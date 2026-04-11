@@ -128,11 +128,11 @@ hr.div{border:none;border-top:1px solid var(--b);margin:14px 0}
     <div class="screen" id="s-exercicios"></div>
   </div>
   <nav class="nav-bar">
-    <div class="nav-item active" data-s="dashboard" onclick="go('dashboard')"><div class="nav-icon">ðŸ“Š</div><div class="nav-label">Dashboard</div></div>
-    <div class="nav-item" data-s="clientes" onclick="go('clientes')"><div class="nav-icon">ðŸ‘¤</div><div class="nav-label">Clientes</div></div>
-    <div class="nav-item" data-s="planos" onclick="go('planos')"><div class="nav-icon">ðŸ“‹</div><div class="nav-label">Planos</div></div>
-    <div class="nav-item" data-s="sessoes" onclick="go('sessoes')"><div class="nav-icon">ðŸ“…</div><div class="nav-label">SessÃµes</div></div>
-    <div class="nav-item" data-s="exercicios" onclick="go('exercicios')"><div class="nav-icon">ðŸ‹ï¸</div><div class="nav-label">ExercÃ­cios</div></div>
+    <div class="nav-item active" data-s="dashboard" onclick="go('dashboard')"><div class="nav-icon">ðŸ“Š#128202;</div><div class="nav-label">Dashboard</div></div>
+    <div class="nav-item" data-s="clientes" onclick="go('clientes')"><div class="nav-icon">ðŸ‘¤#128100;</div><div class="nav-label">Clientes</div></div>
+    <div class="nav-item" data-s="planos" onclick="go('planos')"><div class="nav-icon">ðŸ“‹#128203;</div><div class="nav-label">Planos</div></div>
+    <div class="nav-item" data-s="sessoes" onclick="go('sessoes')"><div class="nav-icon">ðŸ“…#128197;</div><div class="nav-label">SessÃµes</div></div>
+    <div class="nav-item" data-s="exercicios" onclick="go('exercicios')"><div class="nav-icon">ðŸ‹ï¸#127959;</div><div class="nav-label">ExercÃ­cios</div></div>
   </nav>
 </div>
 <div class="modal" id="m-client"></div>
@@ -156,111 +156,111 @@ const S={
 // â”€â”€ EXERCISE DATABASE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // [nome, grupo, equipamento, nivel, series, reps, descanso, lombar, joelho]
 const EX=[
-  ["Agachamento livre","QuadricÃ­pites / GlÃºteos","Barra / Halteres","Todos","3-4","10-15","60-90s","âœ“ Amplitude parcial","âš ï¸ Evitar >90Â°"],
-  ["Agachamento goblet","QuadricÃ­pites / GlÃºteos","Haltere","Todos","3","12-15","60s","âœ“","âš ï¸ Controlado"],
-  ["Agachamento bÃºlgaro","QuadricÃ­pites / GlÃºteos","Halteres","Int/Av","3","10-12ea","75s","âœ“","âš ï¸ Amplitude controlada"],
-  ["Agachamento sumÃ´","Adutores / GlÃºteos","Haltere","Todos","3","15","60s","âœ“","âœ“"],
-  ["Reverse lunge","QuadricÃ­pites / GlÃºteos","Halteres","Todos","3","10-12ea","60s","âœ“","âœ“ Menos stress joelho"],
-  ["Lunge caminhando","QuadricÃ­pites / GlÃºteos","Halteres","Int/Av","3","12ea","60s","âœ“","âš ï¸ Joelho controlado"],
-  ["Leg press 45Â°","QuadricÃ­pites","MÃ¡quina","Todos","3-4","12-15","60-75s","âœ“ Reduzir amplitude","âš ï¸ Amplitude parcial"],
-  ["Leg extension","QuadricÃ­pites","MÃ¡quina","Todos","3","12-15","60s","âœ“","âš ï¸ Sem hiperextensÃ£o"],
-  ["Terminal knee extension","QuadricÃ­pites","ElÃ¡stico","Todos","3","15ea","45s","âœ“","âœ“ ReabilitaÃ§Ã£o"],
-  ["Hip thrust com barra","GlÃºteos","Barra","Int/Av","4","12-15","60s","âœ“","âœ“"],
-  ["Ponte glÃºteo","GlÃºteos","Peso corporal","Todos","3","15","45s","âœ“ Fundamental","âœ“"],
-  ["Ponte glÃºteo unilateral","GlÃºteos","Peso corporal","Todos","3","12ea","45s","âœ“","âœ“"],
-  ["Step up com halteres","GlÃºteos / QuadricÃ­pites","Banco","Todos","3","12ea","60s","âœ“","âš ï¸ Controlado"],
-  ["Romanian Deadlift","Isquiotibiais / GlÃºteos","Barra / Halteres","Int/Av","3-4","10-12","75s","âš ï¸ Hip hinge rigoroso","âœ“"],
-  ["Stiff com halteres","Isquiotibiais","Halteres","Todos","3","12","60s","âš ï¸ Neutro lombar","âœ“"],
-  ["Leg curl deitado","Isquiotibiais","MÃ¡quina","Todos","3","12-15","60s","âœ“","âš ï¸ Sem hiperext."],
-  ["Leg curl sentado","Isquiotibiais","MÃ¡quina","Todos","3","12-15","60s","âœ“","âš ï¸ Amplitude controlada"],
-  ["Calf raise em pÃ©","Panturrilha","MÃ¡quina / Livre","Todos","4","15-20","45s","âœ“","âœ“"],
-  ["Cadeira adutora","Adutores","MÃ¡quina","Todos","3","15","60s","âœ“","âœ“"],
-  ["Cadeira abdutora","GlÃºteos","MÃ¡quina","Todos","3","15","60s","âœ“","âœ“"],
-  ["Press halteres banco plano","Peito","Halteres","Todos","3-4","8-12","60-75s","âš ï¸ Core ativado","âœ“"],
-  ["Press barra banco plano","Peito","Barra","Int/Av","4","8-10","75-90s","âš ï¸ Core ativado","âœ“"],
-  ["Press banco inclinado","Peito","Halteres / Barra","Int/Av","4","8-10","75s","âš ï¸ Core ativado","âœ“"],
-  ["Press banco declinado","Peito","Halteres","Int/Av","3","10-12","75s","âš ï¸ Estabilizar","âœ“"],
-  ["Fly com halteres","Peito","Halteres","Todos","3","12-15","60s","âœ“","âœ“"],
-  ["Crossover em cabo","Peito","Cabo","Todos","3","12-15","60s","âœ“","âœ“"],
-  ["FlexÃµes","Peito / TrÃ­ceps","Peso corporal","Todos","3","10-15","60s","âš ï¸ Prancha rigorosa","âœ“"],
-  ["FlexÃµes de joelhos","Peito / TrÃ­ceps","Peso corporal","Iniciante","3","12-15","60s","âœ“","âœ“"],
-  ["Mergulho nas barras","Peito / TrÃ­ceps","Barras","Int/Av","3-4","8-10","75s","âš ï¸ Sem flexÃ£o excessiva","âœ“"],
-  ["Remada mÃ¡quina","Costas","MÃ¡quina","Todos","3","12-15","60s","âœ“","âœ“"],
-  ["Remada com barra","Costas","Barra","Int/Av","4","8-10","75-90s","âš ï¸ Neutro lombar","âœ“"],
-  ["Remada com haltere unilateral","Costas","Haltere","Todos","3","12","60s","âœ“","âœ“"],
-  ["Puxada frontal","Grande Dorsal","Cabo / MÃ¡quina","Todos","3-4","10-15","60-75s","âœ“","âœ“"],
-  ["Puxada frontal pega fechada","Grande Dorsal","Cabo","Todos","3","10-12","60s","âœ“","âœ“"],
-  ["Dominadas","Grande Dorsal","Barra","Int/Av","4","6-10","90s","âœ“","âœ“"],
-  ["Remada TRX","Costas","TRX","Todos","3","12-15","60s","âœ“","âœ“"],
-  ["Remada inversa (body row)","Costas","Barra / TRX","Todos","3","12-15","60s","âœ“","âœ“"],
-  ["Pull-over com haltere","Grande Dorsal","Haltere","Int/Av","3","12-15","60s","âš ï¸ Sem hiperestensÃ£o","âœ“"],
-  ["Press halteres sentado","Ombros","Halteres","Todos","3","12-15","60s","âš ï¸ Sem extensÃ£o lombar","âœ“"],
-  ["Press militar","Ombros","Barra","Int/Av","4","8-10","75-90s","âš ï¸ Core ativado","âœ“"],
-  ["ElevaÃ§Ã£o lateral","DeltÃ³ide mÃ©dio","Halteres / Cabo","Todos","3","12-15","45-60s","âœ“","âœ“"],
-  ["ElevaÃ§Ã£o frontal","DeltÃ³ide anterior","Haltere","Todos","3","12","60s","âœ“","âœ“"],
-  ["Face pull","DeltÃ³ide posterior","Cabo","Todos","3","15-20","45s","âœ“","âœ“"],
-  ["RotaÃ§Ã£o externa cabo","Rotadores externos","Cabo","Todos","3","15","45s","âœ“","âœ“"],
-  ["Wall slide","Mobilidade ombros","Parede","Todos","3","10-12","45s","âœ“","âœ“"],
-  ["Band pull-apart","Mobilidade ombros","ElÃ¡stico","Todos","3","15-20","45s","âœ“","âœ“"],
-  ["Rosca direta com halteres","BÃ­ceps","Halteres","Todos","3","12-15","60s","âœ“","âœ“"],
-  ["Rosca martelo","BÃ­ceps","Halteres","Todos","3","12","60s","âœ“","âœ“"],
-  ["Rosca com barra EZ","BÃ­ceps","Barra EZ","Int/Av","4","10-12","60s","âœ“","âœ“"],
-  ["Rosca concentrada","BÃ­ceps","Haltere","Todos","3","12-15","60s","âœ“","âœ“"],
-  ["ExtensÃ£o trÃ­ceps cabo","TrÃ­ceps","Cabo","Todos","3","12-15","60s","âœ“","âœ“"],
-  ["TrÃ­ceps francÃªs com haltere","TrÃ­ceps","Haltere","Todos","3","12","60s","âš ï¸ Lombar neutra","âœ“"],
-  ["Kickback trÃ­ceps","TrÃ­ceps","Haltere","Todos","3","12-15","45s","âš ï¸ PosiÃ§Ã£o estÃ¡vel","âœ“"],
-  ["Mergulho no banco","TrÃ­ceps","Banco","Todos","3","10-12","60s","âœ“","âœ“"],
-  ["Prancha frontal","Core","Peso corporal","Todos","3","20-60s","45s","âœ“ Fundamental","âœ“"],
-  ["Prancha lateral","Core","Peso corporal","Todos","3","20-30sea","45s","âœ“","âœ“"],
-  ["Dead bug","Core","Peso corporal","Todos","3","10ea","45s","âœ“ Excelente","âœ“"],
-  ["Bird-dog","Core / Lombar","Peso corporal","Todos","3","8-10ea","45s","âœ“ Fundamental","âœ“"],
-  ["Gato-camelo","Core / Lombar","Tapete","Todos","1","10-15x","â€”","âœ“ Fundamental","âœ“"],
-  ["Crunch abdominal","Core","Peso corporal","Todos","3","15","45s","âš ï¸ Sem tensÃ£o pescoÃ§o","âœ“"],
-  ["Russian twist","Core","Peso corporal","Todos","3","15ea","45s","âš ï¸ Amplitude controlada","âœ“"],
-  ["Pallof press","Core / Anti-rotaÃ§Ã£o","Cabo","Todos","3","12ea","45s","âœ“ Excelente","âœ“"],
-  ["Hollow body hold","Core","Peso corporal","Int/Av","3","20-30s","60s","âœ“","âœ“"],
-  ["Mountain climbers","Core / Cardio","Peso corporal","Todos","3","20ea","45s","âš ï¸ PosiÃ§Ã£o correta","âœ“"],
-  ["Leg raise deitado","Core","Peso corporal","Todos","3","12-15","60s","âš ï¸ Lombar colada","âš ï¸ Amplitude controlada"],
-  ["Stir the pot (fitball)","Core","Fitball","Int/Av","3","10ea","60s","âœ“","âœ“"],
-  ["Passadeira zona 2","Cardio","Passadeira","Todos","1","15-25 min","â€”","âœ“","âš ï¸ Sem inclinaÃ§Ã£o excessiva"],
-  ["Passadeira inclinada","Cardio","Passadeira","Todos","1","15-20 min","â€”","âœ“","âš ï¸ Moderado"],
-  ["Bicicleta estÃ¡tica","Cardio","Bicicleta","Todos","1","15-20 min","â€”","âœ“","âœ“ Excelente para joelho"],
-  ["Remo ergÃ³metro","Cardio / Costas","Remo","Int/Av","4","500m","90s","âš ï¸ TÃ©cnica rigorosa","âœ“"],
-  ["Battle ropes","Cardio / Full body","Battle Ropes","Todos","5","30s","45s","âœ“","âœ“"],
-  ["Kettlebell swing","Full body","Kettlebell","Int/Av","4","15","60s","âš ï¸ Hip hinge rigoroso","âœ“"],
-  ["Burpee modificado (step)","Full body","Peso corporal","Iniciante","3","10","75s","âœ“","âœ“ Sem salto"],
-  ["Hip flexor stretch","Mobilidade anca","Tapete","Todos","1","40-45sea","â€”","âœ“","âœ“"],
-  ["Pigeon pose","Mobilidade glÃºteos","Tapete","Todos","1","40-45sea","â€”","âœ“","âš ï¸ Adaptar"],
-  ["90/90 hip stretch","Mobilidade anca","Tapete","Todos","1","45sea","â€”","âœ“","âœ“"],
-  ["Frog stretch","Mobilidade anca","Tapete","Todos","1","45-60s","â€”","âœ“","âš ï¸ Gradual"],
-  ["Couch stretch","Mobilidade anca","Tapete / Parede","Todos","1","45sea","â€”","âœ“","âœ“"],
-  ["Child's pose","Mobilidade lombar","Tapete","Todos","1","40-60s","â€”","âœ“","âœ“"],
-  ["RotaÃ§Ã£o torÃ¡cica","Mobilidade torÃ¡cica","Tapete","Todos","1","10xea","â€”","âœ“","âœ“"],
-  ["Thread the needle","Mobilidade torÃ¡cica","Tapete","Todos","1","10xea","â€”","âœ“","âœ“"],
-  ["ExtensÃ£o torÃ¡cica foam roller","Mobilidade torÃ¡cica","Foam Roller","Todos","1","60s/segm.","â€”","âœ“","âœ“"],
-  ["Cobra stretch","Mobilidade lombar","Tapete","Todos","1","20-30s","â€”","âš ï¸ Amplitude controlada","âœ“"],
-  ["Supine twist","Mobilidade lombar","Tapete","Todos","1","40sea","â€”","âœ“","âœ“"],
-  ["Joelhos ao peito","Mobilidade lombar","Tapete","Todos","1","40s","â€”","âœ“ Fundamental","âœ“"],
-  ["Shoulder CARs","Mobilidade ombros","Peso corporal","Todos","1","5xea","â€”","âœ“","âœ“"],
-  ["Doorway stretch peito","Mobilidade ombros","Parede / Porta","Todos","1","40s","â€”","âœ“","âœ“"],
-  ["Stretch isquiotibiais","Mobilidade posterior","Tapete","Todos","1","40sea","â€”","âœ“","âœ“"],
-  ["Hundred (Pilates)","Core","Tapete","Todos","1","100 bat.","60s","âš ï¸ Lombar neutra","âœ“"],
-  ["Roll up (Pilates)","Core / Mobilidade","Tapete","Todos","3","8-10","45s","âš ï¸ Controlado","âœ“"],
-  ["Single leg stretch","Core","Tapete","Todos","3","10ea","45s","âœ“","âœ“"],
-  ["Swan dive (Pilates)","Mobilidade lombar","Tapete","Int/Av","3","8","60s","âš ï¸ ExtensÃ£o suave","âœ“"],
-  ["Downward dog","Mobilidade total","Tapete","Todos","1","30-45s","â€”","âœ“","âœ“"],
-  ["Warrior I","Mobilidade anca / ForÃ§a","Tapete","Todos","1","30sea","â€”","âœ“","âš ï¸ Joelho alinhado"],
-  ["Warrior II","Mobilidade anca / ForÃ§a","Tapete","Todos","1","30sea","â€”","âœ“","âš ï¸ Joelho alinhado"],
-  ["Reclined pigeon","Mobilidade glÃºteos","Tapete","Todos","1","45sea","â€”","âœ“","âœ“ Excelente"],
-  ["Legs up the wall","RecuperaÃ§Ã£o","Tapete","Todos","1","3-5 min","â€”","âœ“","âœ“"],
-  ["Foam roller quadricÃ­pites","LibertaÃ§Ã£o miofascial","Foam Roller","Todos","1","60sea","â€”","âœ“","âœ“"],
-  ["Foam roller isquiotibiais","LibertaÃ§Ã£o miofascial","Foam Roller","Todos","1","60sea","â€”","âœ“","âœ“"],
-  ["Foam roller glÃºteo","LibertaÃ§Ã£o miofascial","Foam Roller / Bola","Todos","1","60sea","â€”","âœ“","âœ“"],
-  ["Foam roller coluna torÃ¡cica","LibertaÃ§Ã£o miofascial","Foam Roller","Todos","1","60s/segm.","â€”","âœ“","âœ“"],
-  ["Foam roller gÃ©meos","LibertaÃ§Ã£o miofascial","Foam Roller","Todos","1","60sea","â€”","âœ“","âœ“"],
-  ["RespiraÃ§Ã£o diafragmÃ¡tica","Core / AtivaÃ§Ã£o","Tapete","Todos","1","10 ciclos","â€”","âœ“","âœ“"],
-  ["Box breathing (4-4-4-4)","AtivaÃ§Ã£o / Foco","Peso corporal","Todos","1","5 ciclos","â€”","âœ“","âœ“"],
-  ["AtivaÃ§Ã£o glÃºteo deitado","AtivaÃ§Ã£o","Tapete","Todos","2","15","45s","âœ“","âœ“"],
+  ["Agachamento livre","QuadricÃ­pites / GlÃºteos","Barra / Halteres","Todos","3-4","10-15","60-90s","âœ“#10003; Amplitude parcial","âš ï¸#9888; Evitar >90Â°"],
+  ["Agachamento goblet","QuadricÃ­pites / GlÃºteos","Haltere","Todos","3","12-15","60s","âœ“#10003;","âš ï¸#9888; Controlado"],
+  ["Agachamento bÃºlgaro","QuadricÃ­pites / GlÃºteos","Halteres","Int/Av","3","10-12ea","75s","âœ“#10003;","âš ï¸#9888; Amplitude controlada"],
+  ["Agachamento sumÃ´","Adutores / GlÃºteos","Haltere","Todos","3","15","60s","âœ“#10003;","âœ“#10003;"],
+  ["Reverse lunge","QuadricÃ­pites / GlÃºteos","Halteres","Todos","3","10-12ea","60s","âœ“#10003;","âœ“#10003; Menos stress joelho"],
+  ["Lunge caminhando","QuadricÃ­pites / GlÃºteos","Halteres","Int/Av","3","12ea","60s","âœ“#10003;","âš ï¸#9888; Joelho controlado"],
+  ["Leg press 45Â°","QuadricÃ­pites","MÃ¡quina","Todos","3-4","12-15","60-75s","âœ“#10003; Reduzir amplitude","âš ï¸#9888; Amplitude parcial"],
+  ["Leg extension","QuadricÃ­pites","MÃ¡quina","Todos","3","12-15","60s","âœ“#10003;","âš ï¸#9888; Sem hiperextensÃ£o"],
+  ["Terminal knee extension","QuadricÃ­pites","ElÃ¡stico","Todos","3","15ea","45s","âœ“#10003;","âœ“#10003; ReabilitaÃ§Ã£o"],
+  ["Hip thrust com barra","GlÃºteos","Barra","Int/Av","4","12-15","60s","âœ“#10003;","âœ“#10003;"],
+  ["Ponte glÃºteo","GlÃºteos","Peso corporal","Todos","3","15","45s","âœ“#10003; Fundamental","âœ“#10003;"],
+  ["Ponte glÃºteo unilateral","GlÃºteos","Peso corporal","Todos","3","12ea","45s","âœ“#10003;","âœ“#10003;"],
+  ["Step up com halteres","GlÃºteos / QuadricÃ­pites","Banco","Todos","3","12ea","60s","âœ“#10003;","âš ï¸#9888; Controlado"],
+  ["Romanian Deadlift","Isquiotibiais / GlÃºteos","Barra / Halteres","Int/Av","3-4","10-12","75s","âš ï¸#9888; Hip hinge rigoroso","âœ“#10003;"],
+  ["Stiff com halteres","Isquiotibiais","Halteres","Todos","3","12","60s","âš ï¸#9888; Neutro lombar","âœ“#10003;"],
+  ["Leg curl deitado","Isquiotibiais","MÃ¡quina","Todos","3","12-15","60s","âœ“#10003;","âš ï¸#9888; Sem hiperext."],
+  ["Leg curl sentado","Isquiotibiais","MÃ¡quina","Todos","3","12-15","60s","âœ“#10003;","âš ï¸#9888; Amplitude controlada"],
+  ["Calf raise em pÃ©","Panturrilha","MÃ¡quina / Livre","Todos","4","15-20","45s","âœ“#10003;","âœ“#10003;"],
+  ["Cadeira adutora","Adutores","MÃ¡quina","Todos","3","15","60s","âœ“#10003;","âœ“#10003;"],
+  ["Cadeira abdutora","GlÃºteos","MÃ¡quina","Todos","3","15","60s","âœ“#10003;","âœ“#10003;"],
+  ["Press halteres banco plano","Peito","Halteres","Todos","3-4","8-12","60-75s","âš ï¸#9888; Core ativado","âœ“#10003;"],
+  ["Press barra banco plano","Peito","Barra","Int/Av","4","8-10","75-90s","âš ï¸#9888; Core ativado","âœ“#10003;"],
+  ["Press banco inclinado","Peito","Halteres / Barra","Int/Av","4","8-10","75s","âš ï¸#9888; Core ativado","âœ“#10003;"],
+  ["Press banco declinado","Peito","Halteres","Int/Av","3","10-12","75s","âš ï¸#9888; Estabilizar","âœ“#10003;"],
+  ["Fly com halteres","Peito","Halteres","Todos","3","12-15","60s","âœ“#10003;","âœ“#10003;"],
+  ["Crossover em cabo","Peito","Cabo","Todos","3","12-15","60s","âœ“#10003;","âœ“#10003;"],
+  ["FlexÃµes","Peito / TrÃ­ceps","Peso corporal","Todos","3","10-15","60s","âš ï¸#9888; Prancha rigorosa","âœ“#10003;"],
+  ["FlexÃµes de joelhos","Peito / TrÃ­ceps","Peso corporal","Iniciante","3","12-15","60s","âœ“#10003;","âœ“#10003;"],
+  ["Mergulho nas barras","Peito / TrÃ­ceps","Barras","Int/Av","3-4","8-10","75s","âš ï¸#9888; Sem flexÃ£o excessiva","âœ“#10003;"],
+  ["Remada mÃ¡quina","Costas","MÃ¡quina","Todos","3","12-15","60s","âœ“#10003;","âœ“#10003;"],
+  ["Remada com barra","Costas","Barra","Int/Av","4","8-10","75-90s","âš ï¸#9888; Neutro lombar","âœ“#10003;"],
+  ["Remada com haltere unilateral","Costas","Haltere","Todos","3","12","60s","âœ“#10003;","âœ“#10003;"],
+  ["Puxada frontal","Grande Dorsal","Cabo / MÃ¡quina","Todos","3-4","10-15","60-75s","âœ“#10003;","âœ“#10003;"],
+  ["Puxada frontal pega fechada","Grande Dorsal","Cabo","Todos","3","10-12","60s","âœ“#10003;","âœ“#10003;"],
+  ["Dominadas","Grande Dorsal","Barra","Int/Av","4","6-10","90s","âœ“#10003;","âœ“#10003;"],
+  ["Remada TRX","Costas","TRX","Todos","3","12-15","60s","âœ“#10003;","âœ“#10003;"],
+  ["Remada inversa (body row)","Costas","Barra / TRX","Todos","3","12-15","60s","âœ“#10003;","âœ“#10003;"],
+  ["Pull-over com haltere","Grande Dorsal","Haltere","Int/Av","3","12-15","60s","âš ï¸#9888; Sem hiperestensÃ£o","âœ“#10003;"],
+  ["Press halteres sentado","Ombros","Halteres","Todos","3","12-15","60s","âš ï¸#9888; Sem extensÃ£o lombar","âœ“#10003;"],
+  ["Press militar","Ombros","Barra","Int/Av","4","8-10","75-90s","âš ï¸#9888; Core ativado","âœ“#10003;"],
+  ["ElevaÃ§Ã£o lateral","DeltÃ³ide mÃ©dio","Halteres / Cabo","Todos","3","12-15","45-60s","âœ“#10003;","âœ“#10003;"],
+  ["ElevaÃ§Ã£o frontal","DeltÃ³ide anterior","Haltere","Todos","3","12","60s","âœ“#10003;","âœ“#10003;"],
+  ["Face pull","DeltÃ³ide posterior","Cabo","Todos","3","15-20","45s","âœ“#10003;","âœ“#10003;"],
+  ["RotaÃ§Ã£o externa cabo","Rotadores externos","Cabo","Todos","3","15","45s","âœ“#10003;","âœ“#10003;"],
+  ["Wall slide","Mobilidade ombros","Parede","Todos","3","10-12","45s","âœ“#10003;","âœ“#10003;"],
+  ["Band pull-apart","Mobilidade ombros","ElÃ¡stico","Todos","3","15-20","45s","âœ“#10003;","âœ“#10003;"],
+  ["Rosca direta com halteres","BÃ­ceps","Halteres","Todos","3","12-15","60s","âœ“#10003;","âœ“#10003;"],
+  ["Rosca martelo","BÃ­ceps","Halteres","Todos","3","12","60s","âœ“#10003;","âœ“#10003;"],
+  ["Rosca com barra EZ","BÃ­ceps","Barra EZ","Int/Av","4","10-12","60s","âœ“#10003;","âœ“#10003;"],
+  ["Rosca concentrada","BÃ­ceps","Haltere","Todos","3","12-15","60s","âœ“#10003;","âœ“#10003;"],
+  ["ExtensÃ£o trÃ­ceps cabo","TrÃ­ceps","Cabo","Todos","3","12-15","60s","âœ“#10003;","âœ“#10003;"],
+  ["TrÃ­ceps francÃªs com haltere","TrÃ­ceps","Haltere","Todos","3","12","60s","âš ï¸#9888; Lombar neutra","âœ“#10003;"],
+  ["Kickback trÃ­ceps","TrÃ­ceps","Haltere","Todos","3","12-15","45s","âš ï¸#9888; PosiÃ§Ã£o estÃ¡vel","âœ“#10003;"],
+  ["Mergulho no banco","TrÃ­ceps","Banco","Todos","3","10-12","60s","âœ“#10003;","âœ“#10003;"],
+  ["Prancha frontal","Core","Peso corporal","Todos","3","20-60s","45s","âœ“#10003; Fundamental","âœ“#10003;"],
+  ["Prancha lateral","Core","Peso corporal","Todos","3","20-30sea","45s","âœ“#10003;","âœ“#10003;"],
+  ["Dead bug","Core","Peso corporal","Todos","3","10ea","45s","âœ“#10003; Excelente","âœ“#10003;"],
+  ["Bird-dog","Core / Lombar","Peso corporal","Todos","3","8-10ea","45s","âœ“#10003; Fundamental","âœ“#10003;"],
+  ["Gato-camelo","Core / Lombar","Tapete","Todos","1","10-15x","â€”","âœ“#10003; Fundamental","âœ“#10003;"],
+  ["Crunch abdominal","Core","Peso corporal","Todos","3","15","45s","âš ï¸#9888; Sem tensÃ£o pescoÃ§o","âœ“#10003;"],
+  ["Russian twist","Core","Peso corporal","Todos","3","15ea","45s","âš ï¸#9888; Amplitude controlada","âœ“#10003;"],
+  ["Pallof press","Core / Anti-rotaÃ§Ã£o","Cabo","Todos","3","12ea","45s","âœ“#10003; Excelente","âœ“#10003;"],
+  ["Hollow body hold","Core","Peso corporal","Int/Av","3","20-30s","60s","âœ“#10003;","âœ“#10003;"],
+  ["Mountain climbers","Core / Cardio","Peso corporal","Todos","3","20ea","45s","âš ï¸#9888; PosiÃ§Ã£o correta","âœ“#10003;"],
+  ["Leg raise deitado","Core","Peso corporal","Todos","3","12-15","60s","âš ï¸#9888; Lombar colada","âš ï¸#9888; Amplitude controlada"],
+  ["Stir the pot (fitball)","Core","Fitball","Int/Av","3","10ea","60s","âœ“#10003;","âœ“#10003;"],
+  ["Passadeira zona 2","Cardio","Passadeira","Todos","1","15-25 min","â€”","âœ“#10003;","âš ï¸#9888; Sem inclinaÃ§Ã£o excessiva"],
+  ["Passadeira inclinada","Cardio","Passadeira","Todos","1","15-20 min","â€”","âœ“#10003;","âš ï¸#9888; Moderado"],
+  ["Bicicleta estÃ¡tica","Cardio","Bicicleta","Todos","1","15-20 min","â€”","âœ“#10003;","âœ“#10003; Excelente para joelho"],
+  ["Remo ergÃ³metro","Cardio / Costas","Remo","Int/Av","4","500m","90s","âš ï¸#9888; TÃ©cnica rigorosa","âœ“#10003;"],
+  ["Battle ropes","Cardio / Full body","Battle Ropes","Todos","5","30s","45s","âœ“#10003;","âœ“#10003;"],
+  ["Kettlebell swing","Full body","Kettlebell","Int/Av","4","15","60s","âš ï¸#9888; Hip hinge rigoroso","âœ“#10003;"],
+  ["Burpee modificado (step)","Full body","Peso corporal","Iniciante","3","10","75s","âœ“#10003;","âœ“#10003; Sem salto"],
+  ["Hip flexor stretch","Mobilidade anca","Tapete","Todos","1","40-45sea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Pigeon pose","Mobilidade glÃºteos","Tapete","Todos","1","40-45sea","â€”","âœ“#10003;","âš ï¸#9888; Adaptar"],
+  ["90/90 hip stretch","Mobilidade anca","Tapete","Todos","1","45sea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Frog stretch","Mobilidade anca","Tapete","Todos","1","45-60s","â€”","âœ“#10003;","âš ï¸#9888; Gradual"],
+  ["Couch stretch","Mobilidade anca","Tapete / Parede","Todos","1","45sea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Child's pose","Mobilidade lombar","Tapete","Todos","1","40-60s","â€”","âœ“#10003;","âœ“#10003;"],
+  ["RotaÃ§Ã£o torÃ¡cica","Mobilidade torÃ¡cica","Tapete","Todos","1","10xea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Thread the needle","Mobilidade torÃ¡cica","Tapete","Todos","1","10xea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["ExtensÃ£o torÃ¡cica foam roller","Mobilidade torÃ¡cica","Foam Roller","Todos","1","60s/segm.","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Cobra stretch","Mobilidade lombar","Tapete","Todos","1","20-30s","â€”","âš ï¸#9888; Amplitude controlada","âœ“#10003;"],
+  ["Supine twist","Mobilidade lombar","Tapete","Todos","1","40sea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Joelhos ao peito","Mobilidade lombar","Tapete","Todos","1","40s","â€”","âœ“#10003; Fundamental","âœ“#10003;"],
+  ["Shoulder CARs","Mobilidade ombros","Peso corporal","Todos","1","5xea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Doorway stretch peito","Mobilidade ombros","Parede / Porta","Todos","1","40s","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Stretch isquiotibiais","Mobilidade posterior","Tapete","Todos","1","40sea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Hundred (Pilates)","Core","Tapete","Todos","1","100 bat.","60s","âš ï¸#9888; Lombar neutra","âœ“#10003;"],
+  ["Roll up (Pilates)","Core / Mobilidade","Tapete","Todos","3","8-10","45s","âš ï¸#9888; Controlado","âœ“#10003;"],
+  ["Single leg stretch","Core","Tapete","Todos","3","10ea","45s","âœ“#10003;","âœ“#10003;"],
+  ["Swan dive (Pilates)","Mobilidade lombar","Tapete","Int/Av","3","8","60s","âš ï¸#9888; ExtensÃ£o suave","âœ“#10003;"],
+  ["Downward dog","Mobilidade total","Tapete","Todos","1","30-45s","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Warrior I","Mobilidade anca / ForÃ§a","Tapete","Todos","1","30sea","â€”","âœ“#10003;","âš ï¸#9888; Joelho alinhado"],
+  ["Warrior II","Mobilidade anca / ForÃ§a","Tapete","Todos","1","30sea","â€”","âœ“#10003;","âš ï¸#9888; Joelho alinhado"],
+  ["Reclined pigeon","Mobilidade glÃºteos","Tapete","Todos","1","45sea","â€”","âœ“#10003;","âœ“#10003; Excelente"],
+  ["Legs up the wall","RecuperaÃ§Ã£o","Tapete","Todos","1","3-5 min","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Foam roller quadricÃ­pites","LibertaÃ§Ã£o miofascial","Foam Roller","Todos","1","60sea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Foam roller isquiotibiais","LibertaÃ§Ã£o miofascial","Foam Roller","Todos","1","60sea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Foam roller glÃºteo","LibertaÃ§Ã£o miofascial","Foam Roller / Bola","Todos","1","60sea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Foam roller coluna torÃ¡cica","LibertaÃ§Ã£o miofascial","Foam Roller","Todos","1","60s/segm.","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Foam roller gÃ©meos","LibertaÃ§Ã£o miofascial","Foam Roller","Todos","1","60sea","â€”","âœ“#10003;","âœ“#10003;"],
+  ["RespiraÃ§Ã£o diafragmÃ¡tica","Core / AtivaÃ§Ã£o","Tapete","Todos","1","10 ciclos","â€”","âœ“#10003;","âœ“#10003;"],
+  ["Box breathing (4-4-4-4)","AtivaÃ§Ã£o / Foco","Peso corporal","Todos","1","5 ciclos","â€”","âœ“#10003;","âœ“#10003;"],
+  ["AtivaÃ§Ã£o glÃºteo deitado","AtivaÃ§Ã£o","Tapete","Todos","2","15","45s","âœ“#10003;","âœ“#10003;"],
 ];
 
 // â”€â”€ PLAN GENERATOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -360,10 +360,10 @@ function buildPlan(c){
     "Mobilidade":["Sem.1: Amplitude controlada","Sem.2: +5s por posiÃ§Ã£o","Sem.3: Cargas leves de alavanca","Sem.4: Fluxo dinÃ¢mico"],
   }[c.objetivo]||["Sem.1-2: AdaptaÃ§Ã£o","Sem.3: ProgressÃ£o","Sem.4: Deload"];
   const alerts=[];
-  if(limL)alerts.push("âš ï¸ Lombar: ativar core antes de cada exercÃ­cio de carga. Parar se desconforto >4/10.");
-  if(limJ)alerts.push("âš ï¸ Joelho: evitar flexÃ£o >90Â° com carga. Foam roller quadricÃ­pites pÃ³s-treino.");
-  if(limO)alerts.push("âš ï¸ Ombro/Cervical: priorizar rotadores externos. Sem press atrÃ¡s da nuca.");
-  if(lims.includes("HipertensÃ£o"))alerts.push("âš ï¸ HipertensÃ£o: evitar Valsalva. Descansos mÃ­nimos 60s.");
+  if(limL)alerts.push("âš ï¸#9888; Lombar: ativar core antes de cada exercÃ­cio de carga. Parar se desconforto >4/10.");
+  if(limJ)alerts.push("âš ï¸#9888; Joelho: evitar flexÃ£o >90Â° com carga. Foam roller quadricÃ­pites pÃ³s-treino.");
+  if(limO)alerts.push("âš ï¸#9888; Ombro/Cervical: priorizar rotadores externos. Sem press atrÃ¡s da nuca.");
+  if(lims.includes("HipertensÃ£o"))alerts.push("âš ï¸#9888; HipertensÃ£o: evitar Valsalva. Descansos mÃ­nimos 60s.");
   return{client:c,aq:AQ[aqK],mob:MOB[aqK],sessions,cardio,prog,alerts,createdAt:new Date().toLocaleDateString('pt-PT')};
 }
 
@@ -402,7 +402,7 @@ function rDash(){
   const ativos=cl.filter(c=>c.estado==='Ativo').length;
   const mes=new Date().toISOString().slice(0,7);
   const sesMes=se.filter(s=>s.data&&s.data.startsWith(mes)).length;
-  const pres=se.filter(s=>s.data&&s.data.startsWith(mes)&&s.presenca==='âœ“').length;
+  const pres=se.filter(s=>s.data&&s.data.startsWith(mes)&&s.presenca==='âœ“#10003;').length;
   document.getElementById('s-dashboard').innerHTML=`
     <div class="kpi-grid">
       <div class="kpi"><div class="kpi-l">Clientes</div><div class="kpi-v" style="color:var(--a)">${cl.length}</div></div>
@@ -414,10 +414,10 @@ function rDash(){
       <button class="btn btn-p" onclick="go('planos')">+ Plano</button>
       <button class="btn btn-s" onclick="openSessModal()">+ SessÃ£o</button>
     </div>
-    ${cl.length===0?`<div class="empty"><div class="empty-i">ðŸ‘¥</div><div class="empty-t">Nenhum cliente.<br>ComeÃ§a por adicionar o primeiro.</div><button class="btn btn-p" style="margin-top:14px;width:auto;padding:12px 24px" onclick="go('clientes')">Adicionar</button></div>`:`
+    ${cl.length===0?`<div class="empty"><div class="empty-i">ðŸ‘¥#128101;</div><div class="empty-t">Nenhum cliente.<br>ComeÃ§a por adicionar o primeiro.</div><button class="btn btn-p" style="margin-top:14px;width:auto;padding:12px 24px" onclick="go('clientes')">Adicionar</button></div>`:`
       <div class="sec">Clientes</div>
       ${cl.slice(0,6).map(c=>`<div class="li" onclick="openClientDetail('${c.id}')"><div class="avatar">${init2(c.nome)}</div><div class="li-inf"><div class="li-t">${esc(c.nome)}</div><div class="li-s">${esc(c.objetivo||'â€”')} Â· ${esc(c.nivel||'â€”')}</div></div>${badgeEst(c.estado||'Ativo')}</div>`).join('')}
-      ${se.length?`<div class="sec">Ãšltimas SessÃµes</div>${se.slice(-4).reverse().map(s=>`<div class="sess-row"><div class="sess-date">${fmtD(s.data)}</div><div class="sess-inf"><div class="sess-client">${esc(s.clienteNome||'â€”')}</div><div class="sess-det">${esc(s.sessao||'')}${s.duracao?' Â· '+s.duracao+'min':''}</div></div><div>${s.presenca==='âœ“'?'âœ…':'âŒ'}</div></div>`).join('')}`:''}
+      ${se.length?`<div class="sec">Ãšltimas SessÃµes</div>${se.slice(-4).reverse().map(s=>`<div class="sess-row"><div class="sess-date">${fmtD(s.data)}</div><div class="sess-inf"><div class="sess-client">${esc(s.clienteNome||'â€”')}</div><div class="sess-det">${esc(s.sessao||'')}${s.duracao?' Â· '+s.duracao+'min':''}</div></div><div>${s.presenca==='âœ“#10003;'?'âœ…#9989;':'âŒ#10060;'}</div></div>`).join('')}`:''}
     `}
   `;
 }
@@ -427,13 +427,13 @@ function rClientes(){
   document.getElementById('htitle').textContent='Clientes';
   const cl=S.clients();
   document.getElementById('s-clientes').innerHTML=`
-    <input class="search" placeholder="ðŸ”  Pesquisar..." id="csearch" oninput="fClients()">
+    <input class="search" placeholder="ðŸ”#128269;  Pesquisar..." id="csearch" oninput="fClients()">
     <div id="clist">${rClientList(cl)}</div>
   `;
   addFab(()=>openClientModal());
 }
 function rClientList(cl){
-  if(!cl.length)return`<div class="empty"><div class="empty-i">ðŸ‘¤</div><div class="empty-t">Sem clientes.<br>Toca em + para adicionar.</div></div>`;
+  if(!cl.length)return`<div class="empty"><div class="empty-i">ðŸ‘¤#128100;</div><div class="empty-t">Sem clientes.<br>Toca em + para adicionar.</div></div>`;
   return cl.map(c=>`<div class="li" onclick="openClientDetail('${c.id}')"><div class="avatar">${init2(c.nome)}</div><div class="li-inf"><div class="li-t">${esc(c.nome)}</div><div class="li-s">${esc(c.objetivo||'â€”')} Â· ${esc(c.nivel||'â€”')} Â· ${esc(c.dias||'?')}Ã—/sem</div></div>${badgeEst(c.estado||'Ativo')}</div>`).join('');
 }
 function fClients(){
@@ -455,7 +455,7 @@ function openClientModal(cid){
   document.getElementById('m-client').innerHTML=`
     <div class="mi">
       <div class="mh">
-        <span class="mb" onclick="closeM('m-client')">â€¹</span>
+        <span class="mb" onclick="closeM('m-client')">&lsaquo;</span>
         <span class="mt">${c?'Editar Cliente':'Novo Cliente'}</span>
         ${c?`<span style="color:var(--red);font-size:13px;cursor:pointer" onclick="delClient('${c.id}')">Eliminar</span>`:''}
       </div>
@@ -534,7 +534,7 @@ function saveClient(existId){
   if(existId){const i=cl.findIndex(x=>x.id===existId);if(i>=0)cl[i]=c;else cl.push(c);}
   else cl.push(c);
   S.sc(cl);closeM('m-client');
-  toast(existId?'Cliente atualizado âœ“':'Cliente adicionado âœ“');
+  toast(existId?'Cliente atualizado âœ“#10003;':'Cliente adicionado âœ“#10003;');
   if(CS==='clientes')rClientes();else if(CS==='dashboard')rDash();
 }
 
@@ -554,7 +554,7 @@ function openClientDetail(id){
   document.getElementById('m-client').innerHTML=`
     <div class="mi">
       <div class="mh">
-        <span class="mb" onclick="closeM('m-client')">â€¹</span>
+        <span class="mb" onclick="closeM('m-client')">&lsaquo;</span>
         <span class="mt">${esc(c.nome)}</span>
         <span style="color:var(--a);font-size:13px;cursor:pointer" onclick="closeM('m-client');setTimeout(()=>openClientModal('${id}'),80)">Editar</span>
       </div>
@@ -568,17 +568,17 @@ function openClientDetail(id){
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
           ${[[c.idade,'Idade','anos'],[c.peso,'Peso','kg'],[imc,'IMC',''],[ c.gordura,'% Gord.','%'],[c.dias,'Freq.','/sem'],[c.duracao,'DuraÃ§Ã£o','min']].filter(x=>x[0]).map(x=>`<div><div style="font-size:9px;color:var(--m);text-transform:uppercase">${x[1]}</div><div style="font-size:15px;font-weight:700">${x[0]}${x[2]?'&thinsp;'+x[2]:''}</div></div>`).join('')}
         </div>
-        ${c.objetivo?`<div style="margin-top:9px;font-size:12px;color:var(--m)">ðŸŽ¯ ${esc(c.objetivo)}</div>`:''}
-        ${c.limitacoes&&c.limitacoes.length?`<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:4px">${c.limitacoes.map(l=>`<span class="badge" style="background:rgba(255,152,0,.12);color:var(--orange)">âš ï¸ ${esc(l)}</span>`).join('')}</div>`:''}
-        ${c.contacto?`<div style="margin-top:7px;font-size:12px;color:var(--m)">ðŸ“ž ${esc(c.contacto)}</div>`:''}
+        ${c.objetivo?`<div style="margin-top:9px;font-size:12px;color:var(--m)">ðŸŽ¯#127919; ${esc(c.objetivo)}</div>`:''}
+        ${c.limitacoes&&c.limitacoes.length?`<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:4px">${c.limitacoes.map(l=>`<span class="badge" style="background:rgba(255,152,0,.12);color:var(--orange)">âš ï¸#9888; ${esc(l)}</span>`).join('')}</div>`:''}
+        ${c.contacto?`<div style="margin-top:7px;font-size:12px;color:var(--m)">ðŸ“ž#128222; ${esc(c.contacto)}</div>`:''}
         ${c.obs?`<div style="margin-top:6px;font-size:12px;color:var(--m);font-style:italic">${esc(c.obs)}</div>`:''}
       </div>
       <div class="row2" style="margin-bottom:14px">
         <button class="btn btn-p" onclick="closeM('m-client');go('planos');setTimeout(()=>openPlanModal('${id}'),100)">+ Gerar Plano</button>
         <button class="btn btn-s" onclick="closeM('m-client');openSessModal('${id}')">+ SessÃ£o</button>
       </div>
-      ${pls.length?`<div class="sec">Planos (${pls.length})</div>${pls.map(p=>`<div class="li" onclick="viewPlan('${p.id}')"><span style="font-size:22px">ðŸ“‹</span><div class="li-inf"><div class="li-t">${esc(p.plan.client.objetivo||'Plano')}</div><div class="li-s">${p.plan.createdAt} Â· ${p.plan.sessions.length} sessÃµes</div></div><span style="color:var(--b)">â€º</span></div>`).join('')}`:''}
-      ${ses.length?`<div class="sec">Ãšltimas SessÃµes</div>${ses.map(s=>`<div class="sess-row"><div class="sess-date">${fmtD(s.data)}</div><div class="sess-inf"><div class="sess-client">${esc(s.sessao||'â€”')}</div><div class="sess-det">${s.duracao?s.duracao+'min':''} ${s.energia?'Â· âš¡'+s.energia+'/5':''}</div></div><div>${s.presenca==='âœ“'?'âœ…':'âŒ'}</div></div>`).join('')}`:''}
+      ${pls.length?`<div class="sec">Planos (${pls.length})</div>${pls.map(p=>`<div class="li" onclick="viewPlan('${p.id}')"><span style="font-size:22px">ðŸ“‹#128203;</span><div class="li-inf"><div class="li-t">${esc(p.plan.client.objetivo||'Plano')}</div><div class="li-s">${p.plan.createdAt} Â· ${p.plan.sessions.length} sessÃµes</div></div><span style="color:var(--b)">&rsaquo;</span></div>`).join('')}`:''}
+      ${ses.length?`<div class="sec">Ãšltimas SessÃµes</div>${ses.map(s=>`<div class="sess-row"><div class="sess-date">${fmtD(s.data)}</div><div class="sess-inf"><div class="sess-client">${esc(s.sessao||'â€”')}</div><div class="sess-det">${s.duracao?s.duracao+'min':''} ${s.energia?'Â· âš¡#9889;'+s.energia+'/5':''}</div></div><div>${s.presenca==='âœ“#10003;'?'âœ…#9989;':'âŒ#10060;'}</div></div>`).join('')}`:''}
     </div>
   `;
   openM('m-client');
@@ -589,11 +589,11 @@ function rPlanos(){
   document.getElementById('htitle').textContent='Planos de Treino';
   const cl=S.clients(),pls=S.plans();
   document.getElementById('s-planos').innerHTML=`
-    ${cl.length===0?`<div class="empty"><div class="empty-i">ðŸ“‹</div><div class="empty-t">Adiciona clientes primeiro.</div><button class="btn btn-p" style="margin-top:14px;width:auto;padding:12px 24px" onclick="go('clientes')">Ir para Clientes</button></div>`:`
-      <button class="btn btn-p" style="margin-bottom:14px" onclick="openPlanModal()">âš¡ Novo Plano de Treino</button>
-      ${pls.length===0?`<div class="empty"><div class="empty-i">ðŸ“‹</div><div class="empty-t">Nenhum plano gerado ainda.</div></div>`:`
+    ${cl.length===0?`<div class="empty"><div class="empty-i">ðŸ“‹#128203;</div><div class="empty-t">Adiciona clientes primeiro.</div><button class="btn btn-p" style="margin-top:14px;width:auto;padding:12px 24px" onclick="go('clientes')">Ir para Clientes</button></div>`:`
+      <button class="btn btn-p" style="margin-bottom:14px" onclick="openPlanModal()">âš¡#9889; Novo Plano de Treino</button>
+      ${pls.length===0?`<div class="empty"><div class="empty-i">ðŸ“‹#128203;</div><div class="empty-t">Nenhum plano gerado ainda.</div></div>`:`
         <div class="sec">Planos Gerados (${pls.length})</div>
-        ${pls.slice().reverse().map(p=>`<div class="li" onclick="viewPlan('${p.id}')"><span style="font-size:22px">ðŸ“‹</span><div class="li-inf"><div class="li-t">${esc(p.plan.client.nome||'â€”')}</div><div class="li-s">${esc(p.plan.client.objetivo||'â€”')} Â· ${p.plan.createdAt}</div></div><span style="color:var(--b)">â€º</span></div>`).join('')}
+        ${pls.slice().reverse().map(p=>`<div class="li" onclick="viewPlan('${p.id}')"><span style="font-size:22px">ðŸ“‹#128203;</span><div class="li-inf"><div class="li-t">${esc(p.plan.client.nome||'â€”')}</div><div class="li-s">${esc(p.plan.client.objetivo||'â€”')} Â· ${p.plan.createdAt}</div></div><span style="color:var(--b)">&rsaquo;</span></div>`).join('')}
       `}
     `}
   `;
@@ -603,7 +603,7 @@ function openPlanModal(preId){
   const cl=S.clients();
   document.getElementById('m-plan').innerHTML=`
     <div class="mi">
-      <div class="mh"><span class="mb" onclick="closeM('m-plan')">â€¹</span><span class="mt">Gerar Plano</span></div>
+      <div class="mh"><span class="mb" onclick="closeM('m-plan')">&lsaquo;</span><span class="mt">Gerar Plano</span></div>
       <div class="fg"><label class="fl">Cliente *</label>
         <select class="fi" id="pcl" onchange="showClientInfo()">
           <option value="">Selecionar...</option>
@@ -611,7 +611,7 @@ function openPlanModal(preId){
         </select>
       </div>
       <div id="pcl-info"></div>
-      <button class="btn btn-p" onclick="genAndViewPlan()">âš¡ Gerar Plano</button>
+      <button class="btn btn-p" onclick="genAndViewPlan()">âš¡#9889; Gerar Plano</button>
     </div>
   `;
   openM('m-plan');
@@ -631,8 +631,8 @@ function showClientInfo(){
         <span class="badge b-g">${c.dias||'?'}Ã—/sem</span>
         <span class="badge b-g">${c.duracao||'?'} min</span>
       </div>
-      ${c.limitacoes&&c.limitacoes.length?`<div style="margin-top:8px;font-size:12px;color:var(--orange)">âš ï¸ ${c.limitacoes.join(', ')}</div>`:''}
-      ${!c.objetivo||!c.nivel?`<div style="margin-top:7px;font-size:12px;color:var(--red)">âš ï¸ Define objetivo e nÃ­vel no perfil do cliente.</div>`:''}
+      ${c.limitacoes&&c.limitacoes.length?`<div style="margin-top:8px;font-size:12px;color:var(--orange)">âš ï¸#9888; ${c.limitacoes.join(', ')}</div>`:''}
+      ${!c.objetivo||!c.nivel?`<div style="margin-top:7px;font-size:12px;color:var(--red)">âš ï¸#9888; Define objetivo e nÃ­vel no perfil do cliente.</div>`:''}
     </div>
   `;
 }
@@ -646,7 +646,7 @@ function genAndViewPlan(){
   const plan=buildPlan(c);
   const pr={id:gid(),clientId:id,plan};
   const pls=S.plans();pls.push(pr);S.sp(pls);
-  closeM('m-plan');toast('Plano gerado âœ“');
+  closeM('m-plan');toast('Plano gerado âœ“#10003;');
   viewPlan(pr.id);
   if(CS==='planos')rPlanos();
 }
@@ -657,9 +657,9 @@ function viewPlan(pid){
   document.getElementById('m-planview').innerHTML=`
     <div class="mi">
       <div class="mh">
-        <span class="mb" onclick="closeM('m-planview')">â€¹</span>
+        <span class="mb" onclick="closeM('m-planview')">&lsaquo;</span>
         <span class="mt">${esc(p.client.nome||'Plano')}</span>
-        <span style="color:var(--red);font-size:13px;cursor:pointer" onclick="delPlan('${pid}')">ðŸ—‘ï¸</span>
+        <span style="color:var(--red);font-size:13px;cursor:pointer" onclick="delPlan('${pid}')">ðŸ—‘ï¸#128465;</span>
       </div>
       <div class="card" style="margin-bottom:13px">
         <div style="display:flex;flex-wrap:wrap;gap:6px">
@@ -692,7 +692,7 @@ function viewPlan(pid){
       <div class="card">${p.mob.map((e,i)=>`<div style="padding:5px 0;border-bottom:1px solid var(--b);font-size:13px;color:#ccc"><span style="color:var(--a);margin-right:7px;font-size:10px">${i+1}.</span>${esc(e)}</div>`).join('')}</div>
       <div class="sec">ProgressÃ£o Â· 4 Semanas</div>
       <div class="card">${p.prog.map(l=>`<div style="padding:5px 0;border-bottom:1px solid var(--b);font-size:13px;color:#ccc;display:flex;gap:8px"><span style="color:var(--a);flex-shrink:0">â†’</span>${esc(l)}</div>`).join('')}</div>
-      <button class="btn btn-s" style="margin-top:14px" onclick="copyPlan('${pid}')">ðŸ“‹ Copiar para WhatsApp</button>
+      <button class="btn btn-s" style="margin-top:14px" onclick="copyPlan('${pid}')">ðŸ“‹#128203; Copiar para WhatsApp</button>
     </div>
   `;
   openM('m-planview');
@@ -708,14 +708,14 @@ function delPlan(pid){
 function copyPlan(pid){
   const pr=S.plans().find(p=>p.id===pid);if(!pr)return;
   const p=pr.plan;
-  let t=`ðŸ‹ï¸ NEXT LEVEL PT â€” ${p.client.nome}\n`;
+  let t=`ðŸ‹ï¸#127959; NEXT LEVEL PT â€” ${p.client.nome}\n`;
   t+=`${p.client.objetivo} Â· ${p.client.nivel} Â· ${p.client.dias}Ã—/sem Â· ${p.client.duracao}min\n\n`;
   t+=`ðŸ”¥ AQUECIMENTO\n${p.aq.join('\n')}\n\n`;
   p.sessions.forEach(s=>{t+=`â”â” ${s.nome.toUpperCase()} â€” ${s.grupos} â”â”\n`;s.exs.forEach(e=>t+=`â€¢ ${e.e}: ${e.s}Ã— ${e.r} (desc. ${e.d})\n`);t+='\n';});
-  if(p.cardio.length){t+=`ðŸš´ CARDIO\n`;p.cardio.forEach(e=>t+=`â€¢ ${e.e}: ${e.r}\n`);t+='\n';}
-  t+=`ðŸ§˜ RETORNO\n${p.mob.join('\n')}\n\n`;
-  t+=`ðŸ“ˆ PROGRESSÃƒO\n${p.prog.join('\n')}`;
-  navigator.clipboard.writeText(t).then(()=>toast('Copiado! âœ“')).catch(()=>toast('Usa o botÃ£o "selecionar tudo" manualmente'));
+  if(p.cardio.length){t+=`ðŸš´#128692; CARDIO\n`;p.cardio.forEach(e=>t+=`â€¢ ${e.e}: ${e.r}\n`);t+='\n';}
+  t+=`ðŸ§˜#129496; RETORNO\n${p.mob.join('\n')}\n\n`;
+  t+=`ðŸ“ˆ#128200; PROGRESSÃƒO\n${p.prog.join('\n')}`;
+  navigator.clipboard.writeText(t).then(()=>toast('Copiado! âœ“#10003;')).catch(()=>toast('Usa o botÃ£o "selecionar tudo" manualmente'));
 }
 
 // â”€â”€ SESSÃ•ES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -727,8 +727,8 @@ function rSessoes(){
   document.getElementById('s-sessoes').innerHTML=`
     <div class="frow" id="sf-row">
       <div class="fc on" onclick="sfiltSet('all',this)">Todas</div>
-      <div class="fc" onclick="sfiltSet('pres',this)">âœ… PresenÃ§as</div>
-      <div class="fc" onclick="sfiltSet('falt',this)">âŒ Faltas</div>
+      <div class="fc" onclick="sfiltSet('pres',this)">âœ…#9989; PresenÃ§as</div>
+      <div class="fc" onclick="sfiltSet('falt',this)">âŒ#10060; Faltas</div>
       ${cl.slice(0,5).map(c=>`<div class="fc" onclick="sfiltSet('${c.id}',this)">${esc(c.nome.split(' ')[0])}</div>`).join('')}
     </div>
     <div id="slist">${rSesList(ses)}</div>
@@ -740,14 +740,14 @@ function sfiltSet(f,el){
   document.querySelectorAll('#sf-row .fc').forEach(c=>c.classList.remove('on'));
   el.classList.add('on');
   let ses=S.sessions().slice().reverse();
-  if(f==='pres')ses=ses.filter(s=>s.presenca==='âœ“');
-  else if(f==='falt')ses=ses.filter(s=>s.presenca==='âœ—');
+  if(f==='pres')ses=ses.filter(s=>s.presenca==='âœ“#10003;');
+  else if(f==='falt')ses=ses.filter(s=>s.presenca==='âœ—#10007;');
   else if(f!=='all')ses=ses.filter(s=>s.clienteId===f);
   document.getElementById('slist').innerHTML=rSesList(ses);
 }
 function rSesList(ses){
-  if(!ses.length)return`<div class="empty"><div class="empty-i">ðŸ“…</div><div class="empty-t">Sem sessÃµes registadas.</div></div>`;
-  return ses.map(s=>`<div class="sess-row"><div class="sess-date">${fmtD(s.data)}</div><div class="sess-inf"><div class="sess-client">${esc(s.clienteNome||'â€”')}</div><div class="sess-det">${esc(s.sessao||'')}${s.duracao?' Â· '+s.duracao+'min':''}${s.energia?' Â· âš¡'+s.energia+'/5':''}</div>${s.notas?`<div style="font-size:11px;color:#777;font-style:italic;margin-top:2px">${esc(s.notas.slice(0,50))}${s.notas.length>50?'â€¦':''}</div>`:''}</div><div style="font-size:18px">${s.presenca==='âœ“'?'âœ…':'âŒ'}</div></div>`).join('');
+  if(!ses.length)return`<div class="empty"><div class="empty-i">ðŸ“…#128197;</div><div class="empty-t">Sem sessÃµes registadas.</div></div>`;
+  return ses.map(s=>`<div class="sess-row"><div class="sess-date">${fmtD(s.data)}</div><div class="sess-inf"><div class="sess-client">${esc(s.clienteNome||'â€”')}</div><div class="sess-det">${esc(s.sessao||'')}${s.duracao?' Â· '+s.duracao+'min':''}${s.energia?' Â· âš¡#9889;'+s.energia+'/5':''}</div>${s.notas?`<div style="font-size:11px;color:#777;font-style:italic;margin-top:2px">${esc(s.notas.slice(0,50))}${s.notas.length>50?'â€¦':''}</div>`:''}</div><div style="font-size:18px">${s.presenca==='âœ“#10003;'?'âœ…#9989;':'âŒ#10060;'}</div></div>`).join('');
 }
 
 function openSessModal(preId){
@@ -756,7 +756,7 @@ function openSessModal(preId){
   const SNAMES=["SessÃ£o A","SessÃ£o B","SessÃ£o C","SessÃ£o D","SessÃ£o E","AvaliaÃ§Ã£o","Livre"];
   document.getElementById('m-sess').innerHTML=`
     <div class="mi">
-      <div class="mh"><span class="mb" onclick="closeM('m-sess')">â€¹</span><span class="mt">Registar SessÃ£o</span></div>
+      <div class="mh"><span class="mb" onclick="closeM('m-sess')">&lsaquo;</span><span class="mt">Registar SessÃ£o</span></div>
       <div class="fg"><label class="fl">Cliente *</label>
         <select class="fi" id="scl">
           <option value="">Selecionar...</option>
@@ -773,18 +773,18 @@ function openSessModal(preId){
         <div class="fg"><label class="fl">DuraÃ§Ã£o (min)</label><input class="fi" id="sdur" type="number" placeholder="60"></div>
         <div class="fg"><label class="fl">PresenÃ§a</label>
           <div class="pg" id="pg-pres">
-            <div class="pill on" data-v="âœ“" style="color:var(--green);border-color:var(--green)" onclick="selP('pg-pres','spres',this)">âœ… Presente</div>
-            <div class="pill" data-v="âœ—" onclick="selP('pg-pres','spres',this)">âŒ Falta</div>
+            <div class="pill on" data-v="âœ“#10003;" style="color:var(--green);border-color:var(--green)" onclick="selP('pg-pres','spres',this)">âœ…#9989; Presente</div>
+            <div class="pill" data-v="âœ—#10007;" onclick="selP('pg-pres','spres',this)">âŒ#10060; Falta</div>
           </div>
-          <input type="hidden" id="spres" value="âœ“">
+          <input type="hidden" id="spres" value="âœ“#10003;">
         </div>
       </div>
       <div class="fg"><label class="fl">Energia (1-5)</label>
-        <div class="stars">${[1,2,3,4,5].map(n=>`<span class="star" style="opacity:.25" onclick="setStar('en',${n})" id="en${n}">â­</span>`).join('')}</div>
+        <div class="stars">${[1,2,3,4,5].map(n=>`<span class="star" style="opacity:.25" onclick="setStar('en',${n})" id="en${n}">â­#11088;</span>`).join('')}</div>
         <input type="hidden" id="sen" value="">
       </div>
       <div class="fg"><label class="fl">EsforÃ§o (1-5)</label>
-        <div class="stars">${[1,2,3,4,5].map(n=>`<span class="star" style="opacity:.25" onclick="setStar('ef',${n})" id="ef${n}">âš¡</span>`).join('')}</div>
+        <div class="stars">${[1,2,3,4,5].map(n=>`<span class="star" style="opacity:.25" onclick="setStar('ef',${n})" id="ef${n}">âš¡#9889;</span>`).join('')}</div>
         <input type="hidden" id="sef" value="">
       </div>
       <div class="fg"><label class="fl">Peso atual (kg)</label><input class="fi" id="speso" type="number" step="0.1" placeholder="Opcional"></div>
@@ -811,14 +811,14 @@ function saveSess(){
     data:document.getElementById('sdata').value,
     sessao:document.getElementById('snome').value,
     duracao:document.getElementById('sdur').value,
-    presenca:document.getElementById('spres').value||'âœ“',
+    presenca:document.getElementById('spres').value||'âœ“#10003;',
     energia:document.getElementById('sen').value,
     esforco:document.getElementById('sef').value,
     peso:document.getElementById('speso').value,
     notas:document.getElementById('snotas').value,
   };
   const ses=S.sessions();ses.push(sess);S.ss(ses);
-  closeM('m-sess');toast('SessÃ£o registada âœ“');
+  closeM('m-sess');toast('SessÃ£o registada âœ“#10003;');
   if(CS==='sessoes')rSessoes();else if(CS==='dashboard')rDash();
 }
 
@@ -828,7 +828,7 @@ function rExercicios(){
   document.getElementById('htitle').textContent='Biblioteca';
   const cats=['Membros Inf.','Membros Sup.','Core','Cardio','Mobilidade'];
   document.getElementById('s-exercicios').innerHTML=`
-    <input class="search" placeholder="ðŸ”  Pesquisar exercÃ­cio..." id="exsearch" oninput="fEx()">
+    <input class="search" placeholder="ðŸ”#128269;  Pesquisar exercÃ­cio..." id="exsearch" oninput="fEx()">
     <div class="frow" id="exfrow">
       <div class="fc on" onclick="setExF('all',this)">Todos (${EX.length})</div>
       ${cats.map(c=>`<div class="fc" onclick="setExF('${c}',this)">${c}</div>`).join('')}
@@ -860,9 +860,9 @@ function fEx(){
 }
 function tClass(v){
   if(!v)return'tag';
-  if(v.includes('âœ“')&&!v.includes('âš ï¸')&&!v.includes('âœ—'))return'tag tag-ok';
-  if(v.includes('âš ï¸'))return'tag tag-warn';
-  if(v.includes('âœ—'))return'tag tag-no';
+  if(v.includes('âœ“#10003;')&&!v.includes('âš ï¸#9888;')&&!v.includes('âœ—#10007;'))return'tag tag-ok';
+  if(v.includes('âš ï¸#9888;'))return'tag tag-warn';
+  if(v.includes('âœ—#10007;'))return'tag tag-no';
   return'tag';
 }
 function rExList(lst){
@@ -887,14 +887,14 @@ function rExList(lst){
 // â”€â”€ FAB â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function addFab(cb){
   const f=document.createElement('button');
-  f.id='_fab';f.className='fab';f.innerHTML='ï¼‹';f.onclick=cb;
+  f.id='_fab';f.className='fab';f.innerHTML='+';f.onclick=cb;
   document.getElementById('app').appendChild(f);
 }
 
 // â”€â”€ PWA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const SW=`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>clients.claim());self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
 if('serviceWorker'in navigator){const b=new Blob([SW],{type:'text/javascript'});navigator.serviceWorker.register(URL.createObjectURL(b)).catch(()=>{});}
-const manifest={name:"Next Level PT Manager",short_name:"NL PT",start_url:"./",display:"standalone",theme_color:"#0D0D0D",background_color:"#0D0D0D",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230D0D0D'/%3E%3Ctext y='.9em' font-size='80' x='10'%3EðŸ‹ï¸%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml"}]};
+const manifest={name:"Next Level PT Manager",short_name:"NL PT",start_url:"./",display:"standalone",theme_color:"#0D0D0D",background_color:"#0D0D0D",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230D0D0D'/%3E%3Ctext y='.9em' font-size='80' x='10'%3EðŸ‹ï¸#127959;%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml"}]};
 const ml=document.createElement('link');ml.rel='manifest';ml.href=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/json'}));document.head.appendChild(ml);
 
 // â”€â”€ SAMPLE DATA & INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -906,10 +906,10 @@ function loadSample(){
     {id:'c003',nome:'Ana Costa',idade:'33',peso:'58',altura:'162',gordura:'24',objetivo:'TonificaÃ§Ã£o',nivel:'Iniciante',dias:'2',duracao:'45',limitacoes:['HÃ©rnia lombar'],estado:'Ativo',contacto:'',obs:'Cuidado com flexÃµes lombares',createdAt:'10/02/2025'},
   ]);
   S.ss([
-    {id:'s001',clienteId:'c001',clienteNome:'Maria Silva',data:'2025-01-06',sessao:'SessÃ£o A',duracao:'60',presenca:'âœ“',energia:'4',esforco:'4',notas:'Boa disposiÃ§Ã£o, completou tudo'},
-    {id:'s002',clienteId:'c001',clienteNome:'Maria Silva',data:'2025-01-10',sessao:'SessÃ£o B',duracao:'58',presenca:'âœ“',energia:'3',esforco:'4',notas:'CansaÃ§o no final'},
-    {id:'s003',clienteId:'c002',clienteNome:'JoÃ£o Fernandes',data:'2025-01-13',sessao:'SessÃ£o A',duracao:'75',presenca:'âœ“',energia:'5',esforco:'5',notas:'Subiu carga no press'},
-    {id:'s004',clienteId:'c001',clienteNome:'Maria Silva',data:'2025-01-20',sessao:'SessÃ£o A',duracao:'60',presenca:'âœ—',energia:'',esforco:'',notas:'Faltou â€” reagendado'},
+    {id:'s001',clienteId:'c001',clienteNome:'Maria Silva',data:'2025-01-06',sessao:'SessÃ£o A',duracao:'60',presenca:'âœ“#10003;',energia:'4',esforco:'4',notas:'Boa disposiÃ§Ã£o, completou tudo'},
+    {id:'s002',clienteId:'c001',clienteNome:'Maria Silva',data:'2025-01-10',sessao:'SessÃ£o B',duracao:'58',presenca:'âœ“#10003;',energia:'3',esforco:'4',notas:'CansaÃ§o no final'},
+    {id:'s003',clienteId:'c002',clienteNome:'JoÃ£o Fernandes',data:'2025-01-13',sessao:'SessÃ£o A',duracao:'75',presenca:'âœ“#10003;',energia:'5',esforco:'5',notas:'Subiu carga no press'},
+    {id:'s004',clienteId:'c001',clienteNome:'Maria Silva',data:'2025-01-20',sessao:'SessÃ£o A',duracao:'60',presenca:'âœ—#10007;',energia:'',esforco:'',notas:'Faltou â€” reagendado'},
   ]);
 }
 
