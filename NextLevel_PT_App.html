@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0D0D0D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NL PT">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Next Level PT</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--a:#E8FF3A;--d:#0D0D0D;--c:#161616;--b:#2A2A2A;--m:#666;--t:#F0F0F0;--red:#F44336;--green:#4CAF50;--orange:#FF9800;--blue:#2196F3;--sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px)}
+html,body{height:100%;background:var(--d);color:var(--t);font-family:-apple-system,system-ui,'Helvetica Neue',sans-serif;overflow:hidden}
+#app{height:100vh;display:flex;flex-direction:column;max-width:540px;margin:0 auto}
+.header{padding:10px 16px 8px;padding-top:calc(10px + var(--st));border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;background:var(--d);flex-shrink:0;gap:10px}
+.hlogo{background:var(--a);color:var(--d);font-weight:900;font-size:9px;letter-spacing:2px;padding:4px 8px;border-radius:3px;text-transform:uppercase;white-space:nowrap}
+.htitle{font-size:15px;font-weight:700;flex:1;text-align:center}
+.haction{color:var(--a);font-size:14px;cursor:pointer;padding:4px;min-width:40px;text-align:right;white-space:nowrap}
+#content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.nav-bar{display:flex;border-top:1px solid var(--b);background:var(--c);padding-bottom:var(--sb);flex-shrink:0}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:7px 0 5px;cursor:pointer;gap:2px}
+.nav-icon{font-size:19px;line-height:1}
+.nav-label{font-size:9px;letter-spacing:.5px;color:var(--m);text-transform:uppercase}
+.nav-item.active .nav-label{color:var(--a)}
+.screen{display:none;padding:14px 14px 80px;animation:fi .2s ease}
+.screen.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:14px 15px;margin-bottom:10px}
+.sec{font-size:9px;letter-spacing:2px;color:var(--a);text-transform:uppercase;margin:18px 0 8px;font-weight:700;border-bottom:1px solid var(--b);padding-bottom:5px}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.kpi{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:13px 14px}
+.kpi-l{font-size:9px;letter-spacing:1.5px;color:var(--m);text-transform:uppercase;margin-bottom:5px}
+.kpi-v{font-size:30px;font-weight:900;line-height:1}
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:10px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:inherit;text-align:center;transition:opacity .15s}
+.btn-p{background:var(--a);color:var(--d)}
+.btn-s{background:transparent;border:1px solid var(--b);color:var(--m)}
+.btn-d{background:rgba(244,67,54,.15);color:#F44336;border:1px solid rgba(244,67,54,.3)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn-sm{padding:8px 14px;font-size:11px;border-radius:8px;width:auto;display:inline-block}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg{margin-bottom:13px}
+.fl{font-size:9px;letter-spacing:1.5px;color:var(--m);text-transform:uppercase;display:block;margin-bottom:5px}
+.fi{background:var(--c);border:1px solid var(--b);border-radius:8px;color:var(--t);padding:11px 13px;font-size:14px;outline:none;width:100%;font-family:inherit;transition:border-color .2s}
+.fi:focus{border-color:var(--a)}
+textarea.fi{min-height:68px;resize:vertical}
+select.fi{appearance:none;cursor:pointer}
+.pg{display:flex;flex-wrap:wrap;gap:7px}
+.pill{padding:7px 13px;border-radius:20px;font-size:13px;cursor:pointer;border:1px solid var(--b);background:transparent;color:var(--m);user-select:none;transition:all .15s;white-space:nowrap}
+.pill.on{border-color:var(--a);background:rgba(232,255,58,.1);color:var(--a)}
+.li{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:13px 15px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:11px;transition:border-color .15s;-webkit-user-select:none}
+.li:active{border-color:var(--a)}
+.li-inf{flex:1;min-width:0}
+.li-t{font-size:14px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li-s{font-size:12px;color:var(--m)}
+.badge{display:inline-block;padding:3px 7px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.b-ok{background:rgba(76,175,80,.18);color:#4CAF50}
+.b-no{background:rgba(244,67,54,.18);color:#F44336}
+.b-pause{background:rgba(255,152,0,.18);color:#FF9800}
+.b-y{background:rgba(232,255,58,.12);color:var(--a)}
+.b-g{background:var(--b);color:var(--m)}
+.modal{display:none;position:fixed;inset:0;z-index:100;background:var(--d);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.modal.open{display:flex;flex-direction:column}
+.mi{padding:14px 14px 40px;padding-top:calc(14px + var(--st));max-width:540px;width:100%;margin:0 auto}
+.mh{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.mb{color:var(--a);font-size:22px;cursor:pointer;padding:2px 6px;font-weight:300;line-height:1}
+.mt{font-size:17px;font-weight:700;flex:1}
+.search{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:11px 13px;font-size:14px;color:var(--t);outline:none;width:100%;font-family:inherit;margin-bottom:12px}
+.search:focus{border-color:var(--a)}
+.frow{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none}
+.frow::-webkit-scrollbar{display:none}
+.fc{padding:6px 12px;border-radius:15px;font-size:11px;cursor:pointer;border:1px solid var(--b);white-space:nowrap;color:var(--m);background:transparent;flex-shrink:0}
+.fc.on{border-color:var(--a);color:var(--a);background:rgba(232,255,58,.08)}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--b);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--a);flex-shrink:0}
+.sess-row{background:var(--c);border-radius:9px;padding:10px 13px;margin-bottom:7px;display:flex;align-items:center;gap:10px}
+.sess-date{font-size:11px;color:var(--m);width:58px;flex-shrink:0}
+.sess-inf{flex:1;min-width:0}
+.sess-client{font-size:13px;font-weight:600}
+.sess-det{font-size:11px;color:var(--m)}
+.ex-card{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:12px 13px;margin-bottom:7px}
+.ex-n{font-size:13px;font-weight:600;color:var(--a);margin-bottom:3px}
+.ex-g{font-size:11px;color:var(--m);margin-bottom:5px}
+.ex-tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-size:10px;padding:2px 7px;border-radius:3px;background:var(--b);color:var(--m)}
+.tag-ok{background:rgba(76,175,80,.12);color:#4CAF50}
+.tag-warn{background:rgba(255,152,0,.12);color:#FF9800}
+.tag-no{background:rgba(244,67,54,.12);color:#F44336}
+.tag-y{background:rgba(232,255,58,.1);color:var(--a)}
+.plan-tbl{width:100%;border-collapse:collapse;margin-top:5px}
+.plan-tbl th{font-size:9px;color:var(--m);text-transform:uppercase;letter-spacing:.8px;padding:4px 5px;text-align:left}
+.plan-tbl td{font-size:12px;padding:7px 5px;border-top:1px solid var(--b);vertical-align:middle}
+.plan-tbl td.num{color:var(--a);font-weight:700;text-align:center;width:28px}
+.plan-tbl td.meta{color:var(--m);text-align:center;width:55px}
+.plan-tbl td.nm{color:var(--t)}
+.fase-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.fase-forca{background:#2E7D32}
+.fase-core{background:#6A1B9A}
+.fase-aq{background:#1565C0}
+.fase-ret{background:#37474F}
+.fase-card{background:#E65100}
+.empty{text-align:center;padding:48px 16px;color:var(--m)}
+.empty-i{font-size:40px;margin-bottom:10px}
+.empty-t{font-size:14px;line-height:1.6}
+.toast{position:fixed;bottom:calc(68px + var(--sb));left:50%;transform:translateX(-50%);background:var(--a);color:var(--d);padding:9px 18px;border-radius:20px;font-size:13px;font-weight:700;z-index:200;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+.fab{position:fixed;bottom:calc(68px + var(--sb));right:14px;width:50px;height:50px;background:var(--a);border:none;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(232,255,58,.3);color:var(--d);z-index:50;font-weight:700}
+.alert-w{background:rgba(255,152,0,.08);border:1px solid rgba(255,152,0,.25);border-radius:8px;padding:9px 12px;font-size:12px;color:#ffcc80;margin-bottom:11px}
+.stars{display:flex;gap:6px;margin-top:4px}
+.star{font-size:22px;cursor:pointer;transition:opacity .1s}
+hr.div{border:none;border-top:1px solid var(--b);margin:14px 0}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--b);border-radius:2px}
+@media(min-width:540px){#app{border-left:1px solid var(--b);border-right:1px solid var(--b)}.fab{right:calc(50% - 270px + 14px)}.toast{position:fixed}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div class="hlogo">Next Level</div>
+    <div class="htitle" id="htitle">Dashboard</div>
+    <div class="haction" id="haction"></div>
+  </div>
+  <div id="content">
+    <div class="screen active" id="s-dashboard"></div>
+    <div class="screen" id="s-clientes"></div>
+    <div class="screen" id="s-planos"></div>
+    <div class="screen" id="s-sessoes"></div>
+    <div class="screen" id="s-exercicios"></div>
+  </div>
+  <nav class="nav-bar">
+    <div class="nav-item active" data-s="dashboard" onclick="go('dashboard')"><div class="nav-icon">📊</div><div class="nav-label">Dashboard</div></div>
+    <div class="nav-item" data-s="clientes" onclick="go('clientes')"><div class="nav-icon">👤</div><div class="nav-label">Clientes</div></div>
+    <div class="nav-item" data-s="planos" onclick="go('planos')"><div class="nav-icon">📋</div><div class="nav-label">Planos</div></div>
+    <div class="nav-item" data-s="sessoes" onclick="go('sessoes')"><div class="nav-icon">📅</div><div class="nav-label">Sessões</div></div>
+    <div class="nav-item" data-s="exercicios" onclick="go('exercicios')"><div class="nav-icon">🏋️</div><div class="nav-label">Exercícios</div></div>
+  </nav>
+</div>
+<div class="modal" id="m-client"></div>
+<div class="modal" id="m-plan"></div>
+<div class="modal" id="m-sess"></div>
+<div class="modal" id="m-planview"></div>
+<div class="toast" id="toast"></div>
+<script>
+// ── STORAGE ──────────────────────────────────────────────────────────────────
+const S={
+  g:k=>{try{return JSON.parse(localStorage.getItem('nl_'+k)||'null')}catch{return null}},
+  s:(k,v)=>localStorage.setItem('nl_'+k,JSON.stringify(v)),
+  clients:()=>S.g('clients')||[],
+  sessions:()=>S.g('sessions')||[],
+  plans:()=>S.g('plans')||[],
+  sc:v=>S.s('clients',v),
+  ss:v=>S.s('sessions',v),
+  sp:v=>S.s('plans',v)
+};
+
+// ── EXERCISE DATABASE ─────────────────────────────────────────────────────────
+// [nome, grupo, equipamento, nivel, series, reps, descanso, lombar, joelho]
+const EX=[
+  ["Agachamento livre","Quadricípites / Glúteos","Barra / Halteres","Todos","3-4","10-15","60-90s","✓ Amplitude parcial","⚠️ Evitar >90°"],
+  ["Agachamento goblet","Quadricípites / Glúteos","Haltere","Todos","3","12-15","60s","✓","⚠️ Controlado"],
+  ["Agachamento búlgaro","Quadricípites / Glúteos","Halteres","Int/Av","3","10-12ea","75s","✓","⚠️ Amplitude controlada"],
+  ["Agachamento sumô","Adutores / Glúteos","Haltere","Todos","3","15","60s","✓","✓"],
+  ["Reverse lunge","Quadricípites / Glúteos","Halteres","Todos","3","10-12ea","60s","✓","✓ Menos stress joelho"],
+  ["Lunge caminhando","Quadricípites / Glúteos","Halteres","Int/Av","3","12ea","60s","✓","⚠️ Joelho controlado"],
+  ["Leg press 45°","Quadricípites","Máquina","Todos","3-4","12-15","60-75s","✓ Reduzir amplitude","⚠️ Amplitude parcial"],
+  ["Leg extension","Quadricípites","Máquina","Todos","3","12-15","60s","✓","⚠️ Sem hiperextensão"],
+  ["Terminal knee extension","Quadricípites","Elástico","Todos","3","15ea","45s","✓","✓ Reabilitação"],
+  ["Hip thrust com barra","Glúteos","Barra","Int/Av","4","12-15","60s","✓","✓"],
+  ["Ponte glúteo","Glúteos","Peso corporal","Todos","3","15","45s","✓ Fundamental","✓"],
+  ["Ponte glúteo unilateral","Glúteos","Peso corporal","Todos","3","12ea","45s","✓","✓"],
+  ["Step up com halteres","Glúteos / Quadricípites","Banco","Todos","3","12ea","60s","✓","⚠️ Controlado"],
+  ["Romanian Deadlift","Isquiotibiais / Glúteos","Barra / Halteres","Int/Av","3-4","10-12","75s","⚠️ Hip hinge rigoroso","✓"],
+  ["Stiff com halteres","Isquiotibiais","Halteres","Todos","3","12","60s","⚠️ Neutro lombar","✓"],
+  ["Leg curl deitado","Isquiotibiais","Máquina","Todos","3","12-15","60s","✓","⚠️ Sem hiperext."],
+  ["Leg curl sentado","Isquiotibiais","Máquina","Todos","3","12-15","60s","✓","⚠️ Amplitude controlada"],
+  ["Calf raise em pé","Panturrilha","Máquina / Livre","Todos","4","15-20","45s","✓","✓"],
+  ["Cadeira adutora","Adutores","Máquina","Todos","3","15","60s","✓","✓"],
+  ["Cadeira abdutora","Glúteos","Máquina","Todos","3","15","60s","✓","✓"],
+  ["Press halteres banco plano","Peito","Halteres","Todos","3-4","8-12","60-75s","⚠️ Core ativado","✓"],
+  ["Press barra banco plano","Peito","Barra","Int/Av","4","8-10","75-90s","⚠️ Core ativado","✓"],
+  ["Press banco inclinado","Peito","Halteres / Barra","Int/Av","4","8-10","75s","⚠️ Core ativado","✓"],
+  ["Press banco declinado","Peito","Halteres","Int/Av","3","10-12","75s","⚠️ Estabilizar","✓"],
+  ["Fly com halteres","Peito","Halteres","Todos","3","12-15","60s","✓","✓"],
+  ["Crossover em cabo","Peito","Cabo","Todos","3","12-15","60s","✓","✓"],
+  ["Flexões","Peito / Tríceps","Peso corporal","Todos","3","10-15","60s","⚠️ Prancha rigorosa","✓"],
+  ["Flexões de joelhos","Peito / Tríceps","Peso corporal","Iniciante","3","12-15","60s","✓","✓"],
+  ["Mergulho nas barras","Peito / Tríceps","Barras","Int/Av","3-4","8-10","75s","⚠️ Sem flexão excessiva","✓"],
+  ["Remada máquina","Costas","Máquina","Todos","3","12-15","60s","✓","✓"],
+  ["Remada com barra","Costas","Barra","Int/Av","4","8-10","75-90s","⚠️ Neutro lombar","✓"],
+  ["Remada com haltere unilateral","Costas","Haltere","Todos","3","12","60s","✓","✓"],
+  ["Puxada frontal","Grande Dorsal","Cabo / Máquina","Todos","3-4","10-15","60-75s","✓","✓"],
+  ["Puxada frontal pega fechada","Grande Dorsal","Cabo","Todos","3","10-12","60s","✓","✓"],
+  ["Dominadas","Grande Dorsal","Barra","Int/Av","4","6-10","90s","✓","✓"],
+  ["Remada TRX","Costas","TRX","Todos","3","12-15","60s","✓","✓"],
+  ["Remada inversa (body row)","Costas","Barra / TRX","Todos","3","12-15","60s","✓","✓"],
+  ["Pull-over com haltere","Grande Dorsal","Haltere","Int/Av","3","12-15","60s","⚠️ Sem hiperestensão","✓"],
+  ["Press halteres sentado","Ombros","Halteres","Todos","3","12-15","60s","⚠️ Sem extensão lombar","✓"],
+  ["Press militar","Ombros","Barra","Int/Av","4","8-10","75-90s","⚠️ Core ativado","✓"],
+  ["Elevação lateral","Deltóide médio","Halteres / Cabo","Todos","3","12-15","45-60s","✓","✓"],
+  ["Elevação frontal","Deltóide anterior","Haltere","Todos","3","12","60s","✓","✓"],
+  ["Face pull","Deltóide posterior","Cabo","Todos","3","15-20","45s","✓","✓"],
+  ["Rotação externa cabo","Rotadores externos","Cabo","Todos","3","15","45s","✓","✓"],
+  ["Wall slide","Mobilidade ombros","Parede","Todos","3","10-12","45s","✓","✓"],
+  ["Band pull-apart","Mobilidade ombros","Elástico","Todos","3","15-20","45s","✓","✓"],
+  ["Rosca direta com halteres","Bíceps","Halteres","Todos","3","12-15","60s","✓","✓"],
+  ["Rosca martelo","Bíceps","Halteres","Todos","3","12","60s","✓","✓"],
+  ["Rosca com barra EZ","Bíceps","Barra EZ","Int/Av","4","10-12","60s","✓","✓"],
+  ["Rosca concentrada","Bíceps","Haltere","Todos","3","12-15","60s","✓","✓"],
+  ["Extensão tríceps cabo","Tríceps","Cabo","Todos","3","12-15","60s","✓","✓"],
+  ["Tríceps francês com haltere","Tríceps","Haltere","Todos","3","12","60s","⚠️ Lombar neutra","✓"],
+  ["Kickback tríceps","Tríceps","Haltere","Todos","3","12-15","45s","⚠️ Posição estável","✓"],
+  ["Mergulho no banco","Tríceps","Banco","Todos","3","10-12","60s","✓","✓"],
+  ["Prancha frontal","Core","Peso corporal","Todos","3","20-60s","45s","✓ Fundamental","✓"],
+  ["Prancha lateral","Core","Peso corporal","Todos","3","20-30sea","45s","✓","✓"],
+  ["Dead bug","Core","Peso corporal","Todos","3","10ea","45s","✓ Excelente","✓"],
+  ["Bird-dog","Core / Lombar","Peso corporal","Todos","3","8-10ea","45s","✓ Fundamental","✓"],
+  ["Gato-camelo","Core / Lombar","Tapete","Todos","1","10-15x","—","✓ Fundamental","✓"],
+  ["Crunch abdominal","Core","Peso corporal","Todos","3","15","45s","⚠️ Sem tensão pescoço","✓"],
+  ["Russian twist","Core","Peso corporal","Todos","3","15ea","45s","⚠️ Amplitude controlada","✓"],
+  ["Pallof press","Core / Anti-rotação","Cabo","Todos","3","12ea","45s","✓ Excelente","✓"],
+  ["Hollow body hold","Core","Peso corporal","Int/Av","3","20-30s","60s","✓","✓"],
+  ["Mountain climbers","Core / Cardio","Peso corporal","Todos","3","20ea","45s","⚠️ Posição correta","✓"],
+  ["Leg raise deitado","Core","Peso corporal","Todos","3","12-15","60s","⚠️ Lombar colada","⚠️ Amplitude controlada"],
+  ["Stir the pot (fitball)","Core","Fitball","Int/Av","3","10ea","60s","✓","✓"],
+  ["Passadeira zona 2","Cardio","Passadeira","Todos","1","15-25 min","—","✓","⚠️ Sem inclinação excessiva"],
+  ["Passadeira inclinada","Cardio","Passadeira","Todos","1","15-20 min","—","✓","⚠️ Moderado"],
+  ["Bicicleta estática","Cardio","Bicicleta","Todos","1","15-20 min","—","✓","✓ Excelente para joelho"],
+  ["Remo ergómetro","Cardio / Costas","Remo","Int/Av","4","500m","90s","⚠️ Técnica rigorosa","✓"],
+  ["Battle ropes","Cardio / Full body","Battle Ropes","Todos","5","30s","45s","✓","✓"],
+  ["Kettlebell swing","Full body","Kettlebell","Int/Av","4","15","60s","⚠️ Hip hinge rigoroso","✓"],
+  ["Burpee modificado (step)","Full body","Peso corporal","Iniciante","3","10","75s","✓","✓ Sem salto"],
+  ["Hip flexor stretch","Mobilidade anca","Tapete","Todos","1","40-45sea","—","✓","✓"],
+  ["Pigeon pose","Mobilidade glúteos","Tapete","Todos","1","40-45sea","—","✓","⚠️ Adaptar"],
+  ["90/90 hip stretch","Mobilidade anca","Tapete","Todos","1","45sea","—","✓","✓"],
+  ["Frog stretch","Mobilidade anca","Tapete","Todos","1","45-60s","—","✓","⚠️ Gradual"],
+  ["Couch stretch","Mobilidade anca","Tapete / Parede","Todos","1","45sea","—","✓","✓"],
+  ["Child's pose","Mobilidade lombar","Tapete","Todos","1","40-60s","—","✓","✓"],
+  ["Rotação torácica","Mobilidade torácica","Tapete","Todos","1","10xea","—","✓","✓"],
+  ["Thread the needle","Mobilidade torácica","Tapete","Todos","1","10xea","—","✓","✓"],
+  ["Extensão torácica foam roller","Mobilidade torácica","Foam Roller","Todos","1","60s/segm.","—","✓","✓"],
+  ["Cobra stretch","Mobilidade lombar","Tapete","Todos","1","20-30s","—","⚠️ Amplitude controlada","✓"],
+  ["Supine twist","Mobilidade lombar","Tapete","Todos","1","40sea","—","✓","✓"],
+  ["Joelhos ao peito","Mobilidade lombar","Tapete","Todos","1","40s","—","✓ Fundamental","✓"],
+  ["Shoulder CARs","Mobilidade ombros","Peso corporal","Todos","1","5xea","—","✓","✓"],
+  ["Doorway stretch peito","Mobilidade ombros","Parede / Porta","Todos","1","40s","—","✓","✓"],
+  ["Stretch isquiotibiais","Mobilidade posterior","Tapete","Todos","1","40sea","—","✓","✓"],
+  ["Hundred (Pilates)","Core","Tapete","Todos","1","100 bat.","60s","⚠️ Lombar neutra","✓"],
+  ["Roll up (Pilates)","Core / Mobilidade","Tapete","Todos","3","8-10","45s","⚠️ Controlado","✓"],
+  ["Single leg stretch","Core","Tapete","Todos","3","10ea","45s","✓","✓"],
+  ["Swan dive (Pilates)","Mobilidade lombar","Tapete","Int/Av","3","8","60s","⚠️ Extensão suave","✓"],
+  ["Downward dog","Mobilidade total","Tapete","Todos","1","30-45s","—","✓","✓"],
+  ["Warrior I","Mobilidade anca / Força","Tapete","Todos","1","30sea","—","✓","⚠️ Joelho alinhado"],
+  ["Warrior II","Mobilidade anca / Força","Tapete","Todos","1","30sea","—","✓","⚠️ Joelho alinhado"],
+  ["Reclined pigeon","Mobilidade glúteos","Tapete","Todos","1","45sea","—","✓","✓ Excelente"],
+  ["Legs up the wall","Recuperação","Tapete","Todos","1","3-5 min","—","✓","✓"],
+  ["Foam roller quadricípites","Libertação miofascial","Foam Roller","Todos","1","60sea","—","✓","✓"],
+  ["Foam roller isquiotibiais","Libertação miofascial","Foam Roller","Todos","1","60sea","—","✓","✓"],
+  ["Foam roller glúteo","Libertação miofascial","Foam Roller / Bola","Todos","1","60sea","—","✓","✓"],
+  ["Foam roller coluna torácica","Libertação miofascial","Foam Roller","Todos","1","60s/segm.","—","✓","✓"],
+  ["Foam roller gémeos","Libertação miofascial","Foam Roller","Todos","1","60sea","—","✓","✓"],
+  ["Respiração diafragmática","Core / Ativação","Tapete","Todos","1","10 ciclos","—","✓","✓"],
+  ["Box breathing (4-4-4-4)","Ativação / Foco","Peso corporal","Todos","1","5 ciclos","—","✓","✓"],
+  ["Ativação glúteo deitado","Ativação","Tapete","Todos","2","15","45s","✓","✓"],
+];
+
+// ── PLAN GENERATOR ────────────────────────────────────────────────────────────
+const AQ={
+  geral:["Marcha no lugar 3 min","Rotação de ombros 10x","Rotação de ancas 10x","Mobilização torácica 10x","Agachamento livre sem carga 15x"],
+  lombar:["Marcha no lugar 3 min","Gato-camelo 10x","Rotação anca deitado 10x cada","Bird-dog 8x cada","Respiração diafragmática 5 ciclos"],
+  joelho:["Marcha no lugar 3 min","Rotação de tornozelo 10x","Elevação de joelho 10x","Agachamento parcial 15x","Marcha lateral com banda 10x"],
+  ombro:["Marcha no lugar 3 min","Pendular de ombro 30s","Rotação interna/externa elástico 15x","Retração escapular 15x","Wall slide 10x"],
+};
+const MOB={
+  geral:["Hip flexor stretch 40s cada","Pigeon pose 40s cada","Torção espinhal 30s cada","Child's pose 40s","Doorway stretch 30s"],
+  lombar:["Joelhos ao peito 40s","Gato-camelo 10x lento","Piriforme stretch 40s","Child's pose 40s","Pelvic tilt 10x"],
+  joelho:["Quad stretch 40s cada","Stretch isquiotibiais 40s","Calf stretch 40s","Hip flexor 40s","Foam roller quadricípites 60s"],
+  ombro:["Cross-body shoulder 40s","Doorway stretch 40s","Lat stretch barra 30s","Thread the needle 30s cada","Neck stretch 30s"],
+};
+const CARDIO_DB={
+  "Perda de peso":[{e:"Passadeira inclinada (zona 2)",r:"15-20 min"},{e:"Bicicleta estática moderada",r:"15 min"}],
+  "Resistência":[{e:"Corrida zona 3",r:"20-25 min"},{e:"Remo ergómetro 4×500m",r:"4 séries"}],
+  "Performance desportiva":[{e:"Sprint intervals (30s/90s)",r:"8 rounds"},{e:"Bicicleta HIIT (20s/40s)",r:"8 rounds"}],
+  "Tonificação":[{e:"Passadeira inclinada",r:"10 min"}],
+  "Ganho de massa":[],
+  "Reabilitação":[{e:"Bicicleta estática leve",r:"10 min"}],
+  "Mobilidade":[],
+};
+const SPLITS={
+  2:[["peito","costas","core"],["quad","posterior","gluteos","core"]],
+  3:[["peito","triceps","ombros"],["costas","biceps","core"],["quad","posterior","gluteos"]],
+  4:[["peito","triceps"],["costas","biceps"],["quad","core"],["posterior","gluteos","ombros"]],
+  5:[["peito","triceps"],["costas","biceps"],["quad"],["posterior","gluteos"],["ombros","core"]],
+};
+const EX_MAP={
+  peito:["Press halteres banco plano","Press banco inclinado","Fly com halteres","Crossover em cabo","Flexões","Flexões de joelhos","Press barra banco plano"],
+  costas:["Remada máquina","Remada com haltere unilateral","Puxada frontal","Remada TRX","Remada com barra","Dominadas","Remada inversa (body row)"],
+  ombros:["Press halteres sentado","Elevação lateral","Face pull","Rotação externa cabo","Press militar","Wall slide"],
+  biceps:["Rosca direta com halteres","Rosca martelo","Rosca com barra EZ","Rosca concentrada"],
+  triceps:["Extensão tríceps cabo","Tríceps francês com haltere","Mergulho no banco","Kickback tríceps"],
+  core:["Prancha frontal","Dead bug","Bird-dog","Pallof press","Prancha lateral","Hollow body hold","Russian twist"],
+  quad:["Agachamento livre","Leg press 45°","Agachamento goblet","Reverse lunge","Leg extension","Lunge caminhando","Agachamento búlgaro"],
+  gluteos:["Hip thrust com barra","Ponte glúteo","Ponte glúteo unilateral","Step up com halteres","Agachamento sumô"],
+  posterior:["Romanian Deadlift","Stiff com halteres","Leg curl deitado","Leg curl sentado"],
+};
+const AVOID_L=["Agachamento búlgaro","Leg press 45°","Remada com barra","Romanian Deadlift","Stiff com halteres","Deadlift convencional"];
+const AVOID_J=["Agachamento búlgaro","Lunge caminhando","Agachamento sumô","Leg extension"];
+const AVOID_O=["Press militar","Press Arnold","Press barra atrás"];
+
+function buildPlan(c){
+  const nv=c.nivel==="Iniciante"?0:c.nivel==="Intermédio"?1:2;
+  const dias=parseInt(c.dias)||3;
+  const dur=parseInt(c.duracao)||60;
+  const lims=c.limitacoes||[];
+  const limL=lims.some(l=>["Hérnia lombar","Dor lombar","Ciática"].includes(l));
+  const limJ=lims.includes("Joelho");
+  const limO=lims.some(l=>["Ombro","Cervical"].includes(l));
+  const aqK=limL?"lombar":limJ?"joelho":limO?"ombro":"geral";
+  const sm={
+    "Ganho de massa":{s:4,r:"8-12",d:"75s"},
+    "Perda de peso":{s:3,r:"12-15",d:"45s"},
+    "Tonificação":{s:3,r:"12-15",d:"60s"},
+    "Reabilitação":{s:3,r:"15-20",d:"75s"},
+    "Resistência":{s:4,r:"15-20",d:"45s"},
+    "Performance desportiva":{s:4,r:"6-10",d:"90s"},
+    "Mobilidade":{s:3,r:"12-15",d:"60s"},
+  }[c.objetivo]||{s:3,r:"12-15",d:"60s"};
+  const exPG=dur<=45?2:dur<=60?3:4;
+  const splits=SPLITS[dias]||SPLITS[3];
+  const sessions=splits.map((groups,i)=>{
+    let exs=[];
+    groups.forEach(g=>{
+      if(g==="core"){
+        ["Prancha frontal","Dead bug","Bird-dog","Pallof press","Prancha lateral"].slice(0,Math.max(2,exPG-1)).forEach(e=>{
+          exs.push({fase:"core",e,s:Math.min(sm.s,3),r:"20-40s ou 10x",d:"45s"});
+        });
+      } else {
+        let lst=(EX_MAP[g]||[]).filter(e=>{
+          if(limL&&AVOID_L.includes(e))return false;
+          if(limJ&&AVOID_J.includes(e))return false;
+          if(limO&&AVOID_O.includes(e))return false;
+          if(nv===0&&["Dominadas","Press militar","Agachamento búlgaro","Remada com barra"].includes(e))return false;
+          return true;
+        });
+        lst.slice(0,exPG).forEach(e=>{
+          const ex=EX.find(x=>x[0]===e);
+          exs.push({fase:"forca",e,s:sm.s,r:ex?ex[5]:sm.r,d:ex?ex[6]:sm.d});
+        });
+      }
+    });
+    return{nome:`Sessão ${String.fromCharCode(65+i)}`,grupos:groups.map(g=>({peito:"Peito",costas:"Costas",ombros:"Ombros",biceps:"Bíceps",triceps:"Tríceps",core:"Core",quad:"Quadricípites",gluteos:"Glúteos",posterior:"Posterior"})[g]||g).join(" + "),exs};
+  });
+  const cardio=CARDIO_DB[c.objetivo]||[];
+  const prog={
+    "Ganho de massa":["Sem.1: Técnica e adaptação","Sem.2: +5% carga, manter reps","Sem.3: Sobrecarga progressiva","Sem.4: Deload — 60% carga"],
+    "Perda de peso":["Sem.1: Adaptar ritmo e circuito","Sem.2: +2min cardio, -5s descanso","Sem.3: Subir carga 5-10%","Sem.4: Circuit sem pausas"],
+    "Reabilitação":["Sem.1: Amplitude parcial","Sem.2: Amplitude completa, carga zero","Sem.3: Introduzir carga leve","Sem.4: Reavaliar — escala 0-10"],
+    "Tonificação":["Sem.1: Padrões base 3 séries","Sem.2: 3 séries completas","Sem.3: +1 série nos principais","Sem.4: Supersets nos complementares"],
+    "Resistência":["Sem.1: Volume base","Sem.2: +1 série por exercício","Sem.3: -10s descanso","Sem.4: Circuit training"],
+    "Performance desportiva":["Sem.1: Técnica máxima","Sem.2: Velocidade concêntrica","Sem.3: Carga + explosividade","Sem.4: Especificidade desportiva"],
+    "Mobilidade":["Sem.1: Amplitude controlada","Sem.2: +5s por posição","Sem.3: Cargas leves de alavanca","Sem.4: Fluxo dinâmico"],
+  }[c.objetivo]||["Sem.1-2: Adaptação","Sem.3: Progressão","Sem.4: Deload"];
+  const alerts=[];
+  if(limL)alerts.push("⚠️ Lombar: ativar core antes de cada exercício de carga. Parar se desconforto >4/10.");
+  if(limJ)alerts.push("⚠️ Joelho: evitar flexão >90° com carga. Foam roller quadricípites pós-treino.");
+  if(limO)alerts.push("⚠️ Ombro/Cervical: priorizar rotadores externos. Sem press atrás da nuca.");
+  if(lims.includes("Hipertensão"))alerts.push("⚠️ Hipertensão: evitar Valsalva. Descansos mínimos 60s.");
+  return{client:c,aq:AQ[aqK],mob:MOB[aqK],sessions,cardio,prog,alerts,createdAt:new Date().toLocaleDateString('pt-PT')};
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+const gid=()=>'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const fmtD=d=>{if(!d)return'—';const p=d.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d};
+const init2=n=>(n||'?').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+const badgeEst=e=>{const c=e==='Ativo'?'b-ok':e==='Inativo'?'b-no':'b-pause';return`<span class="badge ${c}">${esc(e)}</span>`};
+let CS='dashboard';
+
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2200);
+}
+function openM(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
+function closeM(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function go(screen){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('s-'+screen).classList.add('active');
+  document.querySelector(`[data-s="${screen}"]`).classList.add('active');
+  CS=screen;
+  document.getElementById('haction').innerHTML='';
+  const f=document.getElementById('_fab');if(f)f.remove();
+  ({dashboard:rDash,clientes:rClientes,planos:rPlanos,sessoes:rSessoes,exercicios:rExercicios})[screen]();
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────────────────────
+function rDash(){
+  document.getElementById('htitle').textContent='Dashboard';
+  const cl=S.clients(),se=S.sessions();
+  const ativos=cl.filter(c=>c.estado==='Ativo').length;
+  const mes=new Date().toISOString().slice(0,7);
+  const sesMes=se.filter(s=>s.data&&s.data.startsWith(mes)).length;
+  const pres=se.filter(s=>s.data&&s.data.startsWith(mes)&&s.presenca==='✓').length;
+  document.getElementById('s-dashboard').innerHTML=`
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-l">Clientes</div><div class="kpi-v" style="color:var(--a)">${cl.length}</div></div>
+      <div class="kpi"><div class="kpi-l">Ativos</div><div class="kpi-v" style="color:var(--green)">${ativos}</div></div>
+      <div class="kpi"><div class="kpi-l">Sessões (mês)</div><div class="kpi-v" style="color:var(--orange)">${sesMes}</div></div>
+      <div class="kpi"><div class="kpi-l">Presenças (mês)</div><div class="kpi-v" style="color:var(--blue)">${pres}</div></div>
+    </div>
+    <div class="row2" style="margin-bottom:14px">
+      <button class="btn btn-p" onclick="go('planos')">+ Plano</button>
+      <button class="btn btn-s" onclick="openSessModal()">+ Sessão</button>
+    </div>
+    ${cl.length===0?`<div class="empty"><div class="empty-i">👥</div><div class="empty-t">Nenhum cliente.<br>Começa por adicionar o primeiro.</div><button class="btn btn-p" style="margin-top:14px;width:auto;padding:12px 24px" onclick="go('clientes')">Adicionar</button></div>`:`
+      <div class="sec">Clientes</div>
+      ${cl.slice(0,6).map(c=>`<div class="li" onclick="openClientDetail('${c.id}')"><div class="avatar">${init2(c.nome)}</div><div class="li-inf"><div class="li-t">${esc(c.nome)}</div><div class="li-s">${esc(c.objetivo||'—')} · ${esc(c.nivel||'—')}</div></div>${badgeEst(c.estado||'Ativo')}</div>`).join('')}
+      ${se.length?`<div class="sec">Últimas Sessões</div>${se.slice(-4).reverse().map(s=>`<div class="sess-row"><div class="sess-date">${fmtD(s.data)}</div><div class="sess-inf"><div class="sess-client">${esc(s.clienteNome||'—')}</div><div class="sess-det">${esc(s.sessao||'')}${s.duracao?' · '+s.duracao+'min':''}</div></div><div>${s.presenca==='✓'?'✅':'❌'}</div></div>`).join('')}`:''}
+    `}
+  `;
+}
+
+// ── CLIENTES ──────────────────────────────────────────────────────────────────
+function rClientes(){
+  document.getElementById('htitle').textContent='Clientes';
+  const cl=S.clients();
+  document.getElementById('s-clientes').innerHTML=`
+    <input class="search" placeholder="🔍  Pesquisar..." id="csearch" oninput="fClients()">
+    <div id="clist">${rClientList(cl)}</div>
+  `;
+  addFab(()=>openClientModal());
+}
+function rClientList(cl){
+  if(!cl.length)return`<div class="empty"><div class="empty-i">👤</div><div class="empty-t">Sem clientes.<br>Toca em + para adicionar.</div></div>`;
+  return cl.map(c=>`<div class="li" onclick="openClientDetail('${c.id}')"><div class="avatar">${init2(c.nome)}</div><div class="li-inf"><div class="li-t">${esc(c.nome)}</div><div class="li-s">${esc(c.objetivo||'—')} · ${esc(c.nivel||'—')} · ${esc(c.dias||'?')}×/sem</div></div>${badgeEst(c.estado||'Ativo')}</div>`).join('');
+}
+function fClients(){
+  const q=(document.getElementById('csearch')||{value:''}).value.toLowerCase();
+  const cl=S.clients().filter(c=>(c.nome||'').toLowerCase().includes(q)||(c.objetivo||'').toLowerCase().includes(q));
+  document.getElementById('clist').innerHTML=rClientList(cl);
+}
+
+function openClientModal(cid){
+  const cl=S.clients();
+  const c=cid?cl.find(x=>x.id===cid):null;
+  const lims=["Hérnia lombar","Dor lombar","Ciática","Joelho","Ombro","Cervical","Hipertensão","Osteoporose","Diabetes"];
+  const cL=c&&c.limitacoes?c.limitacoes:[];
+  const OBJS=["Perda de peso","Ganho de massa","Reabilitação","Resistência","Mobilidade","Tonificação","Performance desportiva"];
+  const NIVS=["Iniciante","Intermédio","Avançado"];
+  const DIAS=["2","3","4","5"];
+  const DURS=["30","45","60","75"];
+  const ESTS=["Ativo","Inativo","Pausado"];
+  document.getElementById('m-client').innerHTML=`
+    <div class="mi">
+      <div class="mh">
+        <span class="mb" onclick="closeM('m-client')">‹</span>
+        <span class="mt">${c?'Editar Cliente':'Novo Cliente'}</span>
+        ${c?`<span style="color:var(--red);font-size:13px;cursor:pointer" onclick="delClient('${c.id}')">Eliminar</span>`:''}
+      </div>
+      <div class="sec">Dados Pessoais</div>
+      <div class="fg"><label class="fl">Nome *</label><input class="fi" id="fn" value="${esc(c&&c.nome||'')}" placeholder="Nome completo"></div>
+      <div class="row2">
+        <div class="fg"><label class="fl">Idade</label><input class="fi" id="fi" type="number" value="${esc(c&&c.idade||'')}" placeholder="Ex: 35"></div>
+        <div class="fg"><label class="fl">Contacto</label><input class="fi" id="fc" value="${esc(c&&c.contacto||'')}" placeholder="9XX XXX XXX"></div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label class="fl">Peso (kg)</label><input class="fi" id="fp" type="number" value="${esc(c&&c.peso||'')}" placeholder="70"></div>
+        <div class="fg"><label class="fl">Altura (cm)</label><input class="fi" id="fa" type="number" value="${esc(c&&c.altura||'')}" placeholder="170"></div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label class="fl">% Gordura</label><input class="fi" id="fg2" type="number" value="${esc(c&&c.gordura||'')}" placeholder="25"></div>
+        <div class="fg"><label class="fl">Estado</label><select class="fi" id="fest">${ESTS.map(e=>`<option value="${e}" ${(c&&c.estado||'Ativo')===e?'selected':''}>${e}</option>`).join('')}</select></div>
+      </div>
+      <div class="sec">Objetivo e Treino</div>
+      <div class="fg"><label class="fl">Objetivo *</label>
+        <div class="pg" id="pg-obj">${OBJS.map(o=>`<div class="pill${(c&&c.objetivo)===o?' on':''}" data-v="${esc(o)}" onclick="selP('pg-obj','fo',this)">${esc(o)}</div>`).join('')}</div>
+        <input type="hidden" id="fo" value="${esc(c&&c.objetivo||'')}">
+      </div>
+      <div class="fg"><label class="fl">Nível *</label>
+        <div class="pg" id="pg-niv">${NIVS.map(n=>`<div class="pill${(c&&c.nivel)===n?' on':''}" data-v="${esc(n)}" onclick="selP('pg-niv','fni',this)">${esc(n)}</div>`).join('')}</div>
+        <input type="hidden" id="fni" value="${esc(c&&c.nivel||'')}">
+      </div>
+      <div class="row2">
+        <div class="fg"><label class="fl">Dias/Sem *</label>
+          <div class="pg" id="pg-dia">${DIAS.map(d=>`<div class="pill${(c&&c.dias)===d?' on':''}" data-v="${d}" onclick="selP('pg-dia','fd',this)">${d}×</div>`).join('')}</div>
+          <input type="hidden" id="fd" value="${esc(c&&c.dias||'')}">
+        </div>
+        <div class="fg"><label class="fl">Duração *</label>
+          <div class="pg" id="pg-dur">${DURS.map(d=>`<div class="pill${(c&&c.duracao)===d?' on':''}" data-v="${d}" onclick="selP('pg-dur','fdu',this)">${d}'</div>`).join('')}</div>
+          <input type="hidden" id="fdu" value="${esc(c&&c.duracao||'')}">
+        </div>
+      </div>
+      <div class="sec">Limitações</div>
+      <div class="pg" id="pg-lim">${lims.map(l=>`<div class="pill${cL.includes(l)?' on':''}" data-v="${esc(l)}" onclick="this.classList.toggle('on')">${esc(l)}</div>`).join('')}</div>
+      <div class="fg" style="margin-top:13px"><label class="fl">Observações</label><textarea class="fi" id="fobs" placeholder="Notas relevantes...">${esc(c&&c.obs||'')}</textarea></div>
+      <div style="margin-top:18px"><button class="btn btn-p" onclick="saveClient('${c&&c.id||''}')">${c?'Guardar Alterações':'Adicionar Cliente'}</button></div>
+    </div>
+  `;
+  openM('m-client');
+}
+
+function selP(gid,hidId,el){
+  document.querySelectorAll(`#${gid} .pill`).forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById(hidId).value=el.dataset.v;
+}
+
+function getLimsSelected(){
+  return[...document.querySelectorAll('#pg-lim .pill.on')].map(p=>p.dataset.v);
+}
+
+function saveClient(existId){
+  const nome=document.getElementById('fn').value.trim();
+  if(!nome){toast('Nome obrigatório');return}
+  const cl=S.clients();
+  const c={
+    id:existId||gid(),nome,
+    idade:document.getElementById('fi').value,
+    contacto:document.getElementById('fc').value,
+    peso:document.getElementById('fp').value,
+    altura:document.getElementById('fa').value,
+    gordura:document.getElementById('fg2').value,
+    estado:document.getElementById('fest').value,
+    objetivo:document.getElementById('fo').value,
+    nivel:document.getElementById('fni').value,
+    dias:document.getElementById('fd').value,
+    duracao:document.getElementById('fdu').value,
+    limitacoes:getLimsSelected(),
+    obs:document.getElementById('fobs').value,
+    createdAt:existId?(cl.find(x=>x.id===existId)||{}).createdAt:new Date().toLocaleDateString('pt-PT'),
+  };
+  if(existId){const i=cl.findIndex(x=>x.id===existId);if(i>=0)cl[i]=c;else cl.push(c);}
+  else cl.push(c);
+  S.sc(cl);closeM('m-client');
+  toast(existId?'Cliente atualizado ✓':'Cliente adicionado ✓');
+  if(CS==='clientes')rClientes();else if(CS==='dashboard')rDash();
+}
+
+function delClient(id){
+  if(!confirm('Eliminar este cliente e todos os seus dados?'))return;
+  S.sc(S.clients().filter(c=>c.id!==id));
+  S.ss(S.sessions().filter(s=>s.clienteId!==id));
+  S.sp(S.plans().filter(p=>p.clientId!==id));
+  closeM('m-client');toast('Cliente eliminado');rClientes();
+}
+
+function openClientDetail(id){
+  const c=S.clients().find(x=>x.id===id);if(!c)return;
+  const ses=S.sessions().filter(s=>s.clienteId===id).slice(-5).reverse();
+  const pls=S.plans().filter(p=>p.clientId===id);
+  const imc=c.peso&&c.altura?(c.peso/Math.pow(c.altura/100,2)).toFixed(1):null;
+  document.getElementById('m-client').innerHTML=`
+    <div class="mi">
+      <div class="mh">
+        <span class="mb" onclick="closeM('m-client')">‹</span>
+        <span class="mt">${esc(c.nome)}</span>
+        <span style="color:var(--a);font-size:13px;cursor:pointer" onclick="closeM('m-client');setTimeout(()=>openClientModal('${id}'),80)">Editar</span>
+      </div>
+      <div class="card">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+          <div class="avatar" style="width:48px;height:48px;font-size:18px">${init2(c.nome)}</div>
+          <div><div style="font-size:17px;font-weight:700">${esc(c.nome)}</div>
+            <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap">${badgeEst(c.estado||'Ativo')}${c.nivel?`<span class="badge b-y">${esc(c.nivel)}</span>`:''}</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          ${[[c.idade,'Idade','anos'],[c.peso,'Peso','kg'],[imc,'IMC',''],[ c.gordura,'% Gord.','%'],[c.dias,'Freq.','/sem'],[c.duracao,'Duração','min']].filter(x=>x[0]).map(x=>`<div><div style="font-size:9px;color:var(--m);text-transform:uppercase">${x[1]}</div><div style="font-size:15px;font-weight:700">${x[0]}${x[2]?'&thinsp;'+x[2]:''}</div></div>`).join('')}
+        </div>
+        ${c.objetivo?`<div style="margin-top:9px;font-size:12px;color:var(--m)">🎯 ${esc(c.objetivo)}</div>`:''}
+        ${c.limitacoes&&c.limitacoes.length?`<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:4px">${c.limitacoes.map(l=>`<span class="badge" style="background:rgba(255,152,0,.12);color:var(--orange)">⚠️ ${esc(l)}</span>`).join('')}</div>`:''}
+        ${c.contacto?`<div style="margin-top:7px;font-size:12px;color:var(--m)">📞 ${esc(c.contacto)}</div>`:''}
+        ${c.obs?`<div style="margin-top:6px;font-size:12px;color:var(--m);font-style:italic">${esc(c.obs)}</div>`:''}
+      </div>
+      <div class="row2" style="margin-bottom:14px">
+        <button class="btn btn-p" onclick="closeM('m-client');go('planos');setTimeout(()=>openPlanModal('${id}'),100)">+ Gerar Plano</button>
+        <button class="btn btn-s" onclick="closeM('m-client');openSessModal('${id}')">+ Sessão</button>
+      </div>
+      ${pls.length?`<div class="sec">Planos (${pls.length})</div>${pls.map(p=>`<div class="li" onclick="viewPlan('${p.id}')"><span style="font-size:22px">📋</span><div class="li-inf"><div class="li-t">${esc(p.plan.client.objetivo||'Plano')}</div><div class="li-s">${p.plan.createdAt} · ${p.plan.sessions.length} sessões</div></div><span style="color:var(--b)">›</span></div>`).join('')}`:''}
+      ${ses.length?`<div class="sec">Últimas Sessões</div>${ses.map(s=>`<div class="sess-row"><div class="sess-date">${fmtD(s.data)}</div><div class="sess-inf"><div class="sess-client">${esc(s.sessao||'—')}</div><div class="sess-det">${s.duracao?s.duracao+'min':''} ${s.energia?'· ⚡'+s.energia+'/5':''}</div></div><div>${s.presenca==='✓'?'✅':'❌'}</div></div>`).join('')}`:''}
+    </div>
+  `;
+  openM('m-client');
+}
+
+// ── PLANOS ────────────────────────────────────────────────────────────────────
+function rPlanos(){
+  document.getElementById('htitle').textContent='Planos de Treino';
+  const cl=S.clients(),pls=S.plans();
+  document.getElementById('s-planos').innerHTML=`
+    ${cl.length===0?`<div class="empty"><div class="empty-i">📋</div><div class="empty-t">Adiciona clientes primeiro.</div><button class="btn btn-p" style="margin-top:14px;width:auto;padding:12px 24px" onclick="go('clientes')">Ir para Clientes</button></div>`:`
+      <button class="btn btn-p" style="margin-bottom:14px" onclick="openPlanModal()">⚡ Novo Plano de Treino</button>
+      ${pls.length===0?`<div class="empty"><div class="empty-i">📋</div><div class="empty-t">Nenhum plano gerado ainda.</div></div>`:`
+        <div class="sec">Planos Gerados (${pls.length})</div>
+        ${pls.slice().reverse().map(p=>`<div class="li" onclick="viewPlan('${p.id}')"><span style="font-size:22px">📋</span><div class="li-inf"><div class="li-t">${esc(p.plan.client.nome||'—')}</div><div class="li-s">${esc(p.plan.client.objetivo||'—')} · ${p.plan.createdAt}</div></div><span style="color:var(--b)">›</span></div>`).join('')}
+      `}
+    `}
+  `;
+}
+
+function openPlanModal(preId){
+  const cl=S.clients();
+  document.getElementById('m-plan').innerHTML=`
+    <div class="mi">
+      <div class="mh"><span class="mb" onclick="closeM('m-plan')">‹</span><span class="mt">Gerar Plano</span></div>
+      <div class="fg"><label class="fl">Cliente *</label>
+        <select class="fi" id="pcl" onchange="showClientInfo()">
+          <option value="">Selecionar...</option>
+          ${cl.map(c=>`<option value="${c.id}" ${c.id===preId?'selected':''}>${esc(c.nome)}</option>`).join('')}
+        </select>
+      </div>
+      <div id="pcl-info"></div>
+      <button class="btn btn-p" onclick="genAndViewPlan()">⚡ Gerar Plano</button>
+    </div>
+  `;
+  openM('m-plan');
+  if(preId)setTimeout(showClientInfo,60);
+}
+
+function showClientInfo(){
+  const id=(document.getElementById('pcl')||{}).value;
+  const c=S.clients().find(x=>x.id===id);
+  if(!c){document.getElementById('pcl-info').innerHTML='';return}
+  document.getElementById('pcl-info').innerHTML=`
+    <div class="card" style="margin-bottom:13px">
+      <div style="font-size:11px;color:var(--m);margin-bottom:7px">Dados para o plano</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <span class="badge b-y">${esc(c.objetivo||'Sem objetivo')}</span>
+        <span class="badge b-g">${esc(c.nivel||'Sem nível')}</span>
+        <span class="badge b-g">${c.dias||'?'}×/sem</span>
+        <span class="badge b-g">${c.duracao||'?'} min</span>
+      </div>
+      ${c.limitacoes&&c.limitacoes.length?`<div style="margin-top:8px;font-size:12px;color:var(--orange)">⚠️ ${c.limitacoes.join(', ')}</div>`:''}
+      ${!c.objetivo||!c.nivel?`<div style="margin-top:7px;font-size:12px;color:var(--red)">⚠️ Define objetivo e nível no perfil do cliente.</div>`:''}
+    </div>
+  `;
+}
+
+function genAndViewPlan(){
+  const id=(document.getElementById('pcl')||{}).value;
+  if(!id){toast('Seleciona um cliente');return}
+  const c=S.clients().find(x=>x.id===id);
+  if(!c)return;
+  if(!c.objetivo||!c.nivel){toast('Cliente sem objetivo ou nível — edita o perfil primeiro');return}
+  const plan=buildPlan(c);
+  const pr={id:gid(),clientId:id,plan};
+  const pls=S.plans();pls.push(pr);S.sp(pls);
+  closeM('m-plan');toast('Plano gerado ✓');
+  viewPlan(pr.id);
+  if(CS==='planos')rPlanos();
+}
+
+function viewPlan(pid){
+  const pr=S.plans().find(p=>p.id===pid);if(!pr)return;
+  const p=pr.plan;
+  document.getElementById('m-planview').innerHTML=`
+    <div class="mi">
+      <div class="mh">
+        <span class="mb" onclick="closeM('m-planview')">‹</span>
+        <span class="mt">${esc(p.client.nome||'Plano')}</span>
+        <span style="color:var(--red);font-size:13px;cursor:pointer" onclick="delPlan('${pid}')">🗑️</span>
+      </div>
+      <div class="card" style="margin-bottom:13px">
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <span class="badge b-y">${esc(p.client.objetivo||'—')}</span>
+          <span class="badge b-g">${esc(p.client.nivel||'—')}</span>
+          <span class="badge b-g">${p.client.dias||'?'}×/sem</span>
+          <span class="badge b-g">${p.client.duracao||'?'}'</span>
+          <span class="badge b-g">${p.createdAt}</span>
+        </div>
+      </div>
+      ${p.alerts.map(a=>`<div class="alert-w">${esc(a)}</div>`).join('')}
+      <div class="sec">Aquecimento · 8-10 min</div>
+      <div class="card">${p.aq.map((e,i)=>`<div style="padding:5px 0;border-bottom:1px solid var(--b);font-size:13px;color:#ccc"><span style="color:var(--a);margin-right:7px;font-size:10px">${i+1}.</span>${esc(e)}</div>`).join('')}</div>
+      ${p.sessions.map(s=>`
+        <div class="sec">${esc(s.nome)} · ${esc(s.grupos)}</div>
+        <table class="plan-tbl">
+          <thead><tr><th>Exercício</th><th style="text-align:center">S</th><th style="text-align:center">Reps</th><th style="text-align:center">Desc.</th></tr></thead>
+          <tbody>
+            ${s.exs.map(e=>`<tr>
+              <td class="nm"><span class="fase-dot fase-${e.fase}"></span>${esc(e.e)}</td>
+              <td class="num">${e.s}</td>
+              <td class="meta">${esc(e.r)}</td>
+              <td class="meta">${esc(e.d)}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      `).join('')}
+      ${p.cardio.length?`<div class="sec">Cardio</div><div class="card">${p.cardio.map(e=>`<div style="padding:7px 0;border-bottom:1px solid var(--b);display:flex;justify-content:space-between;font-size:13px"><span style="color:#ccc">${esc(e.e)}</span><span style="color:var(--a)">${esc(e.r)}</span></div>`).join('')}</div>`:''}
+      <div class="sec">Retorno à Calma · 8 min</div>
+      <div class="card">${p.mob.map((e,i)=>`<div style="padding:5px 0;border-bottom:1px solid var(--b);font-size:13px;color:#ccc"><span style="color:var(--a);margin-right:7px;font-size:10px">${i+1}.</span>${esc(e)}</div>`).join('')}</div>
+      <div class="sec">Progressão · 4 Semanas</div>
+      <div class="card">${p.prog.map(l=>`<div style="padding:5px 0;border-bottom:1px solid var(--b);font-size:13px;color:#ccc;display:flex;gap:8px"><span style="color:var(--a);flex-shrink:0">→</span>${esc(l)}</div>`).join('')}</div>
+      <button class="btn btn-s" style="margin-top:14px" onclick="copyPlan('${pid}')">📋 Copiar para WhatsApp</button>
+    </div>
+  `;
+  openM('m-planview');
+}
+
+function delPlan(pid){
+  if(!confirm('Eliminar este plano?'))return;
+  S.sp(S.plans().filter(p=>p.id!==pid));
+  closeM('m-planview');toast('Plano eliminado');
+  if(CS==='planos')rPlanos();
+}
+
+function copyPlan(pid){
+  const pr=S.plans().find(p=>p.id===pid);if(!pr)return;
+  const p=pr.plan;
+  let t=`🏋️ NEXT LEVEL PT — ${p.client.nome}\n`;
+  t+=`${p.client.objetivo} · ${p.client.nivel} · ${p.client.dias}×/sem · ${p.client.duracao}min\n\n`;
+  t+=`🔥 AQUECIMENTO\n${p.aq.join('\n')}\n\n`;
+  p.sessions.forEach(s=>{t+=`━━ ${s.nome.toUpperCase()} — ${s.grupos} ━━\n`;s.exs.forEach(e=>t+=`• ${e.e}: ${e.s}× ${e.r} (desc. ${e.d})\n`);t+='\n';});
+  if(p.cardio.length){t+=`🚴 CARDIO\n`;p.cardio.forEach(e=>t+=`• ${e.e}: ${e.r}\n`);t+='\n';}
+  t+=`🧘 RETORNO\n${p.mob.join('\n')}\n\n`;
+  t+=`📈 PROGRESSÃO\n${p.prog.join('\n')}`;
+  navigator.clipboard.writeText(t).then(()=>toast('Copiado! ✓')).catch(()=>toast('Usa o botão "selecionar tudo" manualmente'));
+}
+
+// ── SESSÕES ───────────────────────────────────────────────────────────────────
+let sfilt='all';
+function rSessoes(){
+  document.getElementById('htitle').textContent='Sessões';
+  const ses=S.sessions().slice().reverse();
+  const cl=S.clients();
+  document.getElementById('s-sessoes').innerHTML=`
+    <div class="frow" id="sf-row">
+      <div class="fc on" onclick="sfiltSet('all',this)">Todas</div>
+      <div class="fc" onclick="sfiltSet('pres',this)">✅ Presenças</div>
+      <div class="fc" onclick="sfiltSet('falt',this)">❌ Faltas</div>
+      ${cl.slice(0,5).map(c=>`<div class="fc" onclick="sfiltSet('${c.id}',this)">${esc(c.nome.split(' ')[0])}</div>`).join('')}
+    </div>
+    <div id="slist">${rSesList(ses)}</div>
+  `;
+  addFab(()=>openSessModal());
+}
+function sfiltSet(f,el){
+  sfilt=f;
+  document.querySelectorAll('#sf-row .fc').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  let ses=S.sessions().slice().reverse();
+  if(f==='pres')ses=ses.filter(s=>s.presenca==='✓');
+  else if(f==='falt')ses=ses.filter(s=>s.presenca==='✗');
+  else if(f!=='all')ses=ses.filter(s=>s.clienteId===f);
+  document.getElementById('slist').innerHTML=rSesList(ses);
+}
+function rSesList(ses){
+  if(!ses.length)return`<div class="empty"><div class="empty-i">📅</div><div class="empty-t">Sem sessões registadas.</div></div>`;
+  return ses.map(s=>`<div class="sess-row"><div class="sess-date">${fmtD(s.data)}</div><div class="sess-inf"><div class="sess-client">${esc(s.clienteNome||'—')}</div><div class="sess-det">${esc(s.sessao||'')}${s.duracao?' · '+s.duracao+'min':''}${s.energia?' · ⚡'+s.energia+'/5':''}</div>${s.notas?`<div style="font-size:11px;color:#777;font-style:italic;margin-top:2px">${esc(s.notas.slice(0,50))}${s.notas.length>50?'…':''}</div>`:''}</div><div style="font-size:18px">${s.presenca==='✓'?'✅':'❌'}</div></div>`).join('');
+}
+
+function openSessModal(preId){
+  const cl=S.clients();
+  const today=new Date().toISOString().slice(0,10);
+  const SNAMES=["Sessão A","Sessão B","Sessão C","Sessão D","Sessão E","Avaliação","Livre"];
+  document.getElementById('m-sess').innerHTML=`
+    <div class="mi">
+      <div class="mh"><span class="mb" onclick="closeM('m-sess')">‹</span><span class="mt">Registar Sessão</span></div>
+      <div class="fg"><label class="fl">Cliente *</label>
+        <select class="fi" id="scl">
+          <option value="">Selecionar...</option>
+          ${cl.map(c=>`<option value="${c.id}" data-nome="${esc(c.nome)}" ${c.id===preId?'selected':''}>${esc(c.nome)}</option>`).join('')}
+        </select>
+      </div>
+      <div class="row2">
+        <div class="fg"><label class="fl">Data *</label><input class="fi" id="sdata" type="date" value="${today}"></div>
+        <div class="fg"><label class="fl">Sessão</label>
+          <select class="fi" id="snome">${SNAMES.map(s=>`<option>${s}</option>`).join('')}</select>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label class="fl">Duração (min)</label><input class="fi" id="sdur" type="number" placeholder="60"></div>
+        <div class="fg"><label class="fl">Presença</label>
+          <div class="pg" id="pg-pres">
+            <div class="pill on" data-v="✓" style="color:var(--green);border-color:var(--green)" onclick="selP('pg-pres','spres',this)">✅ Presente</div>
+            <div class="pill" data-v="✗" onclick="selP('pg-pres','spres',this)">❌ Falta</div>
+          </div>
+          <input type="hidden" id="spres" value="✓">
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Energia (1-5)</label>
+        <div class="stars">${[1,2,3,4,5].map(n=>`<span class="star" style="opacity:.25" onclick="setStar('en',${n})" id="en${n}">⭐</span>`).join('')}</div>
+        <input type="hidden" id="sen" value="">
+      </div>
+      <div class="fg"><label class="fl">Esforço (1-5)</label>
+        <div class="stars">${[1,2,3,4,5].map(n=>`<span class="star" style="opacity:.25" onclick="setStar('ef',${n})" id="ef${n}">⚡</span>`).join('')}</div>
+        <input type="hidden" id="sef" value="">
+      </div>
+      <div class="fg"><label class="fl">Peso atual (kg)</label><input class="fi" id="speso" type="number" step="0.1" placeholder="Opcional"></div>
+      <div class="fg"><label class="fl">Notas da Sessão</label><textarea class="fi" id="snotas" placeholder="O que correu bem? O que ajustar?"></textarea></div>
+      <button class="btn btn-p" onclick="saveSess()">Guardar Sessão</button>
+    </div>
+  `;
+  openM('m-sess');
+}
+
+function setStar(type,val){
+  const pfx=type==='en'?'en':'ef';
+  for(let i=1;i<=5;i++)document.getElementById(pfx+i).style.opacity=i<=val?'1':'.25';
+  document.getElementById('s'+type).value=val;
+}
+
+function saveSess(){
+  const sel=document.getElementById('scl');
+  const cid=sel.value;
+  if(!cid||!document.getElementById('sdata').value){toast('Cliente e data são obrigatórios');return}
+  const cNome=(sel.options[sel.selectedIndex].dataset.nome||'');
+  const sess={
+    id:gid(),clienteId:cid,clienteNome:cNome,
+    data:document.getElementById('sdata').value,
+    sessao:document.getElementById('snome').value,
+    duracao:document.getElementById('sdur').value,
+    presenca:document.getElementById('spres').value||'✓',
+    energia:document.getElementById('sen').value,
+    esforco:document.getElementById('sef').value,
+    peso:document.getElementById('speso').value,
+    notas:document.getElementById('snotas').value,
+  };
+  const ses=S.sessions();ses.push(sess);S.ss(ses);
+  closeM('m-sess');toast('Sessão registada ✓');
+  if(CS==='sessoes')rSessoes();else if(CS==='dashboard')rDash();
+}
+
+// ── EXERCÍCIOS ────────────────────────────────────────────────────────────────
+let exF='all';
+function rExercicios(){
+  document.getElementById('htitle').textContent='Biblioteca';
+  const cats=['Membros Inf.','Membros Sup.','Core','Cardio','Mobilidade'];
+  document.getElementById('s-exercicios').innerHTML=`
+    <input class="search" placeholder="🔍  Pesquisar exercício..." id="exsearch" oninput="fEx()">
+    <div class="frow" id="exfrow">
+      <div class="fc on" onclick="setExF('all',this)">Todos (${EX.length})</div>
+      ${cats.map(c=>`<div class="fc" onclick="setExF('${c}',this)">${c}</div>`).join('')}
+    </div>
+    <div id="exlist">${rExList(EX)}</div>
+  `;
+}
+function setExF(f,el){
+  exF=f;
+  document.querySelectorAll('#exfrow .fc').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');fEx();
+}
+function fEx(){
+  const q=(document.getElementById('exsearch')||{value:''}).value.toLowerCase();
+  let lst=EX;
+  if(q)lst=lst.filter(e=>e[0].toLowerCase().includes(q)||e[1].toLowerCase().includes(q)||e[2].toLowerCase().includes(q));
+  if(exF!=='all'){
+    lst=lst.filter(e=>{
+      const g=e[1];
+      if(exF==='Membros Inf.')return/Quadricípites|Glúteos|Isquiotibiais|Panturrilha|Posterior|Adutores/.test(g);
+      if(exF==='Membros Sup.')return/Peito|Costas|Ombros|Bíceps|Tríceps|Deltóide|Dorsal|Trapézio|Rotadores/.test(g);
+      if(exF==='Core')return/Core/.test(g);
+      if(exF==='Cardio')return/Cardio|Full body|Kettlebell/.test(g);
+      if(exF==='Mobilidade')return/Mobilidade|Recuperação|Libertação|Ativação/.test(g);
+      return true;
+    });
+  }
+  document.getElementById('exlist').innerHTML=rExList(lst);
+}
+function tClass(v){
+  if(!v)return'tag';
+  if(v.includes('✓')&&!v.includes('⚠️')&&!v.includes('✗'))return'tag tag-ok';
+  if(v.includes('⚠️'))return'tag tag-warn';
+  if(v.includes('✗'))return'tag tag-no';
+  return'tag';
+}
+function rExList(lst){
+  if(!lst.length)return`<div class="empty"><div class="empty-t">Nenhum exercício encontrado.</div></div>`;
+  return lst.map(e=>`
+    <div class="ex-card">
+      <div class="ex-n">${esc(e[0])}</div>
+      <div class="ex-g">${esc(e[1])}</div>
+      <div class="ex-tags">
+        <span class="tag">${esc(e[2])}</span>
+        <span class="tag tag-y">${esc(e[3])}</span>
+        <span class="tag">${esc(e[4])} séries</span>
+        <span class="tag">${esc(e[5])}</span>
+        <span class="tag">${esc(e[6])} descanso</span>
+        <span class="${tClass(e[7])}">L: ${esc((e[7]||'').slice(0,18))}</span>
+        <span class="${tClass(e[8])}">J: ${esc((e[8]||'').slice(0,18))}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── FAB ───────────────────────────────────────────────────────────────────────
+function addFab(cb){
+  const f=document.createElement('button');
+  f.id='_fab';f.className='fab';f.innerHTML='＋';f.onclick=cb;
+  document.getElementById('app').appendChild(f);
+}
+
+// ── PWA ───────────────────────────────────────────────────────────────────────
+const SW=`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>clients.claim());self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
+if('serviceWorker'in navigator){const b=new Blob([SW],{type:'text/javascript'});navigator.serviceWorker.register(URL.createObjectURL(b)).catch(()=>{});}
+const manifest={name:"Next Level PT Manager",short_name:"NL PT",start_url:"./",display:"standalone",theme_color:"#0D0D0D",background_color:"#0D0D0D",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230D0D0D'/%3E%3Ctext y='.9em' font-size='80' x='10'%3E🏋️%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml"}]};
+const ml=document.createElement('link');ml.rel='manifest';ml.href=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/json'}));document.head.appendChild(ml);
+
+// ── SAMPLE DATA & INIT ────────────────────────────────────────────────────────
+function loadSample(){
+  if(S.clients().length>0)return;
+  S.sc([
+    {id:'c001',nome:'Maria Silva',idade:'38',peso:'62',altura:'165',gordura:'28',objetivo:'Perda de peso',nivel:'Iniciante',dias:'3',duracao:'60',limitacoes:['Joelho'],estado:'Ativo',contacto:'912 000 001',obs:'Prefere exercícios em pé',createdAt:'01/01/2025'},
+    {id:'c002',nome:'João Fernandes',idade:'44',peso:'85',altura:'178',gordura:'18',objetivo:'Ganho de massa',nivel:'Intermédio',dias:'4',duracao:'75',limitacoes:[],estado:'Ativo',contacto:'912 000 002',obs:'',createdAt:'15/01/2025'},
+    {id:'c003',nome:'Ana Costa',idade:'33',peso:'58',altura:'162',gordura:'24',objetivo:'Tonificação',nivel:'Iniciante',dias:'2',duracao:'45',limitacoes:['Hérnia lombar'],estado:'Ativo',contacto:'',obs:'Cuidado com flexões lombares',createdAt:'10/02/2025'},
+  ]);
+  S.ss([
+    {id:'s001',clienteId:'c001',clienteNome:'Maria Silva',data:'2025-01-06',sessao:'Sessão A',duracao:'60',presenca:'✓',energia:'4',esforco:'4',notas:'Boa disposição, completou tudo'},
+    {id:'s002',clienteId:'c001',clienteNome:'Maria Silva',data:'2025-01-10',sessao:'Sessão B',duracao:'58',presenca:'✓',energia:'3',esforco:'4',notas:'Cansaço no final'},
+    {id:'s003',clienteId:'c002',clienteNome:'João Fernandes',data:'2025-01-13',sessao:'Sessão A',duracao:'75',presenca:'✓',energia:'5',esforco:'5',notas:'Subiu carga no press'},
+    {id:'s004',clienteId:'c001',clienteNome:'Maria Silva',data:'2025-01-20',sessao:'Sessão A',duracao:'60',presenca:'✗',energia:'',esforco:'',notas:'Faltou — reagendado'},
+  ]);
+}
+
+loadSample();
+go('dashboard');
+</script>
+</body>
+</html>
