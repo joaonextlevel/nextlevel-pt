@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0D0D0D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NL PT">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Next Level PT</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--a:#E8FF3A;--d:#0D0D0D;--c:#161616;--b:#2A2A2A;--m:#666;--t:#F0F0F0;--red:#F44336;--green:#4CAF50;--orange:#FF9800;--blue:#2196F3;--sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px)}
+html,body{height:100%;background:var(--d);color:var(--t);font-family:-apple-system,system-ui,'Helvetica Neue',sans-serif;overflow:hidden}
+#app{height:100dvh;display:flex;flex-direction:column;max-width:540px;margin:0 auto}
+.header{padding:10px 16px 8px;padding-top:calc(10px + var(--st));border-bottom:1px solid var(--b);display:flex;align-items:center;background:var(--d);flex-shrink:0;gap:10px}
+.hlogo{background:var(--a);color:var(--d);font-weight:900;font-size:9px;letter-spacing:2px;padding:4px 8px;border-radius:3px;text-transform:uppercase;white-space:nowrap}
+.htitle{font-size:15px;font-weight:700;flex:1;text-align:center}
+.hbtn{color:var(--a);font-size:13px;cursor:pointer;padding:4px 2px;white-space:nowrap;background:none;border:none;font-family:inherit}
+#content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.nav-bar{display:flex;border-top:1px solid var(--b);background:var(--c);padding-bottom:var(--sb);flex-shrink:0}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:7px 0 5px;cursor:pointer;gap:2px}
+.nav-icon{font-size:18px;line-height:1}
+.nav-label{font-size:9px;letter-spacing:.5px;color:var(--m);text-transform:uppercase}
+.nav-item.active .nav-label{color:var(--a)}
+.screen{display:none;padding:14px 14px 80px}
+.screen.active{display:block;animation:fi .18s ease}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:14px 15px;margin-bottom:10px}
+.sec{font-size:9px;letter-spacing:2px;color:var(--a);text-transform:uppercase;margin:18px 0 8px;font-weight:700;border-bottom:1px solid var(--b);padding-bottom:5px;display:flex;align-items:center;justify-content:space-between}
+.li{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:11px;-webkit-user-select:none;transition:border-color .12s}
+.li:active{border-color:var(--a)}
+.li-inf{flex:1;min-width:0}
+.li-t{font-size:14px;font-weight:600;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.li-s{font-size:12px;color:var(--m)}
+.fg{margin-bottom:12px}
+.fl{font-size:9px;letter-spacing:1.5px;color:var(--m);text-transform:uppercase;display:block;margin-bottom:5px}
+.fi{background:var(--c);border:1px solid var(--b);border-radius:8px;color:var(--t);padding:11px 13px;font-size:14px;outline:none;width:100%;font-family:inherit;transition:border-color .18s}
+.fi:focus{border-color:var(--a)}
+.fi-sm{padding:7px 10px;font-size:13px}
+textarea.fi{min-height:64px;resize:vertical}
+select.fi{appearance:none;cursor:pointer}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.pg{display:flex;flex-wrap:wrap;gap:7px}
+.pill{padding:7px 13px;border-radius:20px;font-size:13px;cursor:pointer;border:1px solid var(--b);background:transparent;color:var(--m);user-select:none;transition:all .12s;white-space:nowrap}
+.pill.on{border-color:var(--a);background:rgba(232,255,58,.1);color:var(--a)}
+.btn{display:block;width:100%;padding:13px;border:none;border-radius:10px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:inherit;text-align:center}
+.btn-p{background:var(--a);color:var(--d)}
+.btn-s{background:transparent;border:1px solid var(--b);color:var(--m)}
+.btn-d{background:rgba(244,67,54,.1);color:var(--red);border:1px solid rgba(244,67,54,.25)}
+.btn-sm{padding:7px 12px;font-size:11px;border-radius:7px;width:auto;display:inline-block;letter-spacing:.5px}
+.badge{display:inline-block;padding:3px 7px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase}
+.b-ok{background:rgba(76,175,80,.15);color:var(--green)}
+.b-no{background:rgba(244,67,54,.15);color:var(--red)}
+.b-y{background:rgba(232,255,58,.1);color:var(--a)}
+.b-g{background:var(--b);color:var(--m)}
+.b-or{background:rgba(255,152,0,.12);color:var(--orange)}
+.modal{display:none;position:fixed;inset:0;z-index:100;background:var(--d);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.modal.open{display:flex;flex-direction:column}
+.mi{padding:14px 14px 50px;padding-top:calc(14px + var(--st));max-width:540px;width:100%;margin:0 auto}
+.mh{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.mb{color:var(--a);font-size:22px;cursor:pointer;padding:2px 6px;font-weight:300;line-height:1}
+.mt{font-size:17px;font-weight:700;flex:1}
+.search{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:10px 13px;font-size:14px;color:var(--t);outline:none;width:100%;font-family:inherit;margin-bottom:10px}
+.search:focus{border-color:var(--a)}
+.frow{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;margin-bottom:10px;scrollbar-width:none}
+.frow::-webkit-scrollbar{display:none}
+.fc{padding:6px 12px;border-radius:15px;font-size:11px;cursor:pointer;border:1px solid var(--b);white-space:nowrap;color:var(--m);background:transparent;flex-shrink:0}
+.fc.on{border-color:var(--a);color:var(--a);background:rgba(232,255,58,.07)}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--b);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--a);flex-shrink:0}
+
+/* Plan Builder */
+.sess-block{background:var(--c);border:1px solid var(--b);border-radius:12px;margin-bottom:12px}
+.sess-hd{padding:12px 14px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--b)}
+.sess-nm{font-size:14px;font-weight:700;flex:1;background:none;border:none;color:var(--t);font-family:inherit;outline:none;padding:0}
+.sess-nm:focus{color:var(--a)}
+.sess-bd{padding:12px 14px}
+.ex-row{background:var(--d);border:1px solid var(--b);border-radius:8px;margin-bottom:7px}
+.ex-hd{padding:9px 12px;display:flex;align-items:center;gap:8px;cursor:pointer}
+.ex-nm{font-size:13px;font-weight:600;flex:1;color:var(--t)}
+.ex-meta{font-size:10px;color:var(--m)}
+.ex-bd{padding:10px 12px;border-top:1px solid var(--b);display:none}
+.ex-row.open .ex-bd{display:block}
+.ex-row.open .ex-hd{border-bottom:1px solid var(--b)}
+.ex-actions{display:flex;gap:7px;margin-top:9px}
+
+/* Load tracking */
+.load-row{background:var(--d);border:1px solid var(--b);border-radius:8px;padding:10px 12px;margin-bottom:7px}
+.load-nm{font-size:13px;font-weight:600;margin-bottom:7px;color:var(--t)}
+.load-ref{font-size:11px;color:var(--m);margin-bottom:6px}
+
+/* AI */
+.ai-card{background:rgba(232,255,58,.04);border:1px solid rgba(232,255,58,.18);border-radius:10px;padding:12px;margin-bottom:8px}
+.ai-nm{font-size:13px;font-weight:700;color:var(--a);margin-bottom:2px}
+.ai-meta{font-size:11px;color:var(--m);margin-bottom:4px}
+.ai-why{font-size:12px;color:#aaa;font-style:italic;margin-bottom:8px;line-height:1.5}
+.spinner{width:18px;height:18px;border:2px solid var(--b);border-top-color:var(--a);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Chart */
+.chart-wrap{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:12px;margin-bottom:10px}
+.chart-label{font-size:9px;color:var(--m);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.chart-val{font-size:26px;font-weight:800;color:var(--a)}
+.chart-sub{font-size:11px;color:var(--m);margin-bottom:8px}
+
+/* Misc */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.kpi{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:12px 13px}
+.kpi-l{font-size:9px;letter-spacing:1.5px;color:var(--m);text-transform:uppercase;margin-bottom:4px}
+.kpi-v{font-size:28px;font-weight:900;line-height:1}
+.empty{text-align:center;padding:44px 16px;color:var(--m)}
+.empty-i{font-size:36px;margin-bottom:8px}
+.empty-t{font-size:14px;line-height:1.6}
+.alert-w{background:rgba(255,152,0,.07);border:1px solid rgba(255,152,0,.22);border-radius:8px;padding:9px 12px;font-size:12px;color:#ffcc80;margin-bottom:10px}
+.divider{border:none;border-top:1px solid var(--b);margin:12px 0}
+.toast{position:fixed;bottom:calc(68px + var(--sb));left:50%;transform:translateX(-50%);background:var(--a);color:var(--d);padding:8px 18px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;transition:opacity .18s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+.fab{position:fixed;bottom:calc(68px + var(--sb));right:14px;width:50px;height:50px;background:var(--a);border:none;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(232,255,58,.28);color:var(--d);z-index:50;font-weight:700}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--b);border-radius:2px}
+@media(min-width:540px){#app{border-left:1px solid var(--b);border-right:1px solid var(--b)}.fab{right:calc(50% - 270px + 14px)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div class="hlogo">NL PT</div>
+    <div class="htitle" id="htitle">Clientes</div>
+    <button class="hbtn" id="hbtn" onclick="openSettings()">&#9881;&#65039;</button>
+  </div>
+  <div id="content">
+    <div class="screen active" id="s-clientes"></div>
+    <div class="screen" id="s-planos"></div>
+    <div class="screen" id="s-sessoes"></div>
+    <div class="screen" id="s-evolucao"></div>
+    <div class="screen" id="s-biblioteca"></div>
+  </div>
+  <nav class="nav-bar">
+    <div class="nav-item active" data-s="clientes" onclick="go('clientes')"><div class="nav-icon">&#128100;</div><div class="nav-label">Clientes</div></div>
+    <div class="nav-item" data-s="planos" onclick="go('planos')"><div class="nav-icon">&#128203;</div><div class="nav-label">Planos</div></div>
+    <div class="nav-item" data-s="sessoes" onclick="go('sessoes')"><div class="nav-icon">&#128197;</div><div class="nav-label">Sess&#245;es</div></div>
+    <div class="nav-item" data-s="evolucao" onclick="go('evolucao')"><div class="nav-icon">&#128200;</div><div class="nav-label">Evolu&#231;&#227;o</div></div>
+    <div class="nav-item" data-s="biblioteca" onclick="go('biblioteca')"><div class="nav-icon">&#127959;&#65039;</div><div class="nav-label">Biblioteca</div></div>
+  </nav>
+</div>
+
+<!-- Modals -->
+<div class="modal" id="m-client"></div>
+<div class="modal" id="m-plan"></div>
+<div class="modal" id="m-sess"></div>
+<div class="modal" id="m-settings"></div>
+<div class="modal" id="m-exlib"></div>
+<div class="modal" id="m-ai"></div>
+<div class="modal" id="m-measure"></div>
+<div class="modal" id="m-note"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STORAGE ──────────────────────────────────────────────────────────────────
+const K='nlv2_';
+const S={
+  g:k=>{try{return JSON.parse(localStorage.getItem(K+k)||'null')}catch{return null}},
+  s:(k,v)=>localStorage.setItem(K+k,JSON.stringify(v)),
+  clients:()=>S.g('clients')||[],
+  plans:()=>S.g('plans')||[],
+  sessions:()=>S.g('sessions')||[],
+  apiKey:()=>S.g('apikey')||'',
+  sc:v=>S.s('clients',v),
+  sp:v=>S.s('plans',v),
+  ss:v=>S.s('sessions',v),
+  sak:v=>S.s('apikey',v),
+};
+
+// ─── EXERCISE DATABASE ────────────────────────────────────────────────────────
+// [name, group, equipment]
+const EX=[
+  // Membros Inferiores
+  ["Agachamento livre","Quadric\xedpites / Gl\xfateos","Barra / Halteres"],
+  ["Agachamento goblet","Quadric\xedpites / Gl\xfateos","Haltere"],
+  ["Agachamento b\xfalgaro","Quadric\xedpites / Gl\xfateos","Halteres"],
+  ["Agachamento sum\xf4","Adutores / Gl\xfateos","Haltere"],
+  ["Reverse lunge","Quadric\xedpites / Gl\xfateos","Halteres"],
+  ["Lunge caminhando","Quadric\xedpites / Gl\xfateos","Halteres"],
+  ["Leg press 45\xb0","Quadric\xedpites","M\xe1quina"],
+  ["Leg extension","Quadric\xedpites","M\xe1quina"],
+  ["Terminal knee extension","Quadric\xedpites","El\xe1stico"],
+  ["Hip thrust com barra","Gl\xfateos","Barra"],
+  ["Ponte gl\xfateo","Gl\xfateos","Peso corporal"],
+  ["Ponte gl\xfateo unilateral","Gl\xfateos","Peso corporal"],
+  ["Step up com halteres","Gl\xfateos / Quadric\xedpites","Banco"],
+  ["Romanian Deadlift","Isquiotibiais / Gl\xfateos","Barra / Halteres"],
+  ["Stiff com halteres","Isquiotibiais","Halteres"],
+  ["Leg curl deitado","Isquiotibiais","M\xe1quina"],
+  ["Leg curl sentado","Isquiotibiais","M\xe1quina"],
+  ["Calf raise em p\xe9","Panturrilha","M\xe1quina / Livre"],
+  ["Cadeira adutora","Adutores","M\xe1quina"],
+  ["Cadeira abdutora","Gl\xfateos","M\xe1quina"],
+  // Membros Superiores
+  ["Press halteres banco plano","Peito","Halteres"],
+  ["Press barra banco plano","Peito","Barra"],
+  ["Press banco inclinado","Peito","Halteres / Barra"],
+  ["Fly com halteres","Peito","Halteres"],
+  ["Crossover em cabo","Peito","Cabo"],
+  ["Flex\xf5es","Peito / Tr\xedceps","Peso corporal"],
+  ["Flex\xf5es de joelhos","Peito / Tr\xedceps","Peso corporal"],
+  ["Mergulho nas barras","Peito / Tr\xedceps","Barras"],
+  ["Remada m\xe1quina","Costas","M\xe1quina"],
+  ["Remada com barra","Costas","Barra"],
+  ["Remada com haltere unilateral","Costas","Haltere"],
+  ["Puxada frontal","Grande Dorsal","Cabo / M\xe1quina"],
+  ["Puxada frontal pega fechada","Grande Dorsal","Cabo"],
+  ["Dominadas","Grande Dorsal","Barra"],
+  ["Remada TRX","Costas","TRX"],
+  ["Remada inversa","Costas","Barra / TRX"],
+  ["Pull-over com haltere","Grande Dorsal","Haltere"],
+  ["Press halteres sentado","Ombros","Halteres"],
+  ["Press militar","Ombros","Barra"],
+  ["Eleva\xe7\xe3o lateral","Delt\xf3ide m\xe9dio","Halteres / Cabo"],
+  ["Eleva\xe7\xe3o frontal","Delt\xf3ide anterior","Haltere"],
+  ["Face pull","Delt\xf3ide posterior","Cabo"],
+  ["Rota\xe7\xe3o externa cabo","Rotadores externos","Cabo"],
+  ["Band pull-apart","Mobilidade ombros","El\xe1stico"],
+  ["Rosca direta com halteres","B\xedceps","Halteres"],
+  ["Rosca martelo","B\xedceps","Halteres"],
+  ["Rosca com barra EZ","B\xedceps","Barra EZ"],
+  ["Rosca concentrada","B\xedceps","Haltere"],
+  ["Extens\xe3o tr\xedceps cabo","Tr\xedceps","Cabo"],
+  ["Tr\xedceps franc\xeas com haltere","Tr\xedceps","Haltere"],
+  ["Kickback tr\xedceps","Tr\xedceps","Haltere"],
+  ["Mergulho no banco","Tr\xedceps","Banco"],
+  // Core
+  ["Prancha frontal","Core","Peso corporal"],
+  ["Prancha lateral","Core","Peso corporal"],
+  ["Dead bug","Core","Peso corporal"],
+  ["Bird-dog","Core / Lombar","Peso corporal"],
+  ["Gato-camelo","Core / Lombar","Tapete"],
+  ["Crunch abdominal","Core","Peso corporal"],
+  ["Russian twist","Core","Peso corporal"],
+  ["Pallof press","Core / Anti-rota\xe7\xe3o","Cabo"],
+  ["Hollow body hold","Core","Peso corporal"],
+  ["Mountain climbers","Core / Cardio","Peso corporal"],
+  ["Leg raise deitado","Core","Peso corporal"],
+  ["Stir the pot","Core","Fitball"],
+  // Cardio
+  ["Passadeira zona 2","Cardio","Passadeira"],
+  ["Passadeira inclinada","Cardio","Passadeira"],
+  ["Bicicleta est\xe1tica","Cardio","Bicicleta"],
+  ["Remo erg\xf3metro","Cardio / Costas","Remo"],
+  ["Battle ropes","Cardio / Full body","Battle Ropes"],
+  ["Kettlebell swing","Full body","Kettlebell"],
+  // Mobilidade e Pilates
+  ["Hip flexor stretch","Mobilidade anca","Tapete"],
+  ["Pigeon pose","Mobilidade gl\xfateos","Tapete"],
+  ["90/90 hip stretch","Mobilidade anca","Tapete"],
+  ["Child's pose","Mobilidade lombar","Tapete"],
+  ["Rota\xe7\xe3o tor\xe1cica","Mobilidade tor\xe1cica","Tapete"],
+  ["Thread the needle","Mobilidade tor\xe1cica","Tapete"],
+  ["Extens\xe3o tor\xe1cica foam roller","Mobilidade tor\xe1cica","Foam Roller"],
+  ["Cobra stretch","Mobilidade lombar","Tapete"],
+  ["Supine twist","Mobilidade lombar","Tapete"],
+  ["Joelhos ao peito","Mobilidade lombar","Tapete"],
+  ["Downward dog","Mobilidade total","Tapete"],
+  ["Warrior I","Mobilidade anca / For\xe7a","Tapete"],
+  ["Warrior II","Mobilidade anca / For\xe7a","Tapete"],
+  ["Foam roller quadric\xedpites","Liberta\xe7\xe3o miofascial","Foam Roller"],
+  ["Foam roller isquiotibiais","Liberta\xe7\xe3o miofascial","Foam Roller"],
+  ["Foam roller gl\xfateo","Liberta\xe7\xe3o miofascial","Foam Roller"],
+  ["Foam roller coluna tor\xe1cica","Liberta\xe7\xe3o miofascial","Foam Roller"],
+  ["Hundred (Pilates)","Core","Tapete"],
+  ["Roll up (Pilates)","Core / Mobilidade","Tapete"],
+  ["Swan dive (Pilates)","Mobilidade lombar","Tapete"],
+  ["Respira\xe7\xe3o diafragm\xe1tica","Core / Ativa\xe7\xe3o","Tapete"],
+  ["Ativa\xe7\xe3o gl\xfateo deitado","Ativa\xe7\xe3o","Tapete"],
+];
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+const gid=()=>'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const fmtD=d=>{if(!d)return'\u2014';const p=d.split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d};
+const init2=n=>(n||'?').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'?';
+let CS='clientes';
+
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2000);
+}
+function openM(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden'}
+function closeM(id){document.getElementById(id).classList.remove('open');document.body.style.overflow=''}
+function selP(gid,hidId,el){
+  document.querySelectorAll('#'+gid+' .pill').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById(hidId).value=el.dataset.v;
+}
+function badgeEst(e){
+  const c=e==='Ativo'?'b-ok':e==='Inativo'?'b-no':'b-or';
+  return`<span class="badge ${c}">${esc(e)}</span>`;
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function go(screen){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('s-'+screen).classList.add('active');
+  document.querySelector('[data-s="'+screen+'"]').classList.add('active');
+  CS=screen;
+  const fab=document.getElementById('_fab');if(fab)fab.remove();
+  ({clientes:rClientes,planos:rPlanos,sessoes:rSessoes,evolucao:rEvolucao,biblioteca:rBiblioteca})[screen]();
+  document.getElementById('htitle').textContent=
+    {clientes:'Clientes',planos:'Planos de Treino',sessoes:'Sess\xf5es',evolucao:'Evolu\xe7\xe3o',biblioteca:'Biblioteca'}[screen];
+}
+
+function addFab(cb){
+  const f=document.createElement('button');
+  f.id='_fab';f.className='fab';f.textContent='+';f.onclick=cb;
+  document.getElementById('app').appendChild(f);
+}
+
+// ─── CLIENTES ─────────────────────────────────────────────────────────────────
+function rAlerts(){
+  const alerts=getStagnationAlerts();
+  if(!alerts.length)return'';
+  return`<div class="sec" style="margin-top:0">&#9888;&#65039; Alertas de Progress\xe3o</div>`+
+    alerts.map(a=>`<div class="alert-w" style="cursor:pointer" onclick="go('evolucao');setTimeout(()=>{document.getElementById('evcl').value='${a.clientId}';evLoadClient('${a.clientId}');},100)">
+      <div style="font-weight:700;margin-bottom:3px">${esc(a.clientName)}</div>
+      <div>${esc(a.exercise)} &mdash; ${a.load}kg h\xe1 3 sess\xf5es seguidas sem progress\xe3o</div>
+      <div style="font-size:10px;margin-top:3px;color:#aaa">\xdaltima sess\xe3o: ${fmtD(a.lastDate)} &middot; Toca para ver evolu\xe7\xe3o</div>
+    </div>`).join('');
+}
+
+function rClientes(){
+  const cl=S.clients();
+  const alertsHtml=rAlerts();
+  document.getElementById('s-clientes').innerHTML=`
+    ${alertsHtml}
+    <input class="search" placeholder="Pesquisar..." id="csearch" oninput="fCl()">
+    <div id="clist">${rClList(cl)}</div>
+  `;
+  addFab(()=>openClientModal());
+}
+function rClList(cl){
+  if(!cl.length)return`<div class="empty"><div class="empty-i">&#128100;</div><div class="empty-t">Nenhum cliente.<br>Toca em + para adicionar.</div></div>`;
+  return cl.map(c=>`<div class="li" onclick="openClientDetail('${c.id}')">
+    <div class="avatar">${init2(c.name)}</div>
+    <div class="li-inf"><div class="li-t">${esc(c.name)}</div><div class="li-s">${esc(c.objective||'\u2014')} \xb7 ${esc(c.level||'\u2014')}</div></div>
+    ${badgeEst(c.state||'Ativo')}
+  </div>`).join('');
+}
+function fCl(){
+  const q=(document.getElementById('csearch')||{value:''}).value.toLowerCase();
+  const cl=S.clients().filter(c=>(c.name||'').toLowerCase().includes(q)||(c.objective||'').toLowerCase().includes(q));
+  document.getElementById('clist').innerHTML=rClList(cl);
+}
+
+function openClientModal(cid){
+  const c=cid?S.clients().find(x=>x.id===cid):null;
+  const lims=["H\xe9rnia lombar","Dor lombar","Ci\xe1tica","Joelho","Ombro","Cervical","Hipertens\xe3o","Osteoporose","Diabetes","Card\xedaco"];
+  const cL=c&&c.limitations?c.limitations:[];
+  const OBJS=["Perda de peso","Ganho de massa","Tonifica\xe7\xe3o","Reabilita\xe7\xe3o","Resist\xeancia","Mobilidade","Performance desportiva","Sa\xfade geral"];
+  const NIVS=["Iniciante","Interm\xe9dio","Avan\xe7ado"];
+  const DIAS=["2","3","4","5"];
+  const DURS=["30","45","60","75","90"];
+  const ESTS=["Ativo","Inativo","Pausado"];
+  document.getElementById('m-client').innerHTML=`<div class="mi">
+    <div class="mh">
+      <span class="mb" onclick="closeM('m-client')">\u2039</span>
+      <span class="mt">${c?'Editar Cliente':'Novo Cliente'}</span>
+      ${c?`<button class="btn btn-sm btn-d" onclick="delClient('${c.id}')">Eliminar</button>`:''}
+    </div>
+    <div class="sec">Dados Pessoais</div>
+    <div class="fg"><label class="fl">Nome *</label><input class="fi" id="fn" value="${esc(c&&c.name||'')}" placeholder="Nome completo"></div>
+    <div class="row2">
+      <div class="fg"><label class="fl">Idade</label><input class="fi" id="fi2" type="number" value="${esc(c&&c.age||'')}" placeholder="35"></div>
+      <div class="fg"><label class="fl">Contacto</label><input class="fi" id="fc" value="${esc(c&&c.contact||'')}" placeholder="9XX XXX XXX"></div>
+    </div>
+    <div class="row3">
+      <div class="fg"><label class="fl">Peso (kg)</label><input class="fi" id="fw" type="number" step="0.1" value="${esc(c&&c.weight||'')}" placeholder="70"></div>
+      <div class="fg"><label class="fl">Altura (cm)</label><input class="fi" id="fh" type="number" value="${esc(c&&c.height||'')}" placeholder="170"></div>
+      <div class="fg"><label class="fl">% Gordura</label><input class="fi" id="fbf" type="number" step="0.1" value="${esc(c&&c.bodyFat||'')}" placeholder="20"></div>
+    </div>
+    <div class="fg"><label class="fl">Estado</label>
+      <div class="pg" id="pg-st">${ESTS.map(e=>`<div class="pill${(c&&c.state||'Ativo')===e?' on':''}" data-v="${e}" onclick="selP('pg-st','fst',this)">${e}</div>`).join('')}</div>
+      <input type="hidden" id="fst" value="${esc(c&&c.state||'Ativo')}">
+    </div>
+    <div class="sec">Objetivo e Treino</div>
+    <div class="fg"><label class="fl">Objetivo</label>
+      <div class="pg" id="pg-ob">${OBJS.map(o=>`<div class="pill${(c&&c.objective)===o?' on':''}" data-v="${esc(o)}" onclick="selP('pg-ob','fob',this)">${esc(o)}</div>`).join('')}</div>
+      <input type="hidden" id="fob" value="${esc(c&&c.objective||'')}">
+    </div>
+    <div class="row2">
+      <div class="fg"><label class="fl">N\xedvel</label>
+        <div class="pg" id="pg-nv">${NIVS.map(n=>`<div class="pill${(c&&c.level)===n?' on':''}" data-v="${n}" onclick="selP('pg-nv','fnv',this)">${n}</div>`).join('')}</div>
+        <input type="hidden" id="fnv" value="${esc(c&&c.level||'')}">
+      </div>
+      <div class="fg"><label class="fl">Dias/Sem</label>
+        <div class="pg" id="pg-di">${DIAS.map(d=>`<div class="pill${(c&&c.frequency)===d?' on':''}" data-v="${d}" onclick="selP('pg-di','fdi',this)">${d}\xd7</div>`).join('')}</div>
+        <input type="hidden" id="fdi" value="${esc(c&&c.frequency||'')}">
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Dura\xe7\xe3o (min)</label>
+      <div class="pg" id="pg-du">${DURS.map(d=>`<div class="pill${(c&&c.duration)===d?' on':''}" data-v="${d}" onclick="selP('pg-du','fdu',this)">${d}'</div>`).join('')}</div>
+      <input type="hidden" id="fdu" value="${esc(c&&c.duration||'')}">
+    </div>
+    <div class="sec">Limita\xe7\xf5es / Patologias</div>
+    <div class="pg" id="pg-lm">${lims.map(l=>`<div class="pill${cL.includes(l)?' on':''}" data-v="${esc(l)}" onclick="this.classList.toggle('on')">${esc(l)}</div>`).join('')}</div>
+    <div class="fg" style="margin-top:12px"><label class="fl">Observa\xe7\xf5es</label><textarea class="fi" id="fno" placeholder="Notas relevantes...">${esc(c&&c.notes||'')}</textarea></div>
+    <div style="margin-top:16px"><button class="btn btn-p" onclick="saveClient('${c&&c.id||''}')">${c?'Guardar Altera\xe7\xf5es':'Adicionar Cliente'}</button></div>
+  </div>`;
+  openM('m-client');
+}
+
+function saveClient(eid){
+  const name=document.getElementById('fn').value.trim();
+  if(!name){toast('Nome obrigat\xf3rio');return}
+  const cl=S.clients();
+  const lims=[...document.querySelectorAll('#pg-lm .pill.on')].map(p=>p.dataset.v);
+  const now=new Date().toLocaleDateString('pt-PT');
+  const c={
+    id:eid||gid(),name,
+    age:document.getElementById('fi2').value,
+    contact:document.getElementById('fc').value,
+    weight:document.getElementById('fw').value,
+    height:document.getElementById('fh').value,
+    bodyFat:document.getElementById('fbf').value,
+    state:document.getElementById('fst').value||'Ativo',
+    objective:document.getElementById('fob').value,
+    level:document.getElementById('fnv').value,
+    frequency:document.getElementById('fdi').value,
+    duration:document.getElementById('fdu').value,
+    limitations:lims,
+    notes:document.getElementById('fno').value,
+    createdAt:eid?(cl.find(x=>x.id===eid)||{}).createdAt||now:now,
+    measurements:(eid?(cl.find(x=>x.id===eid)||{}).measurements:null)||[],
+  };
+  if(eid){const i=cl.findIndex(x=>x.id===eid);i>=0?cl[i]=c:cl.push(c)}else cl.push(c);
+  S.sc(cl);closeM('m-client');
+  toast(eid?'Atualizado \u2713':'Cliente adicionado \u2713');
+  if(CS==='clientes')rClientes();
+}
+
+function delClient(id){
+  if(!confirm('Eliminar este cliente?'))return;
+  S.sc(S.clients().filter(c=>c.id!==id));
+  S.sp(S.plans().filter(p=>p.clientId!==id));
+  S.ss(S.sessions().filter(s=>s.clientId!==id));
+  closeM('m-client');toast('Eliminado');rClientes();
+}
+
+function openClientDetail(id){
+  const c=S.clients().find(x=>x.id===id);if(!c)return;
+  const imc=c.weight&&c.height?(parseFloat(c.weight)/Math.pow(parseFloat(c.height)/100,2)).toFixed(1):null;
+  const plans=S.plans().filter(p=>p.clientId===id);
+  const sess=S.sessions().filter(s=>s.clientId===id);
+  const pres=sess.filter(s=>s.presence).length;
+  document.getElementById('m-client').innerHTML=`<div class="mi">
+    <div class="mh">
+      <span class="mb" onclick="closeM('m-client')">\u2039</span>
+      <span class="mt">${esc(c.name)}</span>
+      <button class="btn btn-sm btn-s" onclick="closeM('m-client');setTimeout(()=>openClientModal('${id}'),80)">Editar</button>
+    </div>
+    <div class="card">
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+        <div class="avatar" style="width:46px;height:46px;font-size:16px">${init2(c.name)}</div>
+        <div><div style="font-size:16px;font-weight:700">${esc(c.name)}</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:4px">
+            ${badgeEst(c.state||'Ativo')}
+            ${c.level?`<span class="badge b-y">${esc(c.level)}</span>`:''}
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        ${[[c.age,'Idade','anos'],[c.weight,'Peso','kg'],[imc,'IMC',''],[c.bodyFat,'% Gord.','%'],[c.frequency,'Freq.','/sem'],[c.duration,'Dur.','min']].filter(x=>x[0]).map(x=>`<div><div style="font-size:9px;color:var(--m);text-transform:uppercase;letter-spacing:1px">${x[1]}</div><div style="font-size:15px;font-weight:700">${x[0]}${x[2]?'&thinsp;'+x[2]:''}</div></div>`).join('')}
+      </div>
+      ${c.objective?`<div style="margin-top:9px;font-size:12px;color:var(--m)">&#127919; ${esc(c.objective)}</div>`:''}
+      ${c.limitations&&c.limitations.length?`<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:4px">${c.limitations.map(l=>`<span class="badge b-or">&#9888;&#65039; ${esc(l)}</span>`).join('')}</div>`:''}
+      ${c.contact?`<div style="margin-top:6px;font-size:12px;color:var(--m)">&#128222; ${esc(c.contact)}</div>`:''}
+      ${c.notes?`<div style="margin-top:6px;font-size:12px;color:var(--m);font-style:italic">${esc(c.notes)}</div>`:''}
+    </div>
+    <div class="row2" style="margin-bottom:8px">
+      <button class="btn btn-p" onclick="closeM('m-client');go('planos');setTimeout(()=>openPlanModal('${id}'),100)">+ Plano</button>
+      <button class="btn btn-s" onclick="closeM('m-client');openSessModal('${id}')">+ Sess\xe3o</button>
+    </div>
+    <button class="btn btn-s" style="margin-bottom:14px;border-color:rgba(232,255,58,.3);color:var(--a)" onclick="openNoteModal('${id}')">&#128221; Nota R\xe1pida</button>
+    ${(c.quickNotes&&c.quickNotes.length)?`<div class="sec">Notas R\xe1pidas</div>${c.quickNotes.slice(-3).reverse().map(n=>`<div style="background:var(--c);border-left:2px solid var(--a);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:6px"><div style="font-size:10px;color:var(--m);margin-bottom:3px">${esc(n.date)}</div><div style="font-size:13px;line-height:1.5">${esc(n.text)}</div></div>`).join('')}`:''}
+    ${plans.length?`<div class="sec">Planos (${plans.length})</div>${plans.map(p=>`<div class="li" onclick="openPlanView('${p.id}')"><span style="font-size:20px">&#128203;</span><div class="li-inf"><div class="li-t">${esc(p.name)}</div><div class="li-s">${p.sessions.length} sess\xf5es \xb7 ${p.createdAt}</div></div></div>`).join('')}`:''}
+    ${sess.length?`<div class="sec">Presen\xe7as: ${pres}/${sess.length}</div>${sess.slice(-4).reverse().map(s=>`<div style="background:var(--c);border:1px solid var(--b);border-radius:8px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px"><div style="font-size:11px;color:var(--m);width:55px">${fmtD(s.date)}</div><div style="flex:1;font-size:13px">${esc(s.sessionName||'\u2014')}</div><div>${s.presence?'\u2705':'\u274c'}</div></div>`).join('')}`:''}
+    <div class="sec">Medidas</div>
+    <button class="btn btn-s" onclick="openMeasureModal('${id}')">+ Registar medidas</button>
+    ${c.measurements&&c.measurements.length?`<div style="margin-top:10px">${c.measurements.slice(-3).reverse().map(m=>`<div style="background:var(--c);border:1px solid var(--b);border-radius:8px;padding:9px 12px;margin-bottom:6px;display:flex;gap:12px;font-size:12px"><span style="color:var(--m)">${esc(m.date)}</span>${m.weight?`<span>&#9878; ${m.weight}kg</span>`:''}${m.bodyFat?`<span>% ${m.bodyFat}</span>`:''}${m.notes?`<span style="color:var(--m);font-style:italic">${esc(m.notes.slice(0,30))}</span>`:''}</div>`).join('')}</div>`:''}
+  </div>`;
+  openM('m-client');
+}
+
+function openNoteModal(cid){
+  const c=S.clients().find(x=>x.id===cid);if(!c)return;
+  document.getElementById('m-note').innerHTML=`<div class="mi">
+    <div class="mh"><span class="mb" onclick="closeM('m-note')">\u2039</span><span class="mt">Nota R\xe1pida &mdash; ${esc(c.name)}</span></div>
+    <div style="font-size:12px;color:var(--m);margin-bottom:12px">Regista qualquer observa\xe7\xe3o relevante: comportamento, queixa, conquista, ajuste t\xe9cnico...</div>
+    <div class="fg"><textarea class="fi" id="ntext" rows="4" placeholder="Ex: Hoje queixou-se do joelho esquerdo. Evit\xe1mos leg press. Reagiu bem ao leg curl sentado..."></textarea></div>
+    ${(c.quickNotes&&c.quickNotes.length)?`<div class="sec" style="margin-top:0">Notas anteriores</div>${c.quickNotes.slice(-5).reverse().map(n=>`<div style="background:var(--c);border-left:2px solid var(--a);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:6px"><div style="font-size:10px;color:var(--m);margin-bottom:3px">${n.date}</div><div style="font-size:13px;line-height:1.5;color:#ccc">${esc(n.text)}</div></div>`).join('')}`:''}
+    <button class="btn btn-p" style="margin-top:12px" onclick="saveNote('${cid}')">Guardar Nota</button>
+  </div>`;
+  openM('m-note');
+}
+
+function saveNote(cid){
+  const text=(document.getElementById('ntext')||{value:''}).value.trim();
+  if(!text){toast('Escreve algo primeiro');return}
+  const cl=S.clients();
+  const i=cl.findIndex(x=>x.id===cid);if(i<0)return;
+  if(!cl[i].quickNotes)cl[i].quickNotes=[];
+  cl[i].quickNotes.push({date:new Date().toLocaleDateString('pt-PT'),text});
+  S.sc(cl);closeM('m-note');
+  toast('Nota guardada \u2713');
+}
+
+function openMeasureModal(cid){
+  const today=new Date().toISOString().slice(0,10);
+  document.getElementById('m-measure').innerHTML=`<div class="mi">
+    <div class="mh"><span class="mb" onclick="closeM('m-measure')">\u2039</span><span class="mt">Registar Medidas</span></div>
+    <div class="fg"><label class="fl">Data</label><input class="fi" id="md" type="date" value="${today}"></div>
+    <div class="row2">
+      <div class="fg"><label class="fl">Peso (kg)</label><input class="fi" id="mw" type="number" step="0.1" placeholder="70.0"></div>
+      <div class="fg"><label class="fl">% Gordura</label><input class="fi" id="mbf" type="number" step="0.1" placeholder="20.0"></div>
+    </div>
+    <div class="row2">
+      <div class="fg"><label class="fl">Cintura (cm)</label><input class="fi" id="mwa" type="number" step="0.5" placeholder="80"></div>
+      <div class="fg"><label class="fl">Anca (cm)</label><input class="fi" id="mhi" type="number" step="0.5" placeholder="95"></div>
+    </div>
+    <div class="fg"><label class="fl">Notas</label><textarea class="fi" id="mno" placeholder="Como correu a avalia\xe7\xe3o..."></textarea></div>
+    <button class="btn btn-p" onclick="saveMeasure('${cid}')">Guardar</button>
+  </div>`;
+  openM('m-measure');
+}
+
+function saveMeasure(cid){
+  const cl=S.clients();
+  const i=cl.findIndex(x=>x.id===cid);if(i<0)return;
+  const m={
+    date:document.getElementById('md').value,
+    weight:document.getElementById('mw').value,
+    bodyFat:document.getElementById('mbf').value,
+    waist:document.getElementById('mwa').value,
+    hip:document.getElementById('mhi').value,
+    notes:document.getElementById('mno').value,
+  };
+  if(!cl[i].measurements)cl[i].measurements=[];
+  cl[i].measurements.push(m);
+  if(m.weight)cl[i].weight=m.weight;
+  if(m.bodyFat)cl[i].bodyFat=m.bodyFat;
+  S.sc(cl);closeM('m-measure');toast('Medidas guardadas \u2713');
+}
+
+// ─── PLANOS ───────────────────────────────────────────────────────────────────
+function rPlanos(){
+  const cl=S.clients(),pls=S.plans();
+  document.getElementById('s-planos').innerHTML=cl.length===0?`
+    <div class="empty"><div class="empty-i">&#128203;</div><div class="empty-t">Adiciona clientes primeiro.</div>
+    <button class="btn btn-p" style="width:auto;padding:12px 24px;margin-top:14px" onclick="go('clientes')">Ir para Clientes</button></div>
+  `:`
+    <button class="btn btn-p" style="margin-bottom:14px" onclick="openPlanModal()">+ Construir Plano</button>
+    ${pls.length===0?`<div class="empty"><div class="empty-i">&#128203;</div><div class="empty-t">Nenhum plano ainda.<br>Toca em + para criar.</div></div>`:`
+      <div class="sec">Planos (${pls.length})</div>
+      ${pls.slice().reverse().map(p=>{
+        const c=cl.find(x=>x.id===p.clientId);
+        return`<div class="li" onclick="openPlanView('${p.id}')">
+          <div class="avatar">${init2(c&&c.name||'?')}</div>
+          <div class="li-inf"><div class="li-t">${esc(p.name)}</div><div class="li-s">${esc(c&&c.name||'\u2014')} \xb7 ${p.sessions.length} sess\xf5es \xb7 ${p.createdAt}</div></div>
+          <span style="color:var(--b);font-size:18px">&#8250;</span>
+        </div>`;
+      }).join('')}
+    `}
+  `;
+}
+
+// Current plan being built
+let CP={id:null,clientId:'',name:'',sessions:[],createdAt:''};
+let _exLibCb=null; // callback when exercise selected from library
+
+function openPlanModal(preClientId){
+  const cl=S.clients();
+  CP={id:gid(),clientId:preClientId||'',name:'',sessions:[{id:gid(),name:'Sess\xe3o A',exercises:[]}],createdAt:new Date().toLocaleDateString('pt-PT')};
+  renderPlanBuilder(cl);
+  openM('m-plan');
+}
+
+function renderPlanBuilder(cl){
+  document.getElementById('m-plan').innerHTML=`<div class="mi">
+    <div class="mh">
+      <span class="mb" onclick="closeM('m-plan')">\u2039</span>
+      <span class="mt">Construtor de Plano</span>
+      <button class="btn btn-sm btn-p" onclick="savePlan()">Guardar</button>
+    </div>
+    <div class="fg"><label class="fl">Cliente *</label>
+      <select class="fi" id="pcl" onchange="CP.clientId=this.value">
+        <option value="">Selecionar...</option>
+        ${cl.map(c=>`<option value="${c.id}" ${c.id===CP.clientId?'selected':''}>${esc(c.name)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Nome do Plano *</label>
+      <input class="fi" id="pname" value="${esc(CP.name)}" placeholder="Ex: Plano Hipertrofia Jan\u2013Mar" oninput="CP.name=this.value">
+    </div>
+    <div id="pb-sessions">${CP.sessions.map((s,si)=>renderSessBlock(s,si)).join('')}</div>
+    <button class="btn btn-s" onclick="addSessBlock()" style="margin-bottom:12px">+ Nova Sess\xe3o</button>
+  </div>`;
+}
+
+function renderSessBlock(s,si){
+  return`<div class="sess-block" id="sb-${s.id}">
+    <div class="sess-hd">
+      <input class="sess-nm" value="${esc(s.name)}" placeholder="Nome da sess\xe3o" oninput="CP.sessions[${si}].name=this.value">
+      <button class="btn btn-sm btn-d" onclick="removeSess('${s.id}')">&#215;</button>
+    </div>
+    <div class="sess-bd" id="sbd-${s.id}">
+      <div id="exlist-${s.id}">
+        ${s.exercises.length===0?`<div style="font-size:12px;color:var(--m);padding:4px 0;margin-bottom:8px">Nenhum exerc\xedcio. Adiciona abaixo.</div>`:s.exercises.map((e,ei)=>renderExRow(e,s.id,si,ei)).join('')}
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-sm btn-s" onclick="openExLib('${s.id}',${si})">+ Exerc\xedcio</button>
+        <button class="btn btn-sm" style="background:rgba(232,255,58,.08);border:1px solid rgba(232,255,58,.2);color:var(--a)" onclick="openAIModal('${s.id}',${si})">&#129302; Sugest\xf5es IA</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderExRow(e,sid,si,ei){
+  return`<div class="ex-row" id="exr-${e.id}">
+    <div class="ex-hd" onclick="toggleEx('${e.id}')">
+      <div class="ex-nm">${esc(e.name)}</div>
+      <span class="ex-meta">${esc(e.series||'?')}&times; ${esc(e.reps||'?')}</span>
+      <span class="ex-meta" style="color:var(--m)">${esc(e.rest||'')}</span>
+      <button style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:2px 4px" onclick="event.stopPropagation();removeEx('${sid}','${e.id}')">&#215;</button>
+    </div>
+    <div class="ex-bd">
+      <div style="font-size:11px;color:var(--m);margin-bottom:8px">${esc(e.group||'')} \xb7 ${esc(e.equipment||'')}</div>
+      <div class="row3">
+        <div><label class="fl">S\xe9ries</label><input class="fi fi-sm" value="${esc(e.series||'')}" placeholder="3" onchange="updEx('${sid}','${e.id}','series',this.value)"></div>
+        <div><label class="fl">Reps</label><input class="fi fi-sm" value="${esc(e.reps||'')}" placeholder="10-12" onchange="updEx('${sid}','${e.id}','reps',this.value)"></div>
+        <div><label class="fl">Descanso</label><input class="fi fi-sm" value="${esc(e.rest||'')}" placeholder="60s" onchange="updEx('${sid}','${e.id}','rest',this.value)"></div>
+      </div>
+      <div><label class="fl">Notas</label><input class="fi fi-sm" value="${esc(e.notes||'')}" placeholder="Observa\xe7\xf5es, t\xe9cnica..." onchange="updEx('${sid}','${e.id}','notes',this.value)"></div>
+    </div>
+  </div>`;
+}
+
+function toggleEx(eid){
+  document.getElementById('exr-'+eid).classList.toggle('open');
+}
+
+function addSessBlock(){
+  const si=CP.sessions.length;
+  const s={id:gid(),name:'Sess\xe3o '+String.fromCharCode(65+si),exercises:[]};
+  CP.sessions.push(s);
+  const div=document.createElement('div');
+  div.innerHTML=renderSessBlock(s,si);
+  document.getElementById('pb-sessions').insertBefore(div.firstChild,document.getElementById('pb-sessions').lastChild);
+}
+
+function removeSess(sid){
+  if(CP.sessions.length<=1){toast('M\xednimo 1 sess\xe3o');return}
+  CP.sessions=CP.sessions.filter(s=>s.id!==sid);
+  const el=document.getElementById('sb-'+sid);
+  if(el)el.remove();
+}
+
+function removeEx(sid,eid){
+  const s=CP.sessions.find(s=>s.id===sid);if(!s)return;
+  s.exercises=s.exercises.filter(e=>e.id!==eid);
+  const el=document.getElementById('exr-'+eid);
+  if(el)el.remove();
+}
+
+function updEx(sid,eid,field,val){
+  const s=CP.sessions.find(s=>s.id===sid);if(!s)return;
+  const e=s.exercises.find(e=>e.id===eid);if(!e)return;
+  e[field]=val;
+}
+
+function addExToSess(sid,si,exData){
+  const s=CP.sessions.find(s=>s.id===sid);if(!s)return;
+  const e={id:gid(),name:exData.name,group:exData.group,equipment:exData.equipment,series:'3',reps:'10-12',rest:'60s',notes:''};
+  s.exercises.push(e);
+  const ei=s.exercises.length-1;
+  const el=document.getElementById('exlist-'+sid);
+  if(el){
+    const noMsg=el.querySelector('div');
+    if(noMsg&&noMsg.textContent.includes('Nenhum'))noMsg.remove();
+    const div=document.createElement('div');
+    div.innerHTML=renderExRow(e,sid,si,ei);
+    el.appendChild(div.firstChild);
+  }
+}
+
+function savePlan(){
+  CP.clientId=(document.getElementById('pcl')||{value:CP.clientId}).value||CP.clientId;
+  CP.name=(document.getElementById('pname')||{value:CP.name}).value||CP.name;
+  if(!CP.clientId){toast('Seleciona um cliente');return}
+  if(!CP.name.trim()){toast('D\xe1 um nome ao plano');return}
+  const totalEx=CP.sessions.reduce((n,s)=>n+s.exercises.length,0);
+  if(totalEx===0){toast('Adiciona pelo menos 1 exerc\xedcio');return}
+  const pls=S.plans();
+  const exists=pls.findIndex(p=>p.id===CP.id);
+  if(exists>=0)pls[exists]=CP;else pls.push(CP);
+  S.sp(pls);closeM('m-plan');
+  toast('Plano guardado \u2713');
+  if(CS==='planos')rPlanos();
+}
+
+// Plan view / detail
+function openPlanView(pid){
+  const p=S.plans().find(x=>x.id===pid);if(!p)return;
+  const c=S.clients().find(x=>x.id===p.clientId);
+  document.getElementById('m-plan').innerHTML=`<div class="mi">
+    <div class="mh">
+      <span class="mb" onclick="closeM('m-plan')">\u2039</span>
+      <span class="mt">${esc(p.name)}</span>
+      <button class="btn btn-sm btn-d" onclick="delPlan('${pid}')">&#128465;&#65039;</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px">
+      <span class="badge b-y">${esc(c&&c.name||'\u2014')}</span>
+      <span class="badge b-g">${p.sessions.length} sess\xf5es</span>
+      <span class="badge b-g">${p.createdAt}</span>
+    </div>
+    ${p.sessions.map(s=>`
+      <div class="sec">${esc(s.name)} &mdash; ${s.exercises.length} exerc\xedcios</div>
+      ${s.exercises.length===0?'<div style="font-size:12px;color:var(--m);margin-bottom:10px">Sem exerc\xedcios</div>':
+        `<table style="width:100%;border-collapse:collapse;margin-bottom:4px">
+          <thead><tr>
+            <th style="font-size:9px;color:var(--m);text-transform:uppercase;padding:4px 5px;text-align:left">Exerc\xedcio</th>
+            <th style="font-size:9px;color:var(--m);text-transform:uppercase;padding:4px 5px;text-align:center">S</th>
+            <th style="font-size:9px;color:var(--m);text-transform:uppercase;padding:4px 5px;text-align:center">Reps</th>
+            <th style="font-size:9px;color:var(--m);text-transform:uppercase;padding:4px 5px;text-align:center">Desc.</th>
+          </tr></thead>
+          <tbody>
+            ${s.exercises.map(e=>`<tr>
+              <td style="font-size:12px;padding:7px 5px;border-top:1px solid var(--b)">${esc(e.name)}</td>
+              <td style="font-size:12px;padding:7px 5px;border-top:1px solid var(--b);text-align:center;color:var(--a);font-weight:700">${esc(e.series)}</td>
+              <td style="font-size:12px;padding:7px 5px;border-top:1px solid var(--b);text-align:center;color:var(--m)">${esc(e.reps)}</td>
+              <td style="font-size:12px;padding:7px 5px;border-top:1px solid var(--b);text-align:center;color:var(--m)">${esc(e.rest)}</td>
+            </tr>${e.notes?`<tr><td colspan="4" style="font-size:11px;padding:2px 5px 7px;color:#777;font-style:italic;border-top:none">${esc(e.notes)}</td></tr>`:''}`).join('')}
+          </tbody>
+        </table>`}
+    `).join('')}
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button class="btn btn-s" onclick="editPlan('${pid}')">Editar Plano</button>
+      <button class="btn btn-s" onclick="copyPlan('${pid}')">&#128203; Copiar</button>
+    </div>
+  </div>`;
+  openM('m-plan');
+}
+
+function editPlan(pid){
+  const p=S.plans().find(x=>x.id===pid);if(!p)return;
+  CP=JSON.parse(JSON.stringify(p));
+  renderPlanBuilder(S.clients());
+}
+
+function delPlan(pid){
+  if(!confirm('Eliminar este plano?'))return;
+  S.sp(S.plans().filter(p=>p.id!==pid));
+  closeM('m-plan');toast('Eliminado');
+  if(CS==='planos')rPlanos();
+}
+
+function copyPlan(pid){
+  const p=S.plans().find(x=>x.id===pid);if(!p)return;
+  const c=S.clients().find(x=>x.id===p.clientId);
+  let t=`\ud83c\udfcb\ufe0f NEXT LEVEL PT \u2014 ${p.name}\n`;
+  if(c)t+=`Cliente: ${c.name}\n\n`;
+  p.sessions.forEach(s=>{
+    t+=`\u2501\u2501 ${s.name.toUpperCase()} \u2501\u2501\n`;
+    s.exercises.forEach(e=>t+=`\u2022 ${e.name}: ${e.series}\xd7 ${e.reps} (${e.rest})${e.notes?' \u2014 '+e.notes:''}\n`);
+    t+='\n';
+  });
+  navigator.clipboard.writeText(t).then(()=>toast('Copiado! \u2713')).catch(()=>toast('N\xe3o foi poss\xedvel copiar'));
+}
+
+// ─── EXERCISE LIBRARY (PICKER) ────────────────────────────────────────────────
+let _exSid='',_exSi=0;
+function openExLib(sid,si){
+  _exSid=sid;_exSi=si;
+  renderExLib('');
+  openM('m-exlib');
+}
+
+let _exLibCache=[];
+function renderExLib(q,cat){
+  let lst=allEx();
+  if(q)lst=lst.filter(e=>e[0].toLowerCase().includes(q.toLowerCase())||e[1].toLowerCase().includes(q.toLowerCase()));
+  if(cat&&cat!=='all'){
+    lst=lst.filter(e=>{
+      const g=e[1];
+      if(cat==='mi')return/Quadric|Gl\xfateo|Isquio|Panturrilha|Adutor/.test(g);
+      if(cat==='ms')return/Peito|Costa|Ombro|B\xedceps|Tr\xedceps|Dorsal|Delt/.test(g);
+      if(cat==='core')return/Core/.test(g);
+      if(cat==='card')return/Cardio|Full body|Kettlebell/.test(g);
+      if(cat==='mob')return/Mobilidade|Liberta|Pilates|Ativa/.test(g);
+      return true;
+    });
+  }
+  _exLibCache=lst;
+  document.getElementById('m-exlib').innerHTML=`<div class="mi">
+    <div class="mh"><span class="mb" onclick="closeM('m-exlib')">\u2039</span><span class="mt">Adicionar Exerc\xedcio</span></div>
+    <input class="search" placeholder="Pesquisar..." id="exlsearch" oninput="renderExLib(this.value,document.querySelector('#exl-frow .fc.on')?.dataset.cat)" value="${esc(q||'')}">
+    <div class="frow" id="exl-frow">
+      ${[['all','Todos'],['mi','Membros Inf.'],['ms','Membros Sup.'],['core','Core'],['card','Cardio'],['mob','Mobilidade']].map(([v,l])=>`<div class="fc${(!cat||cat==='all')&&v==='all'?' on':cat===v?' on':''}" data-cat="${v}" onclick="renderExLib(document.getElementById('exlsearch').value,'${v}')">${l}</div>`).join('')}
+    </div>
+    <div>
+      ${lst.length===0?'<div class="empty"><div class="empty-t">Nenhum encontrado.</div></div>':
+        lst.map((e,i)=>`<div class="li" onclick="pickExByIdx(${i})">
+          <div class="li-inf"><div class="li-t">${esc(e[0])}</div><div class="li-s">${esc(e[1])} \xb7 ${esc(e[2])}</div></div>
+          <span style="color:var(--a);font-size:20px">+</span>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function pickExByIdx(i){
+  const e=_exLibCache[i];
+  if(!e)return;
+  addExToSess(_exSid,_exSi,{name:e[0],group:e[1],equipment:e[2]||''});
+  closeM('m-exlib');
+  toast(e[0]+' adicionado \u2713');
+}
+
+function pickEx(name,group,equipment){
+  addExToSess(_exSid,_exSi,{name,group,equipment});
+  closeM('m-exlib');
+  toast(name+' adicionado \u2713');
+}
+
+// ─── AI SUGGESTIONS ───────────────────────────────────────────────────────────
+function openAIModal(sid,si){
+  const apiKey=S.apiKey();
+  if(!apiKey){
+    document.getElementById('m-ai').innerHTML=`<div class="mi">
+      <div class="mh"><span class="mb" onclick="closeM('m-ai')">\u2039</span><span class="mt">Sugest\xf5es IA</span></div>
+      <div class="alert-w">Precisas de configurar a API key da Anthropic.<br>Vai a Defini\xe7\xf5es (engrenagem) e adiciona a tua chave.</div>
+      <button class="btn btn-p" onclick="closeM('m-ai');openSettings()">Abrir Defini\xe7\xf5es</button>
+    </div>`;
+    openM('m-ai');
+    return;
+  }
+  const cl=S.clients().find(x=>x.id===((document.getElementById('pcl')||{value:CP.clientId}).value||CP.clientId));
+  const sess=CP.sessions.find(s=>s.id===sid);
+  const currentEx=sess?sess.exercises.map(e=>e.name).join(', '):'';
+  document.getElementById('m-ai').innerHTML=`<div class="mi">
+    <div class="mh"><span class="mb" onclick="closeM('m-ai')">\u2039</span><span class="mt">Sugest\xf5es IA</span></div>
+    ${cl?`<div style="font-size:12px;color:var(--m);margin-bottom:12px">Cliente: ${esc(cl.name)} \xb7 ${esc(cl.objective||'sem objetivo')} \xb7 ${esc(cl.level||'n\xedvel n/d')}</div>`:''}
+    <div class="fg"><label class="fl">O que precisas?</label>
+      <div class="pg" id="pg-aiq" style="margin-bottom:10px">
+        <div class="pill on" data-v="geral" onclick="selP('pg-aiq','faiq',this)">Exerc\xedcios gerais</div>
+        <div class="pill" data-v="patologia" onclick="selP('pg-aiq','faiq',this)">Adaptar limita\xe7\xf5es</div>
+        <div class="pill" data-v="progressao" onclick="selP('pg-aiq','faiq',this)">Progress\xe3o cargas</div>
+      </div>
+      <input type="hidden" id="faiq" value="geral">
+    </div>
+    <div class="fg"><label class="fl">Contexto adicional (opcional)</label>
+      <input class="fi" id="faic" placeholder="Ex: foco em quadric\xedpites, 4\xaa semana..." >
+    </div>
+    <button class="btn btn-p" id="aibtn" onclick="fetchAI('${sid}',${si})">&#129302; Pedir Sugest\xf5es</button>
+    <div id="ai-results" style="margin-top:14px"></div>
+  </div>`;
+  openM('m-ai');
+}
+
+async function fetchAI(sid,si){
+  const apiKey=S.apiKey();
+  const btn=document.getElementById('aibtn');
+  if(btn){btn.disabled=true;btn.innerHTML='<span class="spinner"></span> A pensar...';}
+  const cl=S.clients().find(x=>x.id===((document.getElementById('pcl')||{value:CP.clientId}).value||CP.clientId));
+  const sess=CP.sessions.find(s=>s.id===sid);
+  const tipo=document.getElementById('faiq').value;
+  const ctx=(document.getElementById('faic')||{value:''}).value;
+  const currentEx=sess?sess.exercises.map(e=>e.name).join(', '):'(nenhum ainda)';
+  const prompt=`Perfil do cliente:
+- Nome: ${cl?cl.name:'desconhecido'}
+- Objetivo: ${cl?cl.objective:'n/d'}
+- N\xedvel: ${cl?cl.level:'n/d'}
+- Limita\xe7\xf5es: ${cl&&cl.limitations&&cl.limitations.length?cl.limitations.join(', '):'nenhuma'}
+- Frequ\xeancia: ${cl?cl.frequency:3}x/semana
+
+Sess\xe3o atual j\xe1 tem: ${currentEx}
+
+Tipo de pedido: ${tipo==='geral'?'Sugere 4-5 exerc\xedcios adequados para esta sess\xe3o':tipo==='patologia'?'Sugere adapta\xe7\xf5es e exerc\xedcios seguros para as limita\xe7\xf5es do cliente':'Sugere como progredir os exerc\xedcios atuais nas pr\xf3ximas semanas'}
+${ctx?'Contexto extra: '+ctx:''}
+
+Responde APENAS com JSON v\xe1lido, sem texto extra, sem markdown. Formato:
+[{"nome":"nome do exercicio","series":"3","reps":"10-12","rest":"60s","justificacao":"breve justificacao em pt-PT"}]`;
+
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':apiKey,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:1000,
+        system:'Responds apenas em portugu\xeas de Portugal. \xc9s um personal trainer especialista. Responde SEMPRE com JSON puro v\xe1lido, sem markdown, sem texto antes ou depois.',
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data=await resp.json();
+    if(data.error){throw new Error(data.error.message)}
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    const suggestions=JSON.parse(text);
+    // Store globally to avoid onclick attribute issues
+    window._AI={sid,si,suggestions};
+    const res=document.getElementById('ai-results');
+    if(res){
+      res.innerHTML='<div class="sec" style="margin-top:0">Sugest\xf5es</div>'+
+        suggestions.map((s,i)=>{
+          const nm=s.nome||s.name||s.exercicio||'Exerc\xedcio '+(i+1);
+          const just=s.justificacao||s.justification||'';
+          return '<div class="ai-card">'
+            +'<div class="ai-nm">'+esc(nm)+'</div>'
+            +'<div class="ai-meta">'+(s.series||'3')+' s\xe9ries \xb7 '+(s.reps||'10-12')+' \xb7 '+(s.rest||s.descanso||'60s')+' descanso</div>'
+            +(just?'<div class="ai-why">'+esc(just)+'</div>':'')
+            +'<button class="btn btn-sm btn-p" onclick="pickAI('+i+')">+ Adicionar ao plano</button>'
+            +'</div>';
+        }).join('');
+    }
+  }catch(err){
+    const res=document.getElementById('ai-results');
+    if(res)res.innerHTML=`<div class="alert-w">Erro: ${esc(err.message)}.<br>Verifica a API key nas Defini\xe7\xf5es.</div>`;
+  }finally{
+    const b=document.getElementById('aibtn');
+    if(b){b.disabled=false;b.innerHTML='&#129302; Pedir Sugest\xf5es de novo';}
+  }
+}
+
+function pickAI(idx){
+  if(!window._AI){toast('Erro: sem sugest\xf5es guardadas');return}
+  const {sid,si,suggestions}=window._AI;
+  const sugg=suggestions[idx];
+  if(!sugg){toast('Sugest\xe3o n\xe3o encontrada');return}
+  const name=sugg.nome||sugg.name||sugg.exercicio||'Exerc\xedcio';
+  const sess=CP.sessions.find(s=>s.id===sid);
+  if(!sess){toast('Sess\xe3o n\xe3o encontrada');return}
+  const ex=EX.find(e=>e[0]===name)||[name,'\u2014','\u2014'];
+  const e={id:gid(),name:ex[0],group:ex[1],equipment:ex[2],
+    series:sugg.series||'3',reps:sugg.reps||'10-12',
+    rest:sugg.rest||sugg.descanso||'60s',notes:''};
+  sess.exercises.push(e);
+  closeM('m-ai');
+  setTimeout(()=>{
+    renderPlanBuilder(S.clients());
+    openM('m-plan');
+    toast(name+' adicionado \u2713');
+  },60);
+}
+
+// ─── SESS\xd5ES ─────────────────────────────────────────────────────────────────────
+function rSessoes(){
+  const ses=S.sessions().slice().reverse();
+  document.getElementById('s-sessoes').innerHTML=`
+    <div style="display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;scrollbar-width:none">
+      <div class="fc on" id="sf-all" onclick="sfilt('all',this)">Todas</div>
+      <div class="fc" id="sf-pres" onclick="sfilt('pres',this)">&#9989; Presen\xe7as</div>
+      <div class="fc" id="sf-falt" onclick="sfilt('falt',this)">&#10060; Faltas</div>
+    </div>
+    <div id="slist">${rSesList(ses)}</div>
+  `;
+  addFab(()=>openSessModal());
+}
+function sfilt(f,el){
+  document.querySelectorAll('[id^=sf-]').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  let ses=S.sessions().slice().reverse();
+  if(f==='pres')ses=ses.filter(s=>s.presence);
+  else if(f==='falt')ses=ses.filter(s=>!s.presence);
+  document.getElementById('slist').innerHTML=rSesList(ses);
+}
+function rSesList(ses){
+  if(!ses.length)return`<div class="empty"><div class="empty-i">&#128197;</div><div class="empty-t">Sem sess\xf5es registadas.</div></div>`;
+  return ses.map(s=>`<div style="background:var(--c);border:1px solid var(--b);border-radius:9px;padding:10px 13px;margin-bottom:7px;display:flex;align-items:center;gap:10px">
+    <div style="font-size:11px;color:var(--m);width:56px;flex-shrink:0">${fmtD(s.date)}</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(s.clientName||'\u2014')}</div>
+      <div style="font-size:11px;color:var(--m)">${esc(s.sessionName||'')}${s.duration?' \xb7 '+s.duration+'min':''}${s.energy?' \xb7 \u26a1'+s.energy+'/5':''}</div>
+      ${s.loads&&s.loads.length?`<div style="font-size:10px;color:var(--m);margin-top:2px">${s.loads.length} exerc\xedcios registados</div>`:''}
+    </div>
+    <div style="font-size:18px">${s.presence?'\u2705':'\u274c'}</div>
+  </div>`).join('');
+}
+
+// Sessão state
+let _sess={cid:'',planId:'',sessId:'',loads:[]};
+
+function openSessModal(preClientId){
+  const cl=S.clients();
+  const today=new Date().toISOString().slice(0,10);
+  _sess={cid:preClientId||'',planId:'',sessId:'',loads:[]};
+  document.getElementById('m-sess').innerHTML=`<div class="mi">
+    <div class="mh"><span class="mb" onclick="closeM('m-sess')">\u2039</span><span class="mt">Registar Sess\xe3o</span></div>
+
+    <div class="sec" style="margin-top:0">Info da Sess\xe3o</div>
+    <div class="fg"><label class="fl">Cliente *</label>
+      <select class="fi" id="scl" onchange="onSessClientChange(this.value)">
+        <option value="">Selecionar...</option>
+        ${cl.map(c=>`<option value="${c.id}" data-name="${esc(c.name)}" ${c.id===preClientId?'selected':''}>${esc(c.name)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="row2">
+      <div class="fg"><label class="fl">Data *</label><input class="fi" id="sdate" type="date" value="${today}"></div>
+      <div class="fg"><label class="fl">Dura\xe7\xe3o (min)</label><input class="fi" id="sdur" type="number" placeholder="60"></div>
+    </div>
+    <div class="fg"><label class="fl">Presen\xe7a</label>
+      <div class="pg" id="pg-pres">
+        <div class="pill on" data-v="1" style="color:var(--green);border-color:var(--green)" onclick="selP('pg-pres','spres',this)">&#9989; Presente</div>
+        <div class="pill" data-v="0" onclick="selP('pg-pres','spres',this)">&#10060; Falta</div>
+      </div>
+      <input type="hidden" id="spres" value="1">
+    </div>
+    <div class="row2">
+      <div class="fg"><label class="fl">Energia (1-5)</label>
+        <div style="display:flex;gap:6px" id="en-stars">
+          ${[1,2,3,4,5].map(n=>`<span style="font-size:22px;opacity:.25;cursor:pointer" onclick="setStar('en',${n})" id="en${n}">&#11088;</span>`).join('')}
+        </div><input type="hidden" id="sen" value="">
+      </div>
+      <div class="fg"><label class="fl">Esfor\xe7o (1-5)</label>
+        <div style="display:flex;gap:6px" id="ef-stars">
+          ${[1,2,3,4,5].map(n=>`<span style="font-size:22px;opacity:.25;cursor:pointer" onclick="setStar('ef',${n})" id="ef${n}">&#9889;</span>`).join('')}
+        </div><input type="hidden" id="sef" value="">
+      </div>
+    </div>
+
+    <div id="sess-plan-area"></div>
+
+    <div class="sec">Registo de Cargas</div>
+    <div id="loads-list"></div>
+    <button class="btn btn-s" style="margin-bottom:14px" onclick="openLoadPicker()">+ Adicionar exerc\xedcio</button>
+
+    <div class="fg"><label class="fl">Notas da Sess\xe3o</label><textarea class="fi" id="snotes" placeholder="O que correu bem? O que ajustar?"></textarea></div>
+    <button class="btn btn-p" onclick="saveSess()">Guardar Sess\xe3o</button>
+  </div>`;
+  openM('m-sess');
+  if(preClientId)onSessClientChange(preClientId);
+}
+
+function onSessClientChange(cid){
+  _sess.cid=cid;_sess.planId='';_sess.sessId='';
+  const plans=S.plans().filter(p=>p.clientId===cid);
+  const area=document.getElementById('sess-plan-area');if(!area)return;
+  if(!plans.length){area.innerHTML='';return}
+  area.innerHTML=`<div class="fg"><label class="fl">Plano (opcional)</label>
+    <select class="fi" id="splan" onchange="onSessPlanChange(this.value)">
+      <option value="">Sem plano</option>
+      ${plans.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('')}
+    </select>
+  </div>
+  <div id="sess-sessao-area"></div>`;
+}
+
+function onSessPlanChange(planId){
+  _sess.planId=planId;_sess.sessId='';
+  const area=document.getElementById('sess-sessao-area');if(!area)return;
+  if(!planId){area.innerHTML='';return}
+  const p=S.plans().find(x=>x.id===planId);if(!p)return;
+  area.innerHTML=`<div class="fg"><label class="fl">Sess\xe3o do Plano</label>
+    <select class="fi" id="ssess" onchange="onSessSessChange(this.value,'${planId}')">
+      <option value="">Selecionar...</option>
+      ${p.sessions.map(s=>`<option value="${s.id}">${esc(s.name)} (${s.exercises.length} ex.)</option>`).join('')}
+    </select>
+  </div>`;
+}
+
+function onSessSessChange(sessId,planId){
+  _sess.sessId=sessId;
+  if(!sessId)return;
+  const p=S.plans().find(x=>x.id===planId);if(!p)return;
+  const sess=p.sessions.find(s=>s.id===sessId);if(!sess)return;
+  // Pre-populate loads from plan exercises
+  _sess.loads=sess.exercises.map(e=>({id:gid(),exerciseId:e.id,exerciseName:e.name,planSeries:e.series,planReps:e.reps,planRest:e.rest,load:'',reps:'',series:'',notes:''}));
+  renderLoadsList();
+}
+
+function renderLoadsList(){
+  const wrap=document.getElementById('loads-list');if(!wrap)return;
+  if(!_sess.loads.length){wrap.innerHTML='<div style="font-size:12px;color:var(--m);margin-bottom:8px">Nenhum exerc\xedcio. Toca em + para adicionar.</div>';return}
+  wrap.innerHTML=_sess.loads.map((l,i)=>`
+    <div style="background:var(--d);border:1px solid var(--b);border-radius:9px;padding:11px 13px;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div style="flex:1;font-size:13px;font-weight:700;color:var(--a)">${esc(l.exerciseName)}</div>
+        <button style="background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:2px 6px" onclick="removeLoad(${i})">&#215;</button>
+      </div>
+      ${l.planSeries?`<div style="font-size:10px;color:var(--m);margin-bottom:7px">Plano: ${esc(l.planSeries)}\xd7 ${esc(l.planReps)} \xb7 ${esc(l.planRest)}</div>`:''}
+      <div class="row3">
+        <div><label class="fl">Carga (kg)</label><input class="fi fi-sm" type="number" step="0.5" placeholder="0" value="${esc(l.load)}" oninput="_sess.loads[${i}].load=this.value"></div>
+        <div><label class="fl">S\xe9ries</label><input class="fi fi-sm" placeholder="${esc(l.planSeries||'3')}" value="${esc(l.series)}" oninput="_sess.loads[${i}].series=this.value"></div>
+        <div><label class="fl">Reps</label><input class="fi fi-sm" placeholder="${esc(l.planReps||'10')}" value="${esc(l.reps)}" oninput="_sess.loads[${i}].reps=this.value"></div>
+      </div>
+      <input class="fi fi-sm" placeholder="Nota (opcional)" value="${esc(l.notes)}" oninput="_sess.loads[${i}].notes=this.value" style="margin-top:6px">
+    </div>
+  `).join('');
+}
+
+function removeLoad(i){
+  _sess.loads.splice(i,1);
+  renderLoadsList();
+}
+
+function openLoadPicker(){
+  // Show exercise picker to add load entry
+  const lst=allEx();
+  const modal=document.createElement('div');
+  modal.id='m-loadpick';modal.className='modal open';
+  modal.innerHTML=`<div class="mi">
+    <div class="mh"><span class="mb" onclick="document.getElementById('m-loadpick').remove()">\u2039</span><span class="mt">Adicionar Exerc\xedcio</span></div>
+    <input class="search" placeholder="Pesquisar..." id="lpsearch" oninput="filterLoadPick(this.value)">
+    <div id="lp-list">${renderLoadPickList(lst)}</div>
+  </div>`;
+  document.body.appendChild(modal);
+}
+
+function filterLoadPick(q){
+  const lst=allEx().filter(e=>e[0].toLowerCase().includes(q.toLowerCase())||e[1].toLowerCase().includes(q.toLowerCase()));
+  const el=document.getElementById('lp-list');if(el)el.innerHTML=renderLoadPickList(lst);
+}
+
+function renderLoadPickList(lst){
+  return lst.map(e=>`<div class="li" onclick="pickLoadEx(${JSON.stringify(e[0])})">
+    <div class="li-inf"><div class="li-t">${esc(e[0])}</div><div class="li-s">${esc(e[1])}</div></div>
+    <span style="color:var(--a);font-size:20px">+</span>
+  </div>`).join('');
+}
+
+function pickLoadEx(name){
+  _sess.loads.push({id:gid(),exerciseId:'',exerciseName:name,planSeries:'',planReps:'',planRest:'',load:'',reps:'',series:'',notes:''});
+  renderLoadsList();
+  const m=document.getElementById('m-loadpick');if(m)m.remove();
+  toast(name+' adicionado');
+}
+
+function setStar(type,val){
+  for(let i=1;i<=5;i++){const el=document.getElementById(type+i);if(el)el.style.opacity=i<=val?'1':'.25';}
+  const hid=document.getElementById('s'+type);if(hid)hid.value=val;
+}
+
+function saveSess(){
+  const sel=document.getElementById('scl');
+  const cid=sel?sel.value:'';
+  const date=(document.getElementById('sdate')||{value:''}).value;
+  if(!cid||!date){toast('Cliente e data obrigat\xf3rios');return}
+  const cName=sel?(sel.options[sel.selectedIndex]?.dataset?.name||''):'';
+  const planSel=document.getElementById('splan');
+  const sessSel=document.getElementById('ssess');
+  const planId=planSel?planSel.value:'';
+  const sessId=sessSel?sessSel.value:'';
+  let sessName='';
+  if(planId&&sessId){const p=S.plans().find(x=>x.id===planId);if(p){const s=p.sessions.find(s=>s.id===sessId);if(s)sessName=s.name;}}
+  const loads=_sess.loads.filter(l=>l.load||l.reps||l.series);
+  const r={
+    id:gid(),clientId:cid,clientName:cName,date,
+    duration:(document.getElementById('sdur')||{value:''}).value,
+    presence:(document.getElementById('spres')||{value:'1'}).value==='1',
+    energy:(document.getElementById('sen')||{value:''}).value,
+    effort:(document.getElementById('sef')||{value:''}).value,
+    planId,sessionId:sessId,sessionName:sessName,
+    loads,
+    notes:(document.getElementById('snotes')||{value:''}).value,
+  };
+  const ses=S.sessions();ses.push(r);S.ss(ses);
+  closeM('m-sess');toast('Sess\xe3o guardada \u2713');
+  if(CS==='sessoes')rSessoes();
+}
+
+// ─── EVOLU\xc7\xc3O ──────────────────────────────────────────────────────────────────
+let _evClient='',_evExercise='';
+
+// ─── ALERTAS DE ESTAGNA\xc7\xc3O ─────────────────────────────────────────────────────
+function getStagnationAlerts(){
+  const cl=S.clients();
+  const ses=S.sessions();
+  const alerts=[];
+  cl.filter(c=>c.state==='Ativo'||!c.state).forEach(c=>{
+    const cSes=ses.filter(s=>s.clientId===c.id&&s.loads&&s.loads.length).sort((a,b)=>a.date.localeCompare(b.date));
+    // Group loads by exercise
+    const exMap={};
+    cSes.forEach(s=>s.loads.forEach(l=>{
+      if(!l.load)return;
+      if(!exMap[l.exerciseName])exMap[l.exerciseName]=[];
+      exMap[l.exerciseName].push({date:s.date,load:parseFloat(l.load)});
+    }));
+    Object.entries(exMap).forEach(([ex,pts])=>{
+      if(pts.length<3)return;
+      const last3=pts.slice(-3);
+      const allSame=last3.every(p=>p.load===last3[0].load);
+      if(allSame){
+        alerts.push({clientId:c.id,clientName:c.name,exercise:ex,load:last3[0].load,sessions:last3.length,lastDate:last3[last3.length-1].date});
+      }
+    });
+  });
+  return alerts;
+}
+
+function rEvolucao(){
+  const cl=S.clients();
+  document.getElementById('s-evolucao').innerHTML=`
+    <div class="fg"><label class="fl">Cliente</label>
+      <select class="fi" id="evcl" onchange="evLoadClient(this.value)">
+        <option value="">Selecionar...</option>
+        ${cl.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}
+      </select>
+    </div>
+    <div id="ev-content"><div class="empty"><div class="empty-i">&#128200;</div><div class="empty-t">Seleciona um cliente para ver a evolu\xe7\xe3o.</div></div></div>
+  `;
+  if(_evClient){
+    document.getElementById('evcl').value=_evClient;
+    evLoadClient(_evClient);
+  }
+}
+
+function evLoadClient(cid){
+  _evClient=cid;
+  if(!cid){document.getElementById('ev-content').innerHTML='';return}
+  const c=S.clients().find(x=>x.id===cid);if(!c)return;
+  const ses=S.sessions().filter(s=>s.clientId===cid).sort((a,b)=>a.date.localeCompare(b.date));
+  const pres=ses.filter(s=>s.presence).length;
+  const measList=c.measurements||[];
+  // Get all exercises with loads
+  const exMap={};
+  ses.forEach(s=>{if(s.loads)s.loads.forEach(l=>{if(l.load&&l.exerciseName){if(!exMap[l.exerciseName])exMap[l.exerciseName]=[];exMap[l.exerciseName].push({date:s.date,load:parseFloat(l.load),reps:l.reps||''});}});});
+  const exNames=Object.keys(exMap);
+  document.getElementById('ev-content').innerHTML=`
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-l">Sess\xf5es total</div><div class="kpi-v" style="color:var(--a)">${ses.length}</div></div>
+      <div class="kpi"><div class="kpi-l">Taxa presen\xe7a</div><div class="kpi-v" style="color:var(--green)">${ses.length?Math.round(pres/ses.length*100):0}%</div></div>
+      <div class="kpi"><div class="kpi-l">Peso atual</div><div class="kpi-v" style="color:var(--orange)">${c.weight||'\u2014'}${c.weight?'kg':''}</div></div>
+      <div class="kpi"><div class="kpi-l">% Gordura</div><div class="kpi-v" style="color:var(--blue)">${c.bodyFat||'\u2014'}${c.bodyFat?'%':''}</div></div>
+    </div>
+    ${measList.length>1?`
+      <div class="sec">Evolu\xe7\xe3o do Peso</div>
+      ${renderSparkline(measList.map(m=>({date:m.date,val:parseFloat(m.weight)||0})).filter(x=>x.val>0),'kg','var(--orange)')}
+    `:''}
+    ${exNames.length?`
+      <div class="sec">Cargas por Exerc\xedcio</div>
+      <select class="fi" id="ev-ex" onchange="evLoadEx(this.value,'${cid}')" style="margin-bottom:12px">
+        <option value="">Selecionar exerc\xedcio...</option>
+        ${exNames.map(n=>`<option value="${n}" ${_evExercise===n?'selected':''}>${esc(n)}</option>`).join('')}
+      </select>
+      <div id="ev-ex-chart"></div>
+    `:'<div style="font-size:12px;color:var(--m);margin-top:12px">Regista sess\xf5es com cargas para ver a progress\xe3o.</div>'}
+    ${ses.length?`
+      <div class="sec">\xdaltimas Sess\xf5es</div>
+      ${ses.slice(-6).reverse().map(s=>`<div style="background:var(--c);border:1px solid var(--b);border-radius:8px;padding:9px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px">
+        <div style="font-size:11px;color:var(--m);width:55px">${fmtD(s.date)}</div>
+        <div style="flex:1;font-size:12px">${esc(s.sessionName||'\u2014')}${s.duration?' \xb7 '+s.duration+'min':''}</div>
+        <div>${s.presence?'\u2705':'\u274c'}</div>
+        ${s.energy?`<div style="font-size:11px;color:var(--m)">\u26a1${s.energy}</div>`:''}
+      </div>`).join('')}
+    `:''}
+  `;
+  if(_evExercise&&exMap[_evExercise])evLoadEx(_evExercise,cid);
+}
+
+function evLoadEx(name,cid){
+  _evExercise=name;
+  if(!name){document.getElementById('ev-ex-chart').innerHTML='';return}
+  const ses=S.sessions().filter(s=>s.clientId===cid).sort((a,b)=>a.date.localeCompare(b.date));
+  const pts=[];
+  ses.forEach(s=>{if(s.loads)s.loads.forEach(l=>{if(l.exerciseName===name&&l.load)pts.push({date:s.date,val:parseFloat(l.load)});});});
+  if(!pts.length){document.getElementById('ev-ex-chart').innerHTML='<div style="font-size:12px;color:var(--m)">Sem dados ainda.</div>';return}
+  document.getElementById('ev-ex-chart').innerHTML=renderSparkline(pts,'kg','var(--a)');
+}
+
+function renderSparkline(pts,unit,color){
+  if(!pts||pts.length<2)return pts&&pts.length===1?`<div class="chart-wrap"><div class="chart-label">${pts[0].date}</div><div class="chart-val">${pts[0].val}${unit}</div></div>`:'';
+  const vals=pts.map(p=>p.val);
+  const mn=Math.min(...vals),mx=Math.max(...vals);
+  const last=vals[vals.length-1],first=vals[0];
+  const diff=last-first;
+  const w=300,h=60,pad=6;
+  const px=(i)=>pad+(i/(pts.length-1))*(w-2*pad);
+  const py=(v)=>h-pad-(mx===mn?h/2:(v-mn)/(mx-mn)*(h-2*pad));
+  const pathD=pts.map((p,i)=>(i===0?'M':'L')+px(i).toFixed(1)+','+py(p.val).toFixed(1)).join(' ');
+  return`<div class="chart-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:6px">
+      <div><div class="chart-val">${last}${unit}</div><div class="chart-sub">${pts[pts.length-1].date}</div></div>
+      <div style="text-align:right"><div style="font-size:13px;font-weight:700;color:${diff>=0?'var(--green)':'var(--red)'}">${diff>=0?'+':''}${diff.toFixed(1)}${unit}</div><div class="chart-sub">vs. in\xedcio</div></div>
+    </div>
+    <svg viewBox="0 0 ${w} ${h}" style="width:100%;height:${h}px;overflow:visible">
+      <path d="${pathD}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      ${pts.map((p,i)=>`<circle cx="${px(i).toFixed(1)}" cy="${py(p.val).toFixed(1)}" r="3" fill="${color}"/>`).join('')}
+    </svg>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--m);margin-top:2px"><span>${pts[0].date}</span><span>${pts[pts.length-1].date}</span></div>
+  </div>`;
+}
+
+// ─── CUSTOM EXERCISES ─────────────────────────────────────────────────────────
+const customEx=()=>S.g('customex')||[];
+const saveCustomEx=v=>S.s('customex',v);
+function allEx(){return[...EX,...customEx().map(e=>[e.name,e.group,e.equipment,e.id])];}
+
+const CATS=[
+  {v:'mi',l:'Membros Inferiores',ex:'Quadric\xedpites / Gl\xfateos'},
+  {v:'ms',l:'Membros Superiores',ex:'Peito / Costas'},
+  {v:'ombros',l:'Ombros',ex:'Ombros / Delt\xf3ides'},
+  {v:'bracos',l:'Bra\xe7os',ex:'B\xedceps / Tr\xedceps'},
+  {v:'core',l:'Core / Abdominais',ex:'Core'},
+  {v:'card',l:'Cardio',ex:'Cardio'},
+  {v:'mob',l:'Mobilidade',ex:'Mobilidade'},
+  {v:'outro',l:'Outro',ex:''},
+];
+function openAddExModal(){
+  document.getElementById('m-exlib').innerHTML=`<div class="mi">
+    <div class="mh"><span class="mb" onclick="closeM('m-exlib')">\u2039</span><span class="mt">Novo Exerc\xedcio</span></div>
+    <div class="fg"><label class="fl">Nome *</label><input class="fi" id="cen" placeholder="Ex: Press Arnold"></div>
+    <div class="fg"><label class="fl">Categoria *</label>
+      <div class="pg" id="pg-cat">
+        ${CATS.map(c=>`<div class="pill" data-v="${c.v}" data-ex="${c.ex}" onclick="selCat(this)">${c.l}</div>`).join('')}
+      </div>
+      <input type="hidden" id="cecat" value="">
+    </div>
+    <div class="fg"><label class="fl">Grupo Muscular</label><input class="fi" id="ceg" placeholder="Preenche automaticamente ou personaliza"></div>
+    <div class="fg"><label class="fl">Equipamento</label><input class="fi" id="cee" placeholder="Ex: Halteres, Barra, Cabo..."></div>
+    <div class="fg"><label class="fl">Notas / T\xe9cnica</label><textarea class="fi" id="ceno" placeholder="Descri\xe7\xe3o, pontos t\xe9cnicos..."></textarea></div>
+    <button class="btn btn-p" onclick="saveCustomExercise()">Adicionar \xe0 Biblioteca</button>
+  </div>`;
+  openM('m-exlib');
+}
+function selCat(el){
+  document.querySelectorAll('#pg-cat .pill').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('cecat').value=el.dataset.v;
+  const gEl=document.getElementById('ceg');
+  if(gEl&&!gEl.value&&el.dataset.ex)gEl.value=el.dataset.ex;
+}
+function saveCustomExercise(){
+  const name=(document.getElementById('cen')||{value:''}).value.trim();
+  const cat=(document.getElementById('cecat')||{value:''}).value;
+  const group=(document.getElementById('ceg')||{value:''}).value.trim();
+  if(!name){toast('Nome \xe9 obrigat\xf3rio');return}
+  if(!cat){toast('Seleciona uma categoria');return}
+  const cx=customEx();
+  const catLabel=CATS.find(c=>c.v===cat)?.l||cat;
+  cx.push({id:'cx'+gid(),name,cat,catLabel,group:group||catLabel,equipment:(document.getElementById('cee')||{value:''}).value.trim(),notes:(document.getElementById('ceno')||{value:''}).value.trim()});
+  saveCustomEx(cx);
+  closeM('m-exlib');
+  toast(name+' adicionado \u2713');
+  if(CS==='biblioteca')rBiblioteca();
+}
+
+function delCustomEx(id){
+  if(!confirm('Eliminar este exerc\xedcio?'))return;
+  saveCustomEx(customEx().filter(e=>e.id!==id));
+  toast('Eliminado');rBiblioteca();
+}
+
+// ─── BIBLIOTECA ───────────────────────────────────────────────────────────────
+let _libCat='all';
+function rBiblioteca(){
+  const cx=customEx();
+  const total=EX.length+cx.length;
+  document.getElementById('s-biblioteca').innerHTML=`
+    <button class="btn btn-p" style="margin-bottom:12px" onclick="openAddExModal()">+ Criar exerc\xedcio personalizado</button>
+    <input class="search" placeholder="Pesquisar exerc\xedcio..." id="libsearch" oninput="fLib()">
+    <div class="frow" id="lib-frow">
+      ${[['all','Todos ('+total+')'],['custom','Os meus'],['mi','Membros Inf.'],['ms','Membros Sup.'],['ombros','Ombros'],['bracos','Braços'],['core','Core'],['card','Cardio'],['mob','Mobilidade']].map(([v,l])=>`<div class="fc${_libCat===v?' on':''}" onclick="setLibCat('${v}',this)">${l}</div>`).join('')}
+    </div>
+    <div id="liblist"></div>
+  `;
+  renderLib('',_libCat);
+}
+function setLibCat(v,el){
+  _libCat=v;
+  document.querySelectorAll('#lib-frow .fc').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  fLib();
+}
+function fLib(){
+  const q=(document.getElementById('libsearch')||{value:''}).value;
+  renderLib(q,_libCat);
+}
+function renderLib(q,cat){
+  const cx=customEx();
+  let lst=cat==='custom'?cx.map(e=>[e.name,e.group,e.equipment||'\u2014',e.id]):allEx();
+  if(q)lst=lst.filter(e=>e[0].toLowerCase().includes(q.toLowerCase())||e[1].toLowerCase().includes(q.toLowerCase()));
+  if(cat&&cat!=='all'&&cat!=='custom'){
+    lst=lst.filter(e=>{
+      // For custom exercises, match by saved cat field
+      const cxObj=cx.find(c=>c.name===e[0]);
+      if(cxObj&&cxObj.cat)return cxObj.cat===cat;
+      const g=e[1];
+      if(cat==='mi')return/Quadric|Gl\xfateo|Isquio|Panturrilha|Adutor/.test(g);
+      if(cat==='ms')return/Peito|Costa|Dorsal/.test(g);
+      if(cat==='ombros')return/Ombro|Delt\xf3ide|Rotador/.test(g);
+      if(cat==='bracos')return/B\xedceps|Tr\xedceps/.test(g);
+      if(cat==='core')return/Core/.test(g);
+      if(cat==='card')return/Cardio|Full body|Kettlebell/.test(g);
+      if(cat==='mob')return/Mobilidade|Liberta|Pilates|Ativa/.test(g);
+      return false;
+    });
+  }
+  const el=document.getElementById('liblist');if(!el)return;
+  const isCustom=e=>cx.some(c=>c.name===e[0]);
+  el.innerHTML=lst.length===0?'<div class="empty"><div class="empty-t">Nenhum encontrado.</div></div>':
+    lst.map(e=>`<div class="card" style="padding:11px 13px;margin-bottom:7px;display:flex;align-items:center;gap:10px">
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700;color:var(--a);margin-bottom:3px">${esc(e[0])}${isCustom(e)?'<span class="badge b-y" style="margin-left:6px;font-size:9px">meu</span>':''}</div>
+        <div style="font-size:12px;color:var(--m)">${esc(e[1])} &middot; ${esc(e[2])}</div>
+      </div>
+      ${isCustom(e)?`<button style="background:none;border:none;color:var(--red);font-size:18px;cursor:pointer;padding:2px 6px" onclick="delCustomEx('${cx.find(c=>c.name===e[0])?.id}')">&#215;</button>`:''}
+    </div>`).join('');
+}
+
+// ─── SETTINGS ─────────────────────────────────────────────────────────────────
+function openSettings(){
+  document.getElementById('m-settings').innerHTML=`<div class="mi">
+    <div class="mh"><span class="mb" onclick="closeM('m-settings')">\u2039</span><span class="mt">Defini\xe7\xf5es</span></div>
+    <div class="sec">Intelig\xeancia Artificial</div>
+    <div class="fg"><label class="fl">Anthropic API Key</label>
+      <input class="fi" id="sak" type="password" value="${esc(S.apiKey())}" placeholder="sk-ant-api03-...">
+      <div style="font-size:11px;color:var(--m);margin-top:5px">A chave \xe9 guardada localmente no dispositivo. \xc9 necess\xe1ria para as sugest\xf5es de IA.</div>
+    </div>
+    <button class="btn btn-p" onclick="saveApiKey()">Guardar Chave</button>
+    <div style="margin-top:10px"><a href="https://console.anthropic.com/settings/keys" style="color:var(--a);font-size:12px" target="_blank">Obter chave em console.anthropic.com &#8599;</a></div>
+    <div class="sec" style="margin-top:24px">Dados</div>
+    <button class="btn btn-d" onclick="clearAll()">Limpar todos os dados</button>
+  </div>`;
+  openM('m-settings');
+}
+
+function saveApiKey(){
+  const k=(document.getElementById('sak')||{value:''}).value.trim();
+  S.sak(k);closeM('m-settings');
+  toast(k?'API Key guardada \u2713':'API Key removida');
+}
+
+function clearAll(){
+  if(!confirm('Apagar TODOS os dados? Clientes, planos e sess\xf5es ser\xe3o eliminados.'))return;
+  ['clients','plans','sessions'].forEach(k=>localStorage.removeItem(K+k));
+  closeM('m-settings');toast('Dados eliminados');go(CS);
+}
+
+// ─── PWA ──────────────────────────────────────────────────────────────────────
+const SW=`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>clients.claim());self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
+if('serviceWorker'in navigator){
+  const b=new Blob([SW],{type:'text/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(b)).catch(()=>{});
+}
+const mf={name:"Next Level PT",short_name:"NL PT",start_url:"./",display:"standalone",theme_color:"#0D0D0D",background_color:"#0D0D0D",icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230D0D0D'/%3E%3Ctext y='.9em' font-size='80' x='10'%3E&#127959;%3C/text%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml"}]};
+const ml=document.createElement('link');ml.rel='manifest';ml.href=URL.createObjectURL(new Blob([JSON.stringify(mf)],{type:'application/json'}));document.head.appendChild(ml);
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+go('clientes');
+</script>
+</body>
+</html>
